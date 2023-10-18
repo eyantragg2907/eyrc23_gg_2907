@@ -16,8 +16,8 @@
 '''
 ############################## FILL THE MANDATORY INFORMATION BELOW ###############################
 
-# Team ID:			[ Team-ID ]
-# Author List:		[ Names of team members worked on this file separated by Comma: Name1, Name2, ... ]
+# Team ID:			2907
+# Author List:		Subham Jalan, Pranjal Rastogi
 # Filename:			task_2b.py
 # Functions:	    [`classify_event(image)` ]
 ###################################################################################################
