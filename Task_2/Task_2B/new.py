@@ -27,3 +27,5 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 
 # Train the model
 model.fit_generator(train_generator, epochs=20)
+
+model.save_weights("model2")
