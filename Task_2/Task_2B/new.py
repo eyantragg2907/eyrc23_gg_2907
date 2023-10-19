@@ -1,5 +1,12 @@
 # MODEL B: 299x299
 
+# PLEASE USE THE modelB_299.ipynb NOTEBOOK TO TRAIN THE MODEL
+# NOT THIS FILE
+
+if __name__ == "__main__":
+    print("Please use the modelB_299.ipynb notebook to train the model")
+    exit()
+
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 

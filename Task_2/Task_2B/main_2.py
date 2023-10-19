@@ -1,7 +1,15 @@
 # MODEL A: 75x75 model
 
+# PLEASE USE THE modelA_75.ipynb NOTEBOOK TO TRAIN THE MODEL
+# NOT THIS FILE
+
+if __name__ == "__main__":
+    print("Please use the modelA_75.ipynb notebook to train the model")
+    exit()
+
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
 
 datagen = ImageDataGenerator(rescale = .1/255, rotation_range = 40, width_shift_range=0.2, height_shift_range=0.2, shear_range=0.2, zoom_range=0.2, horizontal_flip=True)
 
