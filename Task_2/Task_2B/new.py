@@ -1,3 +1,5 @@
+# MODEL B: 299x299
+
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
@@ -26,6 +28,6 @@ model = tf.keras.Model(model.input, x)
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Train the model
-model.fit_generator(train_generator, epochs=20)
+model.fit_generator(train_generator, epochs=30)
 
 model.save_weights("model2")

@@ -1,4 +1,4 @@
-# 75x75 model
+# MODEL A: 75x75 model
 
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
@@ -30,4 +30,5 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 
 # Train the model
 model.fit_generator(train_generator, epochs=30)
-model.save_weights("model_75x75")
+
+model.save("models/model_75x75.h5")

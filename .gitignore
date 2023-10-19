@@ -6,6 +6,7 @@ Task_2/Task_2B/train_og
 Task_2/Task_2B/train
 Task_2/Task_2B/eyrcfiles
 Task_2/Task_2B/checkpoints/*
+Task_2/Task_2B/models/*
 ## END CUSTOM ##
 
 ## PYTHON ##
