@@ -32,8 +32,7 @@ path2 = [11, 14, 13, 10, 9, 51, 53, 0, 39, 37, 38, 28, 25, 54, 5, 3, 19, 20, 17,
 ###################################################################################################
 
 # Declaring Variables
-FILE_LOC = "lat_long.csv"
-OUT_FILE_LOC = "live_location.csv"
+OUT_FILE_LOC = "live_data.csv"
 
 def read_csv(csv_name):
     lat_lon = {}
@@ -42,12 +41,12 @@ def read_csv(csv_name):
     # read "lat_lon.csv" file 
     # store csv data in lat_lon dictionary as {id:[lat, lon].....}
     # return lat_lon
-    with open(FILE_LOC, 'r', encoding="utf-8-sig") as f:
+    with open(csv_name, 'r', encoding="utf-8") as f:
         reader = csv.reader(f)
         c = 0
         for row in reader:
             if c != 0:
-                lat_lon[int(row[0])] = [float(row[1]), float(row[2])]
+                lat_lon[int(row[0])] = [row[1], row[2]]
             else:
                 lat_lon[row[0]] = [row[1], row[2]]
             c += 1
@@ -58,7 +57,7 @@ def write_csv(loc, csv_name):
     # open csv (csv_name)
     # write column names "lat", "lon"
     # write loc ([lat, lon]) in respective columns
-    with open(csv_name, 'w', encoding="utf-8") as f:
+    with open(csv_name, 'w') as f:
         writer = csv.writer(f)
         writer.writerow(["lat", "lon"])
         writer.writerow(loc)
