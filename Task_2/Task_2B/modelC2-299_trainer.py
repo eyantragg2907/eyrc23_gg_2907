@@ -28,7 +28,7 @@ for layer in model.layers[:-1]:
 
 # Add a new output layer
 x = tf.keras.layers.Flatten()(model.output)
-x = tf.keras.layers.Dense(256,"relu")(x)
+x = tf.keras.layers.Dense(1024,"relu")(x)
 x = tf.keras.layers.Dropout(0.2)(x)
 x = tf.keras.layers.Dense(5, "softmax")(x)
 
