@@ -16,21 +16,15 @@
 '''
 ############################## FILL THE MANDATORY INFORMATION BELOW ###############################
 
-# Team ID:			[ Team-ID ]
-# Author List:		[ Names of team members worked on this file separated by Comma: Name1, Name2, ... ]
+# Team ID:			2907
+# Author List:		Abhinav Lodha, Pranjal Rastogi
 # Filename:			Task_2D.py
-# Functions:	    [ Function names ]
+# Functions:	    read_csv, write_csv, tracker
 ###################################################################################################
 
 # IMPORTS (DO NOT CHANGE/REMOVE THESE IMPORTS)
 import csv
 import time
-
-# Additional Imports
-'''
-You can import your required libraries here
-
-'''
 
 # DECLARING VARIABLES (DO NOT CHANGE/REMOVE THESE VARIABLES)
 path1 = [11, 14, 13, 18, 19, 20, 23, 21, 22, 33, 30, 35, 32, 31, 34, 40, 36, 38, 37, 39, 41, 50, 4, 6, 52, 7, 8, 1, 2, 11]
@@ -38,10 +32,8 @@ path2 = [11, 14, 13, 10, 9, 51, 53, 0, 39, 37, 38, 28, 25, 54, 5, 3, 19, 20, 17,
 ###################################################################################################
 
 # Declaring Variables
-'''
-You can delare the necessary variables here
-
-'''
+FILE_LOC = "lat_long.csv"
+OUT_FILE_LOC = "live_location.csv"
 
 def read_csv(csv_name):
     lat_lon = {}
@@ -50,44 +42,35 @@ def read_csv(csv_name):
     # read "lat_lon.csv" file 
     # store csv data in lat_lon dictionary as {id:[lat, lon].....}
     # return lat_lon
-
-    '''
-    ADD YOUR CODE HERE
-
-    '''
-    return lat_lon 
+    with open(FILE_LOC, 'r', encoding="utf-8-sig") as f:
+        reader = csv.reader(f)
+        c = 0
+        for row in reader:
+            if c != 0:
+                lat_lon[int(row[0])] = [float(row[1]), float(row[2])]
+            else:
+                lat_lon[row[0]] = [row[1], row[2]]
+            c += 1
+    return lat_lon
 
 def write_csv(loc, csv_name):
 
     # open csv (csv_name)
     # write column names "lat", "lon"
     # write loc ([lat, lon]) in respective columns
-
-    '''
-
-    ADD YOUR CODE HERE
-
-    '''
+    with open(csv_name, 'w', encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["lat", "lon"])
+        writer.writerow(loc)
 
 def tracker(ar_id, lat_lon):
 
     # find the lat, lon associated with ar_id (aruco id)
-    # write these lat, lon to "live_data.csv"
-
-    '''
-
-    ADD YOUR CODE HERE
-
-    '''
+    # write these lat, lon to "live_location.csv"
     # also return coordinate ([lat, lon]) associated with respective ar_id.
+    coordinate = lat_lon[ar_id]
+    write_csv(coordinate, OUT_FILE_LOC)
     return coordinate
-
-# ADDITIONAL FUNCTIONS
-
-'''
-If there are any additonal functions that you're using, you shall add them here. 
-
-'''
 
 ###################################################################################################
 ########################### DO NOT MAKE ANY CHANGES IN THE SCRIPT BELOW ###########################
