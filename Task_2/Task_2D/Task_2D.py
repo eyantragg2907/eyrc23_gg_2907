@@ -43,13 +43,9 @@ def read_csv(csv_name):
     # return lat_lon
     with open(csv_name, 'r', encoding="utf-8") as f:
         reader = csv.reader(f)
-        c = 0
         for row in reader:
-            if c != 0:
-                lat_lon[int(row[0])] = [row[1], row[2]]
-            else:
-                lat_lon[row[0]] = [row[1], row[2]]
-            c += 1
+            lat_lon[row[0]] = [row[1], row[2]]
+    print(lat_lon)
     return lat_lon
 
 def write_csv(loc, csv_name):
@@ -65,9 +61,9 @@ def write_csv(loc, csv_name):
 def tracker(ar_id, lat_lon):
 
     # find the lat, lon associated with ar_id (aruco id)
-    # write these lat, lon to "live_location.csv"
+    # write these lat, lon to "live_data.csv"
     # also return coordinate ([lat, lon]) associated with respective ar_id.
-    coordinate = lat_lon[ar_id]
+    coordinate = lat_lon[str(ar_id)]
     write_csv(coordinate, OUT_FILE_LOC)
     return coordinate
 
