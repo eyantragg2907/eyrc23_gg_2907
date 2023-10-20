@@ -7,6 +7,7 @@ Task_2/Task_2B/train
 Task_2/Task_2B/eyrcfiles
 Task_2/Task_2B/checkpoints
 Task_2/Task_2B/models
+Task_2/Task_2D/movies
 ## END CUSTOM ##
 
 ## PYTHON ##
@@ -249,3 +250,4 @@ $RECYCLE.BIN/
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
 ## END LINUX ##
+
