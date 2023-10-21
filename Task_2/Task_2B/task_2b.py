@@ -82,11 +82,19 @@ def classify_event(image):
 	---
 	event = classify_event(image_path)
 	'''
-    mymodel = tf.keras.models.load_model("models/modelA_299.h5")
+    mymodel = tf.keras.models.load_model("models/modelB_299.h5")
+
     img = tf.keras.preprocessing.image.load_img(image, target_size=(299, 299))
+    img = np.array(img, dtype=np.float32)
+    img = tf.expand_dims(img, axis=0)
+    img = tf.keras.applications.inception_v3.preprocess_input(img)
+
     res = mymodel.predict(img)
-    print(res)
-    event = "variable to return the detected function"
+    predicted_class = np.argmax(res[0], axis=-1)
+
+    classmap = [combat, destroyed_building, fire, rehab, military_vehicles]
+    event = classmap[predicted_class]
+
     return event
 
 # ADDITIONAL FUNCTIONS
