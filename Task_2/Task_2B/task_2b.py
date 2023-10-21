@@ -17,7 +17,7 @@
 ############################## FILL THE MANDATORY INFORMATION BELOW ###############################
 
 # Team ID:			2907
-# Author List:		Subham Jalan, Pranjal Rastogi
+# Author List:		Subham Jalan, Pranjal Rastogi, Arnav Rustagi
 # Filename:			task_2b.py
 # Functions:	    [`classify_event(image)` ]
 ###################################################################################################
@@ -35,6 +35,7 @@ import os
 '''
 You can import your required libraries here
 '''
+import tensorflow as tf
 
 # DECLARING VARIABLES (DO NOT CHANGE/REMOVE THESE VARIABLES)
 detected_list = []
@@ -61,7 +62,8 @@ fire = "fire"
 destroyed_building = "destroyedbuilding"
 ###################################################################################################
 ###################################################################################################
-''' 
+def classify_event(image):
+    ''' 
 	Purpose:
 	---
 	This function will load your trained model and classify the event from an image which is 
@@ -80,10 +82,10 @@ destroyed_building = "destroyedbuilding"
 	---
 	event = classify_event(image_path)
 	'''
-def classify_event(image):
-    '''
-    ADD YOUR CODE HERE
-    '''
+    mymodel = tf.keras.models.load_model("models/modelA_299.h5")
+    img = tf.keras.preprocessing.image.load_img(image, target_size=(299, 299))
+    res = mymodel.predict(img)
+    print(res)
     event = "variable to return the detected function"
     return event
 
