@@ -21,7 +21,9 @@ def print_train_time(start: float, end: float, device: torch.device = None):
     return total_time
 
 
-device = "cpu"
+device = "mps" if torch.backends.mps.is_available() else "cpu"
+# device = "cpu"
+
 class_names = ["combat", "building", "fire", "rehab", "military"]
 BATCH_SIZE = 32
 EPOCHS = 100
