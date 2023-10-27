@@ -63,63 +63,35 @@ test_dataloader = DataLoader(
 class MyCNN(torch.nn.Module):
 	def __init__(self, numChannels, classes):
 		super(MyCNN, self).__init__()
-
-		# initialize first set of CONV => RELU => POOL layers
-		self.conv1 = torch.nn.Conv2d(
-			in_channels=numChannels, out_channels=20, kernel_size=(5, 5)
-		)
-		self.silu1 = torch.nn.SiLU()
-		self.maxpool1 = torch.nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2))
-		# initialize second set of CONV => RELU => POOL layers
-		self.conv2 = torch.nn.Conv2d(
+		self.features = torch.nn.Sequential(
+			torch.nn.Conv2d(
+				in_channels=numChannels, out_channels=20, kernel_size=(5, 5)
+			),
+			torch.nn.SiLU(inplace=True),
+			torch.nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2)),
+			torch.nn.Conv2d(
 			in_channels=20, out_channels=50, kernel_size=(5, 5)
+			),
+			torch.nn.SiLU(),
+			torch.nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2)),
+			torch.nn.Conv2d(
+				in_channels=50, out_channels=10, kernel_size=(5, 5)
+			),
+			torch.nn.SiLU(),
+			torch.nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2))
 		)
-		self.silu2 = torch.nn.SiLU()
-		self.maxpool2 = torch.nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2))
-		# initialize first (and only) set of FC => RELU layers
-		self.flatten = torch.nn.Flatten()
-		self.fc1 = torch.nn.Linear(in_features=186050, out_features=500)
-		# self.silu3 = torch.nn.ReLU()
-		# self.dense1 = torch.nn.Linear(in_features=500, out_features=1024)
-		# self.silu4 = torch.nn.ReLU()
-		# self.dense2 = torch.nn.Linear(in_features=1024, out_features=2048)
-		# self.silu5 = torch.nn.ReLU()
-		# self.dense3 = torch.nn.Linear(in_features=2048, out_features=500)
-		self.silu6 = torch.nn.SiLU()
-		# initialize our softmax classifier
-		self.fc2 = torch.nn.Linear(in_features=500, out_features=classes)
-		self.logSoftmax = torch.nn.LogSoftmax(dim=1)
+		self.classifier = torch.nn.Sequential(
+			torch.nn.Flatten(),
+			torch.nn.Linear(in_features=7840, out_features=500),
+			torch.nn.SiLU(),
+			torch.nn.Linear(in_features=500, out_features=classes),
+			torch.nn.LogSoftmax(dim=1)
+		)
 
 	def forward(self, x):
-		# pass the input through our first set of CONV => RELU =>
-		# POOL layers
-		x = self.conv1(x)
-		x = self.silu1(x)
-		x = self.maxpool1(x)
-		# pass the output from the previous layer through the second
-		# set of CONV => RELU => POOL layers
-		x = self.conv2(x)
-		x = self.silu2(x)
-		x = self.maxpool2(x)
-		# flatten the output from the previous layer and pass it
-		# through our only set of FC => RELU layers
-		x = self.flatten(x)
-		x = self.fc1(x)
-		# x = self.silu3(x)
-
-		# x = self.dense1(x)
-		# x = self.silu4(x)
-		# x = self.dense2(x)
-		# x = self.silu5(x)
-		# x = self.dense3(x)
-
-		x = self.silu6(x)
-		# pass the output to our softmax classifier to get our output
-		# predictions
-		x = self.fc2(x)
-		output = self.logSoftmax(x)
-		# return the output predictions
-		return output
+		x = self.features(x)
+		x = self.classifier(x)
+		return x
 
 
 torch.manual_seed(42)
@@ -254,7 +226,7 @@ print(model_1_results)
 # torch.save(model.state_dict(), "models/pyTorch-CNN-pjr-2710-033.pt")
 
 model_scripted = torch.jit.script(model)
-model_scripted.save("models/torch-CNNv2-2710-04.pt")
+model_scripted.save("models/torch-CNNv4-2710-01.pt")
 
 # ## LOAD
 # # load model
