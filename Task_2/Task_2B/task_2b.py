@@ -35,7 +35,8 @@ import os
 '''
 You can import your required libraries here
 '''
-import tensorflow as tf
+import torch
+import torchvision
 
 # DECLARING VARIABLES (DO NOT CHANGE/REMOVE THESE VARIABLES)
 detected_list = []
@@ -46,6 +47,51 @@ img_name_list = []
 '''
 You can delare the necessary variables here
 '''
+
+class MyCNN(torch.nn.Module):
+	def __init__(self, numChannels, classes):
+		super(MyCNN, self).__init__()
+        
+		# initialize first set of CONV => RELU => POOL layers
+		self.conv1 = torch.nn.Conv2d(in_channels=numChannels, out_channels=20,
+			kernel_size=(5, 5))
+		self.relu1 = torch.nn.ReLU()
+		self.maxpool1 = torch.nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2))
+		# initialize second set of CONV => RELU => POOL layers
+		self.conv2 = torch.nn.Conv2d(in_channels=20, out_channels=50,
+			kernel_size=(5, 5))
+		self.relu2 = torch.nn.ReLU()
+		self.maxpool2 = torch.nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2))
+		# initialize first (and only) set of FC => RELU layers
+		self.flatten = torch.nn.Flatten()
+		self.fc1 = torch.nn.Linear(in_features=186050, out_features=500)
+		self.relu3 = torch.nn.ReLU()
+		# initialize our softmax classifier
+		self.fc2 = torch.nn.Linear(in_features=500, out_features=classes)
+		self.logSoftmax = torch.nn.LogSoftmax(dim=1)
+
+	def forward(self, x):
+		# pass the input through our first set of CONV => RELU =>
+		# POOL layers
+		x = self.conv1(x)
+		x = self.relu1(x)
+		x = self.maxpool1(x)
+		# pass the output from the previous layer through the second
+		# set of CONV => RELU => POOL layers
+		x = self.conv2(x)
+		x = self.relu2(x)
+		x = self.maxpool2(x)
+		# flatten the output from the previous layer and pass it
+		# through our only set of FC => RELU layers
+		x = self.flatten(x)
+		x = self.fc1(x)
+		x = self.relu3(x)
+		# pass the output to our softmax classifier to get our output
+		# predictions
+		x = self.fc2(x)
+		output = self.logSoftmax(x)
+		# return the output predictions
+		return output
 
 # EVENT NAMES
 '''
@@ -82,18 +128,18 @@ def classify_event(image):
 	---
 	event = classify_event(image_path)
 	'''
-    mymodel = tf.keras.models.load_model("models/modelB_299.h5")
-
-    img = tf.keras.preprocessing.image.load_img(image, target_size=(299, 299))
-    img = np.array(img, dtype=np.float32)
-    img = tf.expand_dims(img, axis=0)
-    img = tf.keras.applications.inception_v3.preprocess_input(img)
-
-    res = mymodel.predict(img)
-    predicted_class = np.argmax(res[0], axis=-1)
-
+    # Load the model
+    mymodel = MyCNN(3, 5)
+    mymodel.load_state_dict(torch.load("models/pyTorch-CNN-2710-01.pt"))
+    img = torchvision.io.read_image(image).float()
+    img = torchvision.transforms.Compose([torchvision.transforms.Resize((256,256), antialias=True)])(img)
+    x = torch.unsqueeze(img, 0)
+    mymodel.eval()
+    with torch.inference_mode():
+        y_pred = mymodel(x)
+    val = int(y_pred.argmax(dim=1)[0])
     classmap = [combat, destroyed_building, fire, rehab, military_vehicles]
-    event = classmap[predicted_class]
+    event = classmap[val]
 
     return event
 
