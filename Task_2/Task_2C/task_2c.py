@@ -36,7 +36,8 @@ import os
 '''
 You can import your required libraries here
 '''
-import tensorflow as tf
+import torch
+import torchvision
 import numpy as np
 
 # DECLARING VARIABLES (DO NOT CHANGE/REMOVE THESE VARIABLES)
@@ -49,7 +50,7 @@ detected_list = []
 You can delare the necessary variables here
 '''
 
-model = tf.keras.models.load_model('model.h5')
+model = torch.load("models/model.pt", map_location="cpu")
 
 # EVENT NAMES
 '''
@@ -123,7 +124,7 @@ def event_identification(arena):        # NOTE: You can tweak this function in c
     '''
     ADD YOUR CODE HERE
     '''
-    def resize (events, shape=(299,299)):
+    def resize (events, shape=(256,256)):
         return [cv.resize(event, 
             shape, 
             interpolation = cv.INTER_CUBIC
@@ -164,14 +165,16 @@ def classify_event(image):
     '''
 
     #img = np.array(image, dtype=np.float32)
-    cv.waitKey(0)
-    img = tf.expand_dims(image, axis=0)
-    img = tf.keras.applications.inception_v3.preprocess_input(img)
 
-    res = model.predict(img)
-    predicted_class = np.argmax(res[0], axis=-1)
-
+    model.eval()
+    img = torchvision.transforms.ToTensor()(image)
+    img = torch.unsqueeze(img, 0)
+    with torch.inference_mode():
+        res = model(img)
+    
+    predicted_class = int(res.argmax(dim=1)[0])
     event = idx_to_event[predicted_class]
+    
     return event
 
 # ADDITIONAL FUNCTIONS
