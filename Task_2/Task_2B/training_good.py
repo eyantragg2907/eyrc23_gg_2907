@@ -20,13 +20,13 @@ def load_data():
     train_data = datasets.ImageFolder(
         root=TRAIN_FOLDER,
         transform=torchvision.transforms.Compose(
-            [torchvision.transforms.Resize((256, 256)), ToTensor()]
+            [torchvision.transforms.Resize((50, 50)), ToTensor()]
         ),
     )
     test_data = datasets.ImageFolder(
         root=TEST_FOLDER,
         transform=torchvision.transforms.Compose(
-            [torchvision.transforms.Resize((256, 256)), ToTensor()]
+            [torchvision.transforms.Resize((50, 50)), ToTensor()]
         ),
     )
 
@@ -63,7 +63,7 @@ def create_model(device):
             self.maxpool2 = torch.nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2))
             # initialize first (and only) set of FC => RELU layers
             self.flatten = torch.nn.Flatten()
-            self.fc1 = torch.nn.Linear(in_features=186050, out_features=500)
+            self.fc1 = torch.nn.Linear(in_features=4050, out_features=500)
             self.relu3 = torch.nn.ReLU()
             # initialize our softmax classifier
             self.fc2 = torch.nn.Linear(in_features=500, out_features=classes)
@@ -186,8 +186,9 @@ def eval_model(
 
 def save_model(model: torch.nn.Module):
     # save model
-    # TODO: change to torch.JIT saving
-    torch.save(model.state_dict(), "models/pyTorch-CNN-2710-01-1.pt")
+
+    model_scripted = torch.jit.script(model)
+    model_scripted.save(OUT_NAME)
 
 
 CLASS_NAMES = ["combat", "building", "fire", "rehab", "military"]
@@ -195,10 +196,11 @@ BATCH_SIZE = 32
 EPOCHS = 100
 TRAIN_FOLDER = "train"
 TEST_FOLDER = "test"
+OUT_NAME = "models/pyTorch-CNNv2-2810-01.pt"
 
 def main():
-    device = "mps" if torch.backends.mps.is_available() else "cpu"  # MacOS
-    # WINDOWS: device = "cuda" if torch.cuda.is_available() else "cpu"
+    # device = "mps" if torch.backends.mps.is_available() else "cpu"  # MacOS
+    device = "cuda" if torch.cuda.is_available() else "cpu" # Windows
     # OTH: device = "cpu"
     print(f"Using {device}")
     print(f"Class name mapping: {list(enumerate(CLASS_NAMES))}\n\n")
