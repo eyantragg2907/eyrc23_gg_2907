@@ -124,7 +124,7 @@ def event_identification(arena):        # NOTE: You can tweak this function in c
     '''
     ADD YOUR CODE HERE
     '''
-    def resize (events, shape=(256,256)):
+    def resize (events, shape=(50,50)):
         return [cv.resize(event, 
             shape, 
             interpolation = cv.INTER_CUBIC
