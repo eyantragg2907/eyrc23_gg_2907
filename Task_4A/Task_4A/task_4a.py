@@ -91,21 +91,22 @@ def get_points_from_aruco(frame):
     pt_A,pt_B,pt_C,pt_D = None, None, None, None
 
     for (markerCorner, markerID) in zip(corners, ids):
-	if markerID not in reqd_ids: continue
+        
+        if markerID not in reqd_ids: continue
 
-	topRight = (int(topRight[0]), int(topRight[1]))
-	bottomRight = (int(bottomRight[0]), int(bottomRight[1]))
-	bottomLeft = (int(bottomLeft[0]), int(bottomLeft[1]))
-	topLeft = (int(topLeft[0]), int(topLeft[1]))
+        topRight = (int(topRight[0]), int(topRight[1]))
+        bottomRight = (int(bottomRight[0]), int(bottomRight[1]))
+        bottomLeft = (int(bottomLeft[0]), int(bottomLeft[1]))
+        topLeft = (int(topLeft[0]), int(topLeft[1]))
 
-	if markerID == 5:
-	    pt_A = topLeft
-	elif markerID == 7:
-	    pt_B = bottomLeft
-	elif markerID == 6:
-	    pt_C = bottomRight
-	elif markerID == 4:
-	    pt_D = topRight
+        if markerID == 5:
+            pt_A = topLeft
+        elif markerID == 7:
+            pt_B = bottomLeft
+        elif markerID == 6:
+            pt_C = bottomRight
+        elif markerID == 4:
+            pt_D = topRight
     return pt_A, pt_B, pt_C, pt_D
 
 def get_aruco_data(frame):
@@ -129,12 +130,12 @@ def get_pts_from_frame(frame):
 def get_event_images(frame, pts):
     events = []
     for p in pts:
-	events.append(frame[p[0,0]:p[0,1],p[1,0]:p[1,1]])
+        events.append(frame[p[0,0]:p[0,1],p[1,0]:p[1,1]])
     return events
 
 def draw_rects(frame, pts):
     for p in pts:
-	frame = cv2.rectangle(frame,(p[1,0],p[0,0]),(p[1,1],p[0,1]),(0,255,0),2)
+        frame = cv2.rectangle(frame,(p[1,0],p[0,0]),(p[1,1],p[0,1]),(0,255,0),2)
     return frame
 
 ##############################################################
