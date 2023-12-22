@@ -24,7 +24,8 @@
                                
 import cv2 
 import numpy as np
-import tf
+import tensorflow as tf
+import sys
 
 ##############################################################
 
@@ -55,8 +56,8 @@ def classify_event(image):
     return event
 
 def modify_and_get_events(frame):
-    frame = transform_frame(frame)
-    pts = get_pts_from_frame(frame)
+    frame, side = transform_frame(frame)
+    pts = get_pts_from_frame(frame, side)
     events = get_event_images(frame, pts)
     modified_frame = draw_rects(frame, pts)
 
@@ -76,14 +77,14 @@ def transform_frame(frame):
     s = min(maxHeight, maxWidth)
     input_pts = np.float32([pt_A, pt_B, pt_C, pt_D])
     output_pts = np.float32([[0, 0],
-		    [0, s - 1],
-		    [s - 1, s - 1],
-		    [s - 1, 0]])
+            [0, s - 1],
+            [s - 1, s - 1],
+            [s - 1, 0]])
     M = cv2.getPerspectiveTransform(input_pts,output_pts)
-    out = cv2.warpPerspective(image,M,(maxWidth, maxHeight),flags=cv2.INTER_LINEAR)
+    out = cv2.warpPerspective(frame,M,(maxWidth, maxHeight),flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
 
-    return out
+    return out, s
 
 def get_points_from_aruco(frame):
     corners, ids, _, = get_aruco_data(frame)
@@ -91,22 +92,25 @@ def get_points_from_aruco(frame):
     pt_A,pt_B,pt_C,pt_D = None, None, None, None
 
     for (markerCorner, markerID) in zip(corners, ids):
-	if markerID not in reqd_ids: continue
+        if markerID not in reqd_ids: continue
 
-	topRight = (int(topRight[0]), int(topRight[1]))
-	bottomRight = (int(bottomRight[0]), int(bottomRight[1]))
-	bottomLeft = (int(bottomLeft[0]), int(bottomLeft[1]))
-	topLeft = (int(topLeft[0]), int(topLeft[1]))
+        corners = markerCorner.reshape((4, 2))
+        (topLeft, topRight, bottomRight, bottomLeft) = corners
 
-	if markerID == 5:
-	    pt_A = topLeft
-	elif markerID == 7:
-	    pt_B = bottomLeft
-	elif markerID == 6:
-	    pt_C = bottomRight
-	elif markerID == 4:
-	    pt_D = topRight
-    return pt_A, pt_B, pt_C, pt_D
+        topRight = (int(topRight[0]), int(topRight[1]))
+        bottomRight = (int(bottomRight[0]), int(bottomRight[1]))
+        bottomLeft = (int(bottomLeft[0]), int(bottomLeft[1]))
+        topLeft = (int(topLeft[0]), int(topLeft[1]))
+
+        if markerID == 5:
+            pt_A = topLeft
+        elif markerID == 7:
+            pt_B = bottomLeft
+        elif markerID == 6:
+            pt_C = bottomRight
+        elif markerID == 4:
+            pt_D = topRight
+        return pt_A, pt_B, pt_C, pt_D
 
 def get_aruco_data(frame):
     dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
@@ -116,7 +120,7 @@ def get_aruco_data(frame):
     c, i, r = detector.detectMarkers(frame)
     return c, i.flatten(), r
 
-def get_pts_from_frame(frame):
+def get_pts_from_frame(frame, s):
     S = 937
     Apts = (np.array([[811/S,887/S],[194/S,269/S]])*s).astype(int)
     Bpts = (np.array([[628/S,705/S],[620/S,695/S]])*s).astype(int)
@@ -129,12 +133,12 @@ def get_pts_from_frame(frame):
 def get_event_images(frame, pts):
     events = []
     for p in pts:
-	events.append(frame[p[0,0]:p[0,1],p[1,0]:p[1,1]])
+        events.append(frame[p[0,0]:p[0,1],p[1,0]:p[1,1]])
     return events
 
 def draw_rects(frame, pts):
     for p in pts:
-	frame = cv2.rectangle(frame,(p[1,0],p[0,0]),(p[1,1],p[0,1]),(0,255,0),2)
+        frame = cv2.rectangle(frame,(p[1,0],p[0,0]),(p[1,1],p[0,1]),(0,255,0),2)
     return frame
 
 ##############################################################
@@ -164,18 +168,18 @@ def task_4a_return():
     video = cv2.VideoCapture(0)
 
     while True:
-	_, frame = video.read()
-	if len(sys.argv) > 1: frame = cv2.imread("arena.jpeg")
-	frame, events = modify_and_get_events(frame)
+        _, frame = video.read()
+        if len(sys.argv) > 1: frame = cv2.imread("arena.jpeg")
+        frame, events = modify_and_get_events(frame)
 
-	for key,img in zip("ABCDE",events):
-	    identified_labels[key] = classify_event(img)
-	cv2.imshow('Arena Feed', frame)
+        for key,img in zip("ABCDE",events):
+            identified_labels[key] = classify_event(img)
+        cv2.imshow('Arena Feed', frame)
 
-	if cv2.waitKey(1) & 0xFF == ord('q'): break
+        if cv2.waitKey(1) & 0xFF == ord('q'): break
 
-    video.release()
-    cv2.destroyAllWindows()
+        video.release()
+        cv2.destroyAllWindows()
 ##################################################
     return identified_labels
 
