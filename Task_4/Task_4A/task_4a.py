@@ -65,6 +65,7 @@ def modify_and_get_events(frame):
 
 def transform_frame(frame):
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
+
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
     width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
     maxWidth = max(int(width_AD), int(width_BC))
@@ -90,7 +91,7 @@ def get_points_from_aruco(frame):
     corners, ids, _, = get_aruco_data(frame)
     reqd_ids = {4,5,6,7}
     pt_A,pt_B,pt_C,pt_D = None, None, None, None
-
+ 
     for (markerCorner, markerID) in zip(corners, ids):
         if markerID not in reqd_ids: continue
 
@@ -118,6 +119,8 @@ def get_aruco_data(frame):
     detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 
     c, i, r = detector.detectMarkers(frame)
+
+    if len(c) == 0: raise Exception("No Aruco Markers Found")
     return c, i.flatten(), r
 
 def get_pts_from_frame(frame, s):
