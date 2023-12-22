@@ -10,6 +10,7 @@ cap = cv2.VideoCapture(CAMERA_ID)
 ret, frame = cap.read()
 
 # save the photo
-cv2.imwrite(f"snapshot_{datetime.now().isoformat}.png", frame)
+addr = f"temp_snap_{str(datetime.now().timestamp()).replace('.', '-')}.png"
+cv2.imwrite(addr, frame)
 cap.release()
 
