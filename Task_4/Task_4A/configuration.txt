@@ -1,0 +1,20 @@
+test_set_1
+  ├── A = Fire
+  ├── B = Destroyed Buildings
+  ├── C = Humanitarian Aid and rehabilitation
+  ├── D = Military Vehicles
+  ├── E = Combat
+
+test_set_2
+  ├── A = Humanitarian Aid and rehabilitation
+  ├── B = Destroyed Buildings
+  ├── C = Military Vehicles
+  ├── D = Combat
+  ├── E = Fire
+
+eval_set
+  ├── A = Military Vehicles
+  ├── B = Humanitarian Aid and rehabilitation
+  ├── C = Fire
+  ├── D = Destroyed Buildings
+  ├── E = Combat
