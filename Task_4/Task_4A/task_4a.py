@@ -111,7 +111,7 @@ def get_points_from_aruco(frame):
             pt_C = bottomRight
         elif markerID == 4:
             pt_D = topRight
-        return pt_A, pt_B, pt_C, pt_D
+    return pt_A, pt_B, pt_C, pt_D
 
 def get_aruco_data(frame):
     dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
@@ -168,7 +168,7 @@ def task_4a_return():
     identified_labels = {}  
     
 ##############	ADD YOUR CODE HERE	##############
-    video = cv2.VideoCapture(0)
+    video = cv2.VideoCapture(1)
 
     while True:
         _, frame = video.read()
