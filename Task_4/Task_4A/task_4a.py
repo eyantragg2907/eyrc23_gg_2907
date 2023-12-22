@@ -45,7 +45,7 @@ def classify_event(image):
     '''
     ADD YOUR CODE HERE
     '''
-    img = tf.keras.preprocessing.image.load_img(image, target_size=(180, 180))
+    img = tf.image.resize(image, (180, 180))
     img = np.array(img, dtype=np.float32)
     img = tf.expand_dims(img, axis=0)
     prediction = model.predict(img)
@@ -66,6 +66,8 @@ def modify_and_get_events(frame):
 def transform_frame(frame):
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
 
+    print(f"{pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
+
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
     width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
     maxWidth = max(int(width_AD), int(width_BC))
@@ -84,6 +86,8 @@ def transform_frame(frame):
     M = cv2.getPerspectiveTransform(input_pts,output_pts)
     out = cv2.warpPerspective(frame,M,(maxWidth, maxHeight),flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
+    # out = cv2.resize(out, (1024,1024), interpolation = cv2.INTER_AREA)
+
 
     return out, s
 
@@ -94,6 +98,8 @@ def get_points_from_aruco(frame):
  
     for (markerCorner, markerID) in zip(corners, ids):
         if markerID not in reqd_ids: continue
+
+        print(f"{markerID=}\n")
 
         corners = markerCorner.reshape((4, 2))
         (topLeft, topRight, bottomRight, bottomLeft) = corners
