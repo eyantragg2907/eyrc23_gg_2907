@@ -100,6 +100,18 @@ def transform_frame(frame):
 
     return out, s
 
+def increase_brightness(img, value=100):
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    h, s, v = cv2.split(hsv)
+
+    lim = 255 - value
+    v[v > lim] = 255
+    v[v <= lim] += value
+
+    final_hsv = cv2.merge((h, s, v))
+    img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
+    
+    return img
 
 def get_points_from_aruco(frame):
     (
@@ -200,8 +212,12 @@ def task_4a_return():
     num_of_frames_skip = 100
     for i in range(num_of_frames_skip):
         ret, frame = video.read()
+    c = 0
     while True:
         _, frame = video.read()
+        frame = increase_brightness(frame, value=30)
+        if c == 0:
+            cv2.imwrite("firstframe.jpg", frame)
         if len(sys.argv) > 1:
             frame = cv2.imread("arena.jpg")
         frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
@@ -210,7 +226,7 @@ def task_4a_return():
         for key, img in zip("ABCDE", events):
             identified_labels[key] = classify_event(img)
         cv2.imshow("Arena Feed", frame)
-
+        c += 1
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
 
