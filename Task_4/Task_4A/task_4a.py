@@ -228,10 +228,9 @@ def task_4a_return():
         cv2.imshow("Arena Feed", frame)
         c += 1
         if cv2.waitKey(1) & 0xFF == ord("q"):
+            video.release()
+            cv2.destroyAllWindows()
             break
-
-    video.release()
-    cv2.destroyAllWindows()
     ##################################################
     return identified_labels
 
