@@ -58,10 +58,11 @@ def classify_event(image):
     """
     ADD YOUR CODE HERE
     """
+    addr = f"beforerezie_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
+    wr = cv2.imwrite(addr, image)
     img = tf.image.resize(image, (180, 180))
     addr = f"temp_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
     wr = cv2.imwrite(addr, img.numpy())
-    print(wr)
     img = np.array(img, dtype=np.float32)
     img = tf.expand_dims(img, axis=0)
     prediction = model.predict(img)
