@@ -200,22 +200,25 @@ def task_4a_return():
     num_of_frames_skip = 100
     for i in range(num_of_frames_skip):
         ret, frame = video.read()
+    # while True:
+    ret, frame = video.read()
+    if len(sys.argv) > 1:
+        frame = cv2.imread("arena.jpg")
+    # if ret is True: # for saving the frame 
+    #     addr = f"temp_snap_{str(datetime.now().timestamp()).replace('.', '-')}.png"
+    #     cv2.imwrite(addr, frame)
+    frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
+    frame, events = modify_and_get_events(frame)
+
+    for key, img in zip("ABCDE", events):
+        identified_labels[key] = classify_event(img)
     while True:
-        _, frame = video.read()
-        if len(sys.argv) > 1:
-            frame = cv2.imread("arena.jpg")
-        frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
-        frame, events = modify_and_get_events(frame)
-
-        for key, img in zip("ABCDE", events):
-            identified_labels[key] = classify_event(img)
         cv2.imshow("Arena Feed", frame)
-
+        # time.sleep(10)
         if cv2.waitKey(1) & 0xFF == ord("q"):
+            video.release()
+            cv2.destroyAllWindows()
             break
-
-    video.release()
-    cv2.destroyAllWindows()
     ##################################################
     return identified_labels
 

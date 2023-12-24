@@ -45,7 +45,6 @@ def read_csv(csv_name):
         reader = csv.reader(f)
         for row in reader:
             lat_lon[row[0]] = [row[1], row[2]]
-    print(lat_lon)
     return lat_lon
 
 def write_csv(loc, csv_name):
