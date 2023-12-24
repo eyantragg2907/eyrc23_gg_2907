@@ -23,7 +23,7 @@
 ####################### IMPORT MODULES #######################
 
 import cv2
-import cv2.aruco as arucg 
+import cv2.aruco as aruco
 import numpy as np
 import tensorflow as tf
 import sys
@@ -33,7 +33,7 @@ import time
 import pandas as pd
 
 ##############################################################
-OUT_FILE_LOC = "live_data.csv"
+OUT_FILE_LOC = "live_location.csv"
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
@@ -107,14 +107,19 @@ def get_aruco_data(frame):
     return c, i.flatten(), r
 
 def get_pxcoords(id,ids,corners):
-    index= np.where(ids == id)[0][0]
-    coords = np.mean(corners[index].reshape((4, 2)), axis=0)
-    return np.array([ int(x) for x in coords])
+    try:
+        index= np.where(ids == id)[0][0]
+        coords = np.mean(corners[index].reshape((4, 2)), axis=0)
+        return np.array([ int(x) for x in coords])
+    except:
+        return []
 
 def get_nearestmarker(id,ids,corners):
     mindist= float('inf')
     closestmarker = None
     coords1 = get_pxcoords(id,ids,corners)
+    if coords1 == []: 
+        return None
     for (markerCorner, markerID) in zip(corners, ids):
         if markerID != 97:
             corners = markerCorner.reshape((4, 2))
@@ -128,10 +133,16 @@ def get_nearestmarker(id,ids,corners):
 def get_robot_coords(frame):
     corners, ids, _ = get_aruco_data(frame)    
     NearestMarker = get_nearestmarker(97,ids,corners)
-    coordinate = arucolat_long.loc[NearestMarker]
-    print(f'Nearest Marker ID: {NearestMarker} and Nearest marker lat_long: {coordinate}')
-    write_csv(coordinate, OUT_FILE_LOC)
-    return coordinate
+    if NearestMarker == None:
+        return None
+    try:
+        coordinate = arucolat_long.loc[NearestMarker]
+        print(f'Nearest Marker ID: {NearestMarker} and Nearest marker lat_long: {coordinate}')
+        write_csv(coordinate, OUT_FILE_LOC)
+        return coordinate
+    except:
+        print("NO lat long from this marker!!")
+        return None
 
 def write_csv(loc, csv_name):
 
@@ -148,10 +159,15 @@ def write_csv(loc, csv_name):
 ###############	Main Function	#################
 if __name__ == "__main__":
     arucolat_long=pd.read_csv("lat_long.csv",index_col="id")
-    dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
-    parameters = cv2.aruco.DetectorParameters()
-    detector = cv2.aruco.ArucoDetector(dictionary, parameters)
-    video = cv2.VideoCapture(1)
+    dictionary = aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
+    parameters = aruco.DetectorParameters()
+    detector = aruco.ArucoDetector(dictionary, parameters)
+    if sys.platform == "win32":
+        video = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+        video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+    else:
+        video = cv2.VideoCapture(1)
     num_of_frames_skip = 100
     for i in range(num_of_frames_skip):
         ret, frame = video.read()
@@ -170,6 +186,7 @@ if __name__ == "__main__":
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
+        time.sleep(0.25)
 
     video.release()
     cv2.destroyAllWindows()
