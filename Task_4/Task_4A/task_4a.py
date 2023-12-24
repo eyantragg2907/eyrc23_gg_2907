@@ -35,10 +35,10 @@ from datetime import datetime
 
 classmap = [
     "combat",
-    "destroyedbuilding",
+    "destroyed_buildings",
     "fire",
-    "humanitarianaid",
-    "militaryvehicles",
+    "human_aid_rehabilitation",
+    "military_vehicles",
 ]
 modelpath = r"model.h5"
 model = tf.keras.models.load_model(modelpath, compile=False)
@@ -189,7 +189,7 @@ def add_rects_labels(frame, pts, labels):
             str(l),
             (p[1, 0], p[0, 0] - 15),
             cv2.FONT_HERSHEY_COMPLEX,
-            0.9,
+            0.8,
             (0, 255, 0),
             2,
         )
