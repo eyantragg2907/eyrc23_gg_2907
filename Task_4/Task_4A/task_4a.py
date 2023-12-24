@@ -48,6 +48,10 @@ model.compile(
     metrics=["accuracy"],
 )
 
+dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
+parameters = cv2.aruco.DetectorParameters()
+detector = cv2.aruco.ArucoDetector(dictionary, parameters)
+
 
 def classify_event(image):
     global classmap, model
@@ -149,10 +153,7 @@ def get_points_from_aruco(frame):
 
 
 def get_aruco_data(frame):
-    dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
-    parameters = cv2.aruco.DetectorParameters()
-    detector = cv2.aruco.ArucoDetector(dictionary, parameters)
-
+    global detector
     c, i, r = detector.detectMarkers(frame)
 
     if len(c) == 0:
