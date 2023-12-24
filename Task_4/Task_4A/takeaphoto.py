@@ -5,7 +5,7 @@ from datetime import datetime
 num_of_frames_skip = 100
 # Initialize the camera
 cap = cv2.VideoCapture(CAMERA_ID)
-if not cap.open(0):
+if not cap.open(CAMERA_ID):
     print("CAMERA NOT OPEN. ERROR")
 else:
     # take a photo
