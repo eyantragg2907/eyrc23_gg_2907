@@ -208,25 +208,33 @@ def task_4a_return():
     identified_labels = {}
 
     ##############	ADD YOUR CODE HERE	##############
-    video = cv2.VideoCapture(1)
+    if sys.platform == "win32":
+        video = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+        video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+    else:
+        video = cv2.VideoCapture(1)
     num_of_frames_skip = 100
     for i in range(num_of_frames_skip):
         ret, frame = video.read()
-    # c = 0
+
     ret, frame = video.read()
-    # frame = increase_brightness(frame, value=30)
-    # if c == 0:
-    #     cv2.imwrite("firstframe.jpg", frame)
+    if ret is True:
+        frame = increase_brightness(frame, value=30)
+        cv2.imwrite("firstframe.jpg", frame)
+    else:
+        raise Exception("No frame found")
     if len(sys.argv) > 1:
         frame = cv2.imread("arena.jpg")
     # if ret is True: # for saving the frame 
     #     addr = f"temp_snap_{str(datetime.now().timestamp()).replace('.', '-')}.png"
     #     cv2.imwrite(addr, frame)
-    frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
+    # frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
     frame, events = modify_and_get_events(frame)
 
     for key, img in zip("ABCDE", events):
         identified_labels[key] = classify_event(img)
+    
     while True:
         cv2.imshow("Arena Feed", frame)
         if cv2.waitKey(1) & 0xFF == ord("q"):
