@@ -23,12 +23,15 @@
 ####################### IMPORT MODULES #######################
 
 import cv2
+import cv2.aruco as arucg 
 import numpy as np
 import tensorflow as tf
 import sys
 from datetime import datetime
 import csv
 import time
+import pandas as pd
+
 ##############################################################
 OUT_FILE_LOC = "live_data.csv"
 
@@ -36,6 +39,7 @@ OUT_FILE_LOC = "live_data.csv"
 
 def update_position(frame):
     frame, side = transform_frame(frame)
+    get_robot_coords(frame)
     return frame
 
 
@@ -96,10 +100,6 @@ def get_points_from_aruco(frame):
     return pt_A, pt_B, pt_C, pt_D
 
 def get_aruco_data(frame):
-    dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
-    parameters = cv2.aruco.DetectorParameters()
-    detector = cv2.aruco.ArucoDetector(dictionary, parameters)
-
     c, i, r = detector.detectMarkers(frame)
 
     if len(c) == 0:
@@ -127,7 +127,6 @@ def get_nearestmarker(id,ids,corners):
 
 def get_robot_coords(frame):
     corners, ids, _ = get_aruco_data(frame)    
-    robotpxcoords = get_pxcoords(97,ids,corners)
     NearestMarker = get_nearestmarker(97,ids,corners)
     coordinate = arucolat_long.loc[NearestMarker]
     print(f'Nearest Marker ID: {NearestMarker} and Nearest marker lat_long: {coordinate}')
@@ -144,11 +143,14 @@ def write_csv(loc, csv_name):
         writer.writerow(["lat", "lon"])
         writer.writerow(loc)
 
-##############################################################
 
 
-def task_4b_return():
-    ##############	ADD YOUR CODE HERE	##############
+###############	Main Function	#################
+if __name__ == "__main__":
+    arucolat_long=pd.read_csv("lat_long.csv",index_col="id")
+    dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
+    parameters = cv2.aruco.DetectorParameters()
+    detector = cv2.aruco.ArucoDetector(dictionary, parameters)
     video = cv2.VideoCapture(1)
     num_of_frames_skip = 100
     for i in range(num_of_frames_skip):
@@ -161,7 +163,9 @@ def task_4b_return():
         #     addr = f"temp_snap_{str(datetime.now().timestamp()).replace('.', '-')}.png"
         #     cv2.imwrite(addr, frame)
         frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
-        frame, events = update_position(frame)
+        frame = update_position(frame)
+        corners, ids, rejected = detector.detectMarkers(frame)
+        aruco.drawDetectedMarkers(frame, corners, ids)
         cv2.imshow("Arena Feed", frame)
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
@@ -169,9 +173,3 @@ def task_4b_return():
 
     video.release()
     cv2.destroyAllWindows()
-    ##################################################
-
-
-###############	Main Function	#################
-if __name__ == "__main__":
-    task_4b_return()
