@@ -27,19 +27,16 @@ import numpy as np
 import tensorflow as tf
 import sys
 from datetime import datetime
-
+import csv
+import time
 ##############################################################
-
+OUT_FILE_LOC = "live_data.csv"
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
-def modify_and_get_events(frame):
+def update_position(frame):
     frame, side = transform_frame(frame)
-    pts = get_pts_from_frame(frame, side)
-    events = get_event_images(frame, pts)
-    modified_frame = draw_rects(frame, pts)
-
-    return modified_frame, events
+    return frame
 
 
 def transform_frame(frame):
@@ -64,7 +61,6 @@ def transform_frame(frame):
     # out = cv2.resize(out, (1024,1024), interpolation = cv2.INTER_AREA)
 
     return out, s
-
 
 def get_points_from_aruco(frame):
     (
@@ -99,7 +95,6 @@ def get_points_from_aruco(frame):
             pt_D = topRight
     return pt_A, pt_B, pt_C, pt_D
 
-
 def get_aruco_data(frame):
     dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
     parameters = cv2.aruco.DetectorParameters()
@@ -110,32 +105,6 @@ def get_aruco_data(frame):
     if len(c) == 0:
         raise Exception("No Aruco Markers Found")
     return c, i.flatten(), r
-
-
-def get_pts_from_frame(frame, s):
-    S = 937
-    Apts = (np.array([[811 / S, 887 / S], [194 / S, 269 / S]]) * s).astype(int)
-    Bpts = (np.array([[628 / S, 705 / S], [620 / S, 695 / S]]) * s).astype(int)
-    Cpts = (np.array([[444 / S, 519 / S], [628 / S, 701 / S]]) * s).astype(int)
-    Dpts = (np.array([[440 / S, 516 / S], [183 / S, 260 / S]]) * s).astype(int)
-    Epts = (np.array([[136 / S, 212 / S], [200 / S, 276 / S]]) * s).astype(int)
-
-    return (Apts, Bpts, Cpts, Dpts, Epts)
-
-
-def get_event_images(frame, pts):
-    events = []
-    for p in pts:
-        events.append(frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]])
-    return events
-
-
-def draw_rects(frame, pts):
-    for p in pts:
-        frame = cv2.rectangle(
-            frame, (p[1, 0], p[0, 0]), (p[1, 1], p[0, 1]), (0, 255, 0), 2
-        )
-    return frame
 
 def get_pxcoords(id,ids,corners):
     index= np.where(ids == id)[0][0]
@@ -159,32 +128,26 @@ def get_nearestmarker(id,ids,corners):
 def get_robot_coords(frame):
     corners, ids, _ = get_aruco_data(frame)    
     robotpxcoords = get_pxcoords(97,ids,corners)
-    # print(f'ID: {97}, marker center in px: {robotpxcoords[0],robotpxcoords[1]},marker center in lat_long: {arucolat_long.loc[97]}')
     NearestMarker = get_nearestmarker(97,ids,corners)
-    return arucolat_long.loc[NearestMarker]
+    coordinate = arucolat_long.loc[NearestMarker]
+    print(f'Nearest Marker ID: {NearestMarker} and Nearest marker lat_long: {coordinate}')
+    write_csv(coordinate, OUT_FILE_LOC)
+    return coordinate
+
+def write_csv(loc, csv_name):
+
+    # open csv (csv_name)
+    # write column names "lat", "lon"
+    # write loc ([lat, lon]) in respective columns
+    with open(csv_name, 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow(["lat", "lon"])
+        writer.writerow(loc)
 
 ##############################################################
 
 
-def task_4a_return():
-    """
-    Purpose:
-    ---
-    Only for returning the final dictionary variable
-
-    Arguments:
-    ---
-    You are not allowed to define any input arguments for this function. You can
-    return the dictionary from a user-defined function and just call the
-    function here
-
-    Returns:
-    ---
-    `identified_labels` : { dictionary }
-        dictionary containing the labels of the events detected
-    """
-    identified_labels = {}
-
+def task_4b_return():
     ##############	ADD YOUR CODE HERE	##############
     video = cv2.VideoCapture(1)
     num_of_frames_skip = 100
@@ -198,10 +161,7 @@ def task_4a_return():
         #     addr = f"temp_snap_{str(datetime.now().timestamp()).replace('.', '-')}.png"
         #     cv2.imwrite(addr, frame)
         frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
-        frame, events = modify_and_get_events(frame)
-
-        # for key, img in zip("ABCDE", events):
-        #     identified_labels[key] = classify_event(img)
+        frame, events = update_position(frame)
         cv2.imshow("Arena Feed", frame)
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
@@ -210,10 +170,8 @@ def task_4a_return():
     video.release()
     cv2.destroyAllWindows()
     ##################################################
-    return identified_labels
 
 
 ###############	Main Function	#################
 if __name__ == "__main__":
-    identified_labels = task_4a_return()
-    print(identified_labels)
+    task_4b_return()
