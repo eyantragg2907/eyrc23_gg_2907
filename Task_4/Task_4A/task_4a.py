@@ -68,13 +68,12 @@ def classify_event(image):
     return event
 
 
-def modify_and_get_events(frame):
+def get_events(frame):
     frame, side = transform_frame(frame)
     pts = get_pts_from_frame(frame, side)
     events = get_event_images(frame, pts)
-    modified_frame = draw_rects(frame, pts)
 
-    return modified_frame, events
+    return frame, pts, events
 
 
 def transform_frame(frame):
@@ -100,6 +99,7 @@ def transform_frame(frame):
 
     return out, s
 
+
 def increase_brightness(img, value=100):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     h, s, v = cv2.split(hsv)
@@ -110,8 +110,9 @@ def increase_brightness(img, value=100):
 
     final_hsv = cv2.merge((h, s, v))
     img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
-    
+
     return img
+
 
 def get_points_from_aruco(frame):
     (
@@ -177,10 +178,20 @@ def get_event_images(frame, pts):
     return events
 
 
-def draw_rects(frame, pts):
-    for p in pts:
+def add_rects_labels(frame, pts, labels):
+    for p, l in zip(pts, labels):
+        print(p, l)
         frame = cv2.rectangle(
             frame, (p[1, 0], p[0, 0]), (p[1, 1], p[0, 1]), (0, 255, 0), 2
+        )
+        frame = cv2.putText(
+            frame,
+            str(l),
+            (p[1, 0], p[0, 0] - 15),
+            cv2.FONT_HERSHEY_COMPLEX,
+            0.9,
+            (0, 255, 0),
+            2,
         )
     return frame
 
@@ -212,31 +223,33 @@ def task_4a_return():
     num_of_frames_skip = 100
     for i in range(num_of_frames_skip):
         ret, frame = video.read()
-    # c = 0
-    ret, frame = video.read()
-    # frame = increase_brightness(frame, value=30)
-    # if c == 0:
-    #     cv2.imwrite("firstframe.jpg", frame)
-    if len(sys.argv) > 1:
-        frame = cv2.imread("arena.jpg")
-    # if ret is True: # for saving the frame 
-    #     addr = f"temp_snap_{str(datetime.now().timestamp()).replace('.', '-')}.png"
-    #     cv2.imwrite(addr, frame)
-    frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
-    frame, events = modify_and_get_events(frame)
-
-    for key, img in zip("ABCDE", events):
-        identified_labels[key] = classify_event(img)
+    c = 0
     while True:
+        _, frame = video.read()
+        if len(sys.argv) > 1:
+            frame = cv2.imread("arena.jpeg")
+        frame = increase_brightness(frame, value=30)
+        if c == 0:
+            cv2.imwrite("firstframe.jpg", frame)
+        frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
+        frame, pts, events = get_events(frame)
+
+        labels = []
+        for key, img in zip("ABCDE", events):
+            label = classify_event(img)
+            labels.append(label)
+            identified_labels[key] = label
+
+        frame = add_rects_labels(frame, pts, labels)
         cv2.imshow("Arena Feed", frame)
+        c += 1
         if cv2.waitKey(1) & 0xFF == ord("q"):
             video.release()
             cv2.destroyAllWindows()
             break
-    
-
     ##################################################
     return identified_labels
+
 
 ###############	Main Function	#################
 if __name__ == "__main__":
