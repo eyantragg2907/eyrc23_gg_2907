@@ -32,13 +32,14 @@ from datetime import datetime
 
 
 ################# ADD UTILITY FUNCTIONS HERE #################
+DEBUG = True
 
 classmap = [
     "combat",
-    "destroyedbuilding",
+    "destroyed_buildings",
     "fire",
-    "humanitarianaid",
-    "militaryvehicles",
+    "human_aid_rehabilitation",
+    "military_vehicles",
 ]
 modelpath = r"model.h5"
 model = tf.keras.models.load_model(modelpath, compile=False)
@@ -48,16 +49,24 @@ model.compile(
     metrics=["accuracy"],
 )
 
+dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
+parameters = cv2.aruco.DetectorParameters()
+detector = cv2.aruco.ArucoDetector(dictionary, parameters)
+
 
 def classify_event(image):
     global classmap, model
     """
     ADD YOUR CODE HERE
     """
+
+    if DEBUG:
+        addr = f"temp_tomodelbeforeresize_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
+        cv2.imwrite(addr, image)
     img = tf.image.resize(image, (180, 180))
-    addr = f"temp_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
-    wr = cv2.imwrite(addr, img.numpy())
-    print(wr)
+    if DEBUG:
+        addr = f"temp_tomodelafterresize_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
+        cv2.imwrite(addr, img.numpy())
     img = np.array(img, dtype=np.float32)
     img = tf.expand_dims(img, axis=0)
     prediction = model.predict(img)
@@ -68,19 +77,19 @@ def classify_event(image):
     return event
 
 
-def modify_and_get_events(frame):
+def get_events(frame):
     frame, side = transform_frame(frame)
     pts = get_pts_from_frame(frame, side)
     events = get_event_images(frame, pts)
-    modified_frame = draw_rects(frame, pts)
 
-    return modified_frame, events
+    return frame, pts, events
 
 
 def transform_frame(frame):
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
 
-    print(f"{pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
+    if DEBUG:
+        print(f"{pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
 
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
     width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
@@ -100,6 +109,7 @@ def transform_frame(frame):
 
     return out, s
 
+
 def increase_brightness(img, value=100):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     h, s, v = cv2.split(hsv)
@@ -110,8 +120,9 @@ def increase_brightness(img, value=100):
 
     final_hsv = cv2.merge((h, s, v))
     img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
-    
+
     return img
+
 
 def get_points_from_aruco(frame):
     (
@@ -126,7 +137,7 @@ def get_points_from_aruco(frame):
         if markerID not in reqd_ids:
             continue
 
-        print(f"{markerID=}\n")
+        if DEBUG: print(f"{markerID=}\n")
 
         corners = markerCorner.reshape((4, 2))
         (topLeft, topRight, bottomRight, bottomLeft) = corners
@@ -148,10 +159,7 @@ def get_points_from_aruco(frame):
 
 
 def get_aruco_data(frame):
-    dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
-    parameters = cv2.aruco.DetectorParameters()
-    detector = cv2.aruco.ArucoDetector(dictionary, parameters)
-
+    global detector
     c, i, r = detector.detectMarkers(frame)
 
     if len(c) == 0:
@@ -177,10 +185,19 @@ def get_event_images(frame, pts):
     return events
 
 
-def draw_rects(frame, pts):
-    for p in pts:
+def add_rects_labels(frame, pts, labels):
+    for p, l in zip(pts, labels):
         frame = cv2.rectangle(
             frame, (p[1, 0], p[0, 0]), (p[1, 1], p[0, 1]), (0, 255, 0), 2
+        )
+        frame = cv2.putText(
+            frame,
+            str(l),
+            (p[1, 0], p[0, 0] - 15),
+            cv2.FONT_HERSHEY_COMPLEX,
+            0.8,
+            (0, 255, 0),
+            2,
         )
     return frame
 
@@ -208,35 +225,45 @@ def task_4a_return():
     identified_labels = {}
 
     ##############	ADD YOUR CODE HERE	##############
-    video = cv2.VideoCapture(1)
+    if sys.platform == "win32":
+        video = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+        video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+    else:
+        video = cv2.VideoCapture(1)
     num_of_frames_skip = 100
     for i in range(num_of_frames_skip):
         ret, frame = video.read()
-    # c = 0
+
     ret, frame = video.read()
-    # frame = increase_brightness(frame, value=30)
-    # if c == 0:
-    #     cv2.imwrite("firstframe.jpg", frame)
+    if ret is True:
+        frame = increase_brightness(frame, value=30)
+        cv2.imwrite("firstframe.jpg", frame)
+    else:
+        raise Exception("No frame found")
     if len(sys.argv) > 1:
         frame = cv2.imread("arena.jpg")
-    # if ret is True: # for saving the frame 
-    #     addr = f"temp_snap_{str(datetime.now().timestamp()).replace('.', '-')}.png"
-    #     cv2.imwrite(addr, frame)
-    frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
-    frame, events = modify_and_get_events(frame)
 
+    frame, pts, events = get_events(frame)
+
+    labels = []
     for key, img in zip("ABCDE", events):
-        identified_labels[key] = classify_event(img)
+        label = classify_event(img)
+        labels.append(label)
+        identified_labels[key] = label
+
+    frame = add_rects_labels(frame, pts, labels)
+    video.release()
+    cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
+    frametoshow = cv2.resize(frame, (480, 480))
+    cv2.imshow("Arena Feed", frametoshow)
     while True:
-        cv2.imshow("Arena Feed", frame)
         if cv2.waitKey(1) & 0xFF == ord("q"):
-            video.release()
             cv2.destroyAllWindows()
             break
-    
-
     ##################################################
     return identified_labels
+
 
 ###############	Main Function	#################
 if __name__ == "__main__":
