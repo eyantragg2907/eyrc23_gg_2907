@@ -1,4 +1,4 @@
-CAMERA_ID = 1 # 0 for internal, 1 for external as a basis
+CAMERA_ID = 0 # 0 for internal, 1 for external as a basis
 
 import cv2
 from datetime import datetime

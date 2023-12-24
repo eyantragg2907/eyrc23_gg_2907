@@ -197,7 +197,9 @@ def task_4a_return():
 
     ##############	ADD YOUR CODE HERE	##############
     video = cv2.VideoCapture(1)
-
+    num_of_frames_skip = 100
+    for i in range(num_of_frames_skip):
+        ret, frame = video.read()
     while True:
         _, frame = video.read()
         if len(sys.argv) > 1:
