@@ -231,6 +231,7 @@ def task_4a_return():
         video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
     else:
         video = cv2.VideoCapture(1)
+    
     num_of_frames_skip = 100
     for i in range(num_of_frames_skip):
         ret, frame = video.read()
