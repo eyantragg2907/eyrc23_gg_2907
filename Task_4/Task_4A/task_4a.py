@@ -41,8 +41,8 @@ classmap = [
     "human_aid_rehabilitation",
     "military_vehicles",
 ]
-modelpath = r"model_new_1.h5"
-modelpath = "FINAL_751PM_25DEC_PATCH01.h5"
+
+modelpath = "model.h5"
 model = tf.keras.models.load_model(modelpath, compile=False)
 model.compile(
     optimizer="adam",
@@ -55,6 +55,7 @@ parameters = cv2.aruco.DetectorParameters()
 detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 filenames = "A.png B.png C.png D.png E.png".split()
 
+
 def classify_event(image):
     global classmap, model
     """
@@ -66,7 +67,7 @@ def classify_event(image):
         addr = f"temp_tomodelafterresize_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
         cv2.imwrite(addr, img.numpy())
     """
-    
+
     img = np.array(img, dtype=np.float32)
     print(img.shape)
     img = tf.expand_dims(img, axis=0)
@@ -139,7 +140,8 @@ def get_points_from_aruco(frame):
         if markerID not in reqd_ids:
             continue
 
-        if DEBUG: print(f"{markerID=}\n")
+        if DEBUG:
+            print(f"{markerID=}\n")
 
         corners = markerCorner.reshape((4, 2))
         (topLeft, topRight, bottomRight, bottomLeft) = corners
@@ -183,9 +185,9 @@ def get_pts_from_frame(frame, s):
 def get_event_images(frame, pts):
     global filenames
     events = []
-    for p,f in zip(pts,filenames):
+    for p, f in zip(pts, filenames):
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
-        cv2.imwrite(f,event)
+        cv2.imwrite(f, event)
         events.append(event)
     return events
 
@@ -236,19 +238,20 @@ def task_4a_return():
         video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
     else:
         video = cv2.VideoCapture(1)
-    
+
     num_of_frames_skip = 100
     for i in range(num_of_frames_skip):
         ret, frame = video.read()
 
     ret, frame = video.read()
+    if len(sys.argv) > 1:
+        frame = cv2.imread("arena.jpeg")
+        ret = True
     if ret is True:
         frame = increase_brightness(frame, value=30)
         cv2.imwrite("firstframe.jpg", frame)
     else:
         raise Exception("No frame found")
-    if len(sys.argv) > 1:
-        frame = cv2.imread("arena.jpg")
 
     frame, pts, events = get_events(frame)
 
