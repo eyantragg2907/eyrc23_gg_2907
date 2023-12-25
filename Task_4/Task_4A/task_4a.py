@@ -41,7 +41,7 @@ classmap = [
     "human_aid_rehabilitation",
     "military_vehicles",
 ]
-modelpath = r"model_1.h5"
+modelpath = r"model_2.h5"
 model = tf.keras.models.load_model(modelpath, compile=False)
 model.compile(
     optimizer="adam",
