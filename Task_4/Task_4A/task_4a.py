@@ -42,7 +42,7 @@ classmap = [
     "military_vehicles",
 ]
 
-modelpath = "model.h5"
+modelpath = "FINAL.h5"
 model = tf.keras.models.load_model(modelpath, compile=False)
 model.compile(
     optimizer="adam",
