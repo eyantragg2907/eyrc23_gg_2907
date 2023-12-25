@@ -25,13 +25,14 @@
 import cv2
 import numpy as np
 import tensorflow as tf
+import keras
 import sys
 from datetime import datetime
 
 ##############################################################
 
 
-################# ADD UTILITY FUNCTIONS HERE #################
+################# ADD UTILITY FUNCTIONS HERE #################c
 DEBUG = True
 
 classmap = [
@@ -41,11 +42,11 @@ classmap = [
     "human_aid_rehabilitation",
     "military_vehicles",
 ]
-modelpath = r"model_2.h5"
-model = tf.keras.models.load_model(modelpath, compile=False)
+modelpath = r"model_new_1.h5"
+model = keras.models.load_model(modelpath, compile=False)
 model.compile(
     optimizer="adam",
-    loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
     metrics=["accuracy"],
 )
 
@@ -59,16 +60,15 @@ def classify_event(image):
     """
     ADD YOUR CODE HERE
     """
-
-    if DEBUG:
-        addr = f"temp_tomodelbeforeresize_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
-        cv2.imwrite(addr, image)
     img = tf.image.resize(image, (75, 75))
     if DEBUG:
         addr = f"temp_tomodelafterresize_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
         cv2.imwrite(addr, img.numpy())
+    
     img = np.array(img, dtype=np.float32)
+    print(img.shape)
     img = tf.expand_dims(img, axis=0)
+    print(img.shape)
     prediction = model.predict(img)
     predicted_class = np.argmax(prediction[0], axis=-1)
 
