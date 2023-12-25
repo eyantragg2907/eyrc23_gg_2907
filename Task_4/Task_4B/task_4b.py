@@ -31,17 +31,50 @@ from datetime import datetime
 import csv
 import time
 import pandas as pd
+import socket
+import signal		
 
 ##############################################################
 OUT_FILE_LOC = "live_location.csv"
+arucolat_long=pd.read_csv("lat_long.csv",index_col="id")
+dictionary = aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
+parameters = aruco.DetectorParameters()
+detector = aruco.ArucoDetector(dictionary, parameters)
 
+ip = ""     # Enter IP address of laptop after connecting it to WIFI hotspot
+commandsent = 0
+command = "nnnrlrrnrnln"
 ################# ADD UTILITY FUNCTIONS HERE #################
 
+def signal_handler(sig, frame):
+    print('Clean-up !')
+    cleanup()
+    sys.exit(0)
+
+def cleanup():
+    s.close()
+    print("cleanup done")
+    
+def send_to_robot():
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        s.bind((ip, 8002))
+        s.listen()
+        conn, addr = s.accept()
+        with conn:
+            print(f"Connected by {addr}")
+            while True:
+                data = conn.recv(1024)
+                print(data)
+                print(command)
+                conn.sendall(str.encode(str(command)))
+                sleep(1)
+                cleanup()
+    
 def update_position(frame):
     frame, side = transform_frame(frame)
     get_robot_coords(frame)
     return frame
-
 
 def transform_frame(frame):
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
@@ -158,10 +191,6 @@ def write_csv(loc, csv_name):
 
 ###############	Main Function	#################
 if __name__ == "__main__":
-    arucolat_long=pd.read_csv("lat_long.csv",index_col="id")
-    dictionary = aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
-    parameters = aruco.DetectorParameters()
-    detector = aruco.ArucoDetector(dictionary, parameters)
     if sys.platform == "win32":
         video = cv2.VideoCapture(1, cv2.CAP_DSHOW)
         video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
@@ -180,6 +209,9 @@ if __name__ == "__main__":
         #     cv2.imwrite(addr, frame)
         frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
         frame = update_position(frame)
+        if commandsent == 0:
+            send_to_robot()
+            commandsent = 1
         corners, ids, rejected = detector.detectMarkers(frame)
         aruco.drawDetectedMarkers(frame, corners, ids)
         cv2.imshow("Arena Feed", frame)
