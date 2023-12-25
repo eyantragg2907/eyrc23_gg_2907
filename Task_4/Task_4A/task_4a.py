@@ -25,7 +25,6 @@
 import cv2
 import numpy as np
 import tensorflow as tf
-import keras
 import sys
 from datetime import datetime
 
@@ -43,10 +42,11 @@ classmap = [
     "military_vehicles",
 ]
 modelpath = r"model_new_1.h5"
-model = keras.models.load_model(modelpath, compile=False)
+modelpath = "FINAL_751PM_25DEC_PATCH01.h5"
+model = tf.keras.models.load_model(modelpath, compile=False)
 model.compile(
     optimizer="adam",
-    loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
     metrics=["accuracy"],
 )
 
