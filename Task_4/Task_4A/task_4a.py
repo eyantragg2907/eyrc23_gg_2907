@@ -53,17 +53,19 @@ model.compile(
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 parameters = cv2.aruco.DetectorParameters()
 detector = cv2.aruco.ArucoDetector(dictionary, parameters)
-
+filenames = "A.png B.png C.png D.png E.png".split()
 
 def classify_event(image):
     global classmap, model
     """
     ADD YOUR CODE HERE
     """
-    img = tf.image.resize(image, (75, 75))
+    img = tf.keras.preprocessing.image.load_img(image, target_size=(75, 75))
+    """
     if DEBUG:
         addr = f"temp_tomodelafterresize_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
         cv2.imwrite(addr, img.numpy())
+    """
     
     img = np.array(img, dtype=np.float32)
     print(img.shape)
@@ -179,9 +181,12 @@ def get_pts_from_frame(frame, s):
 
 
 def get_event_images(frame, pts):
+    global filenames
     events = []
-    for p in pts:
-        events.append(frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]])
+    for p,f in zip(pts,filenames):
+        event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
+        cv2.imwrite(f,event)
+        events.append(event)
     return events
 
 
@@ -248,7 +253,7 @@ def task_4a_return():
     frame, pts, events = get_events(frame)
 
     labels = []
-    for key, img in zip("ABCDE", events):
+    for key, img in zip("ABCDE", filenames):
         label = classify_event(img)
         labels.append(label)
         identified_labels[key] = label
