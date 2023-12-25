@@ -41,7 +41,7 @@ classmap = [
     "human_aid_rehabilitation",
     "military_vehicles",
 ]
-modelpath = r"model.h5"
+modelpath = r"model_1.h5"
 model = tf.keras.models.load_model(modelpath, compile=False)
 model.compile(
     optimizer="adam",
@@ -63,7 +63,7 @@ def classify_event(image):
     if DEBUG:
         addr = f"temp_tomodelbeforeresize_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
         cv2.imwrite(addr, image)
-    img = tf.image.resize(image, (180, 180))
+    img = tf.image.resize(image, (75, 75))
     if DEBUG:
         addr = f"temp_tomodelafterresize_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
         cv2.imwrite(addr, img.numpy())
