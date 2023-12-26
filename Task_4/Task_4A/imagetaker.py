@@ -115,25 +115,27 @@ def main():
 
     # frame = increase_brightness(frame, value=30)
     
-    # set 01
-    A = "fire"
-    B = "destroyed_building"
-    C = "human_aid_rehabilitation"
-    D = "military_vehicles"
+    # set 02
+    A = "military_vehicles"
+    B = "human_aid_rehabilitation"
+    C = "fire"
+    D = "destroyed_building"
     E = "combat"
 
-    c = 0
+    SET = "03"
+
+    c = 1s
     while c < 5:
         ret, frame = cap.read()
         # save the photo
         if ret is True:
             print(f"Photo {c} taken")
             cv2.imwrite(f"temp_save.jpg", frame)
-            filenames = f"temp_train/{A}/{c}.png temp_train/{B}/{c}.png temp_train/{C}/{c}.png temp_train/{D}/{c}.png temp_train/{E}/{c}.png".split()
+            filenames = f"temp_train/{A}/{c}{SET}.png temp_train/{B}/{c}{SET}.png temp_train/{C}/{c}{SET}.png temp_train/{D}/{c}{SET}.png temp_train/{E}/{c}{SET}.png".split()
             frame, pts, events = get_events(frame, filenames)
             print(f"Photo {c} saved")
         print("Now we wait")
-        time.sleep(120) # 2 minutes
+        time.sleep(10) # 5 minutes
         print("Next frame")
         c += 1
     print("Done")
