@@ -3,7 +3,7 @@
 <h1>New Model Test: Results</h1>
 <center>
     <h2>Results</h2>
-    <img src="{{ url_for('static', filename='show.jpg') }}" alt="plot" width="500" height="500">
+    <a href="{{ url_for('show_image', filename=filename) }}">Show image</a>
     <h2>Code Out</h2>
     <textarea name="code_out" rows="10" cols="80">{{ code_out }}</textarea><br>
 </center>

@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, request, redirect, send_from_directory, url_for
 import numpy as np
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -82,19 +82,15 @@ def upload_code(filename):
 @app.route('/run-code/<filename>', methods=['GET'])
 def run_code(filename):
     print("running code...")
-    pr = subprocess.check_output(f"conda activate GG_2907; cd temp_models_quick; python task_4a_{filename}.py", shell=True).decode('utf-8')
+    pr = subprocess.check_output(f"conda activate GG_2907 && cd temp_models_quick && python task_4a_{filename}.py", shell=True).decode('utf-8')
     output = pr
-    print("trying to show image...")
+    print("trying to show")
+    filename = f"arena_with_labels{filename}.jpg"
+    return render_template("run_code.html", filename=filename, code_out=output)
 
-    try:
-        im = cv2.imread(f"temp_models_quick/arena_with_labels{filename}.jpg")
-        cv2.imwrite(f"static/show.jpg", im)
-    except: 
-        im = np.zeros((100, 100, 3), dtype=np.uint8)
-        cv2.imwrite(f"static/show.jpg", im)
-
-    return render_template("run_code.html", code_out=output)
-
+@app.route("/show-image/<filename>")
+def show_image(filename):
+    return send_from_directory("temp_models_quick", filename, as_attachment=True)
 # st.title("Task 4A: Model Injection")
 # st.header("I'm telling you, don't inject weird stuff, or I might anger you")
 
