@@ -108,16 +108,29 @@ def main():
         # take a photo
         for i in range(num_of_frames_skip):
             ret, frame = cap.read()
-        
-        ret, frame = cap.read()
+    
         # frame = increase_brightness(frame, value=30)
-        filenames = "temp_fire.png temp_lol.png temp_lol2.png temp_lol3.png temp_lol4.png".split()
-        frame, pts, events = get_events(frame, filenames)
+        
+        # set 01
+        A = "fire"
+        B = "destroyed_building"
+        C = "human_aid_rehabilitation"
+        D = "military_vehicles"
+        E = "combat"
 
-        # save the photo
-        if ret is True:
-            print("Photo 01 taken")
-
+        c = 0
+        while True:
+            ret, frame = cap.read()
+            # save the photo
+            if ret is True:
+                print(f"Photo {c} taken")
+                filenames = f"temp_train/{A}/{c}.png temp_train/{B}/{c}.png temp_train/{C}/{c}.png temp_train/{D}/{c}.png temp_train/{E}/{c}.png".split()
+                frame, pts, events = get_events(frame, filenames)
+            print("Now we wait")
+            time.sleep(120) # 2 minutes
+            print("Next frame")
+            c += 1
+        
     cap.release()
 
 

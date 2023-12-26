@@ -5,10 +5,6 @@ import sys
 from datetime import datetime
 import streamlit as st
 
-##############################################################
-
-
-################# ADD UTILITY FUNCTIONS HERE #################c
 DEBUG = True
 
 classmap = [
@@ -21,13 +17,8 @@ classmap = [
 
 
 def model_load():
-    modelpath = "FINAL.h5"
-    model = tf.keras.models.load_model(modelpath, compile=False)
-    model.compile(
-        optimizer="adam",
-        loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-        metrics=["accuracy"],
-    )
+    # -->LOL<<--[[{{LOAD_MODEL}}]]-->>LOL<<--
+    pass
 
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 parameters = cv2.aruco.DetectorParameters()
@@ -35,25 +26,10 @@ detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 
 filenames = "A.png B.png C.png D.png E.png".split()
 
-
-def classify_event(image):
-    global classmap, model
-    """
-    ADD YOUR CODE HERE
-    """
-    img = tf.keras.preprocessing.image.load_img(image, target_size=(75, 75))
-
-    img = np.array(img, dtype=np.float32)
-    print(img.shape)
-    img = tf.expand_dims(img, axis=0)
-    print(img.shape)
-    prediction = model.predict(img)
-    predicted_class = np.argmax(prediction[0], axis=-1)
-
-    event = classmap[predicted_class]
-
-    return event
-
+def classify_event(imagepath):
+    global classmap
+    # -->LOL<<--[[{{CLASSIFY_EVENT}}]]-->>LOL<<--
+    pass
 
 def get_events(frame):
     frame, side = transform_frame(frame)
@@ -66,9 +42,9 @@ def get_events(frame):
 def transform_frame(frame):
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
 
-    if DEBUG:
-        print(f"{pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
-
+    if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
+        raise Exception("Corners not detected")
+    
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
     width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
     maxWidth = max(int(width_AD), int(width_BC))
@@ -78,8 +54,8 @@ def transform_frame(frame):
     maxHeight = max(int(height_AB), int(height_CD))
 
     s = min(maxHeight, maxWidth)
-    input_pts = np.float32([pt_A, pt_B, pt_C, pt_D])
-    output_pts = np.float32([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]])
+    input_pts = np.float32([pt_A, pt_B, pt_C, pt_D])  # type: ignore
+    output_pts = np.float32([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]]) # type: ignore
     M = cv2.getPerspectiveTransform(input_pts, output_pts)
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
@@ -240,6 +216,7 @@ def task_4a_return():
     video.release()
     cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
     frametoshow = cv2.resize(frame, (480, 480))
+    cv2.imwrite("arena_with_labels__{{REPLACE THIS}}__.jpg", frametoshow)
     cv2.imshow("Arena Feed", frametoshow)
     while True:
         if cv2.waitKey(1) & 0xFF == ord("q"):
@@ -251,5 +228,6 @@ def task_4a_return():
 
 ###############	Main Function	#################
 if __name__ == "__main__":
+
     identified_labels = task_4a_return()
     print(identified_labels)

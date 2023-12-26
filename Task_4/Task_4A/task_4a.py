@@ -45,6 +45,7 @@ classmap = [
 modelpath = "FINAL.h5"
 
 model = tf.keras.models.load_model(modelpath, compile=False)
+if model is None: raise Exception("Model not found at path")
 model.compile(
     optimizer="adam",
     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -71,9 +72,9 @@ def classify_event(image):
     """
 
     img = np.array(img, dtype=np.float32)
-    print(img.shape)
+    # print(img.shape)
     img = tf.expand_dims(img, axis=0)
-    print(img.shape)
+    # print(img.shape)
     prediction = model.predict(img)
     predicted_class = np.argmax(prediction[0], axis=-1)
 
