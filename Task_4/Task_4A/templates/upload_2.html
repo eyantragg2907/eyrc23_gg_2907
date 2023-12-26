@@ -1,0 +1,20 @@
+<!doctype html>
+<title>New Model Test</title>
+<h1>New Model Test: Upload Code (INJECTION)</h1>
+{% with messages = get_flashed_messages() %}
+ {% if messages %}
+  <ul>
+  {% for message in messages %}
+    <li>{{ message }}</li>
+  {% endfor %}
+  </ul>
+ {% endif %}
+{% endwith %}
+<center>
+    MODEL = {{ filename }}
+<form method=post enctype=multipart/form-data id="mainform">
+  CODE_LOAD: <textarea name="code_load" rows="10" cols="80"></textarea><br>
+  CODE_CLASSIFY: <textarea name="code_classify" rows="10" cols="80"></textarea><br>
+  <input type=submit value="Submit">
+</form>
+</center>

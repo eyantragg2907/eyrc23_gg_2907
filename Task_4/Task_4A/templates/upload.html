@@ -1,0 +1,18 @@
+<!doctype html>
+<title>New Model Test</title>
+<h1>New Model Test</h1>
+{% with messages = get_flashed_messages() %}
+ {% if messages %}
+  <ul>
+  {% for message in messages %}
+    <li>{{ message }}</li>
+  {% endfor %}
+  </ul>
+ {% endif %}
+{% endwith %}
+<center>
+<form method=post enctype=multipart/form-data id="mainform">
+  MODEL: <input type=file name=file><br>
+  <input type=submit value="Submit">
+</form>
+</center>
