@@ -1,6 +1,6 @@
 #include <WiFi.h>
 
-const char *ssid = "PjrWifi";     // Enter your wifi hotspot ssid
+const char *ssid = "pjrWifi";          // Enter your wifi hotspot ssid
 const char *password = "SimplePass01"; // Enter your wifi hotspot password
 const uint16_t port = 8002;
 const char *host = "192.168.229.92";
@@ -44,6 +44,7 @@ int move = false;
 bool atNode = true;
 void forward()
 {
+  Serial.println("MOVING FORWARD");
   if (mode == 0)
   { // bang bang
     if (!input1)
@@ -89,21 +90,23 @@ void goToNextNode()
   atNode = false;
   if (!(input2 || input3 || input4))
   { // go ahead until middle IRs see black
+    Serial.println("black forward march");
     forward();
   }
   else
   {
     stop();
+    Serial.println("NODE");
     atNode = true;
-    digitalWrite(buzzer, HIGH);
-    delay(1000);
     digitalWrite(buzzer, LOW);
+    delay(1000);
+    digitalWrite(buzzer, HIGH);
   }
 }
 
 void turn(char x)
 {
-  stop(); 
+  stop();
   if (x == 'l')
   {
     analogWrite(motor2f, speed2);
@@ -135,6 +138,8 @@ void setup()
   pinMode(led_red, OUTPUT);
   pinMode(buzzer, OUTPUT);
 
+  digitalWrite(buzzer, HIGH);
+
   Serial.begin(115200);
 
   // setting up wifi
@@ -147,18 +152,25 @@ void setup()
 
   Serial.print("WiFi connected with IP: ");
   Serial.println(WiFi.localIP());
+
   digitalWrite(led_red, HIGH); // rest condition
-  if (!client.connect(host, port))
+  digitalWrite(led_green, LOW);
+
+  do
   {
     Serial.println("Connection to host failed");
-    digitalWrite(buzzer, HIGH);
-    digitalWrite(led_red, LOW);
+    // digitalWrite(buzzer, LOW);
+    digitalWrite(led_red, HIGH);
     delay(200);
-    return;
-  }
-  msg = client.readStringUntil('\n');                                                        // Read the message through the socket until new line char(\n)
+    // digitalWrite(buzzer, HIGH);
+  } while (!client.connect(host, port));
+
+  digitalWrite(led_red, LOW);
   client.print("Obese American ate 69 giant ramen bowl but still is lighter than your mom"); // Send an acknowledgement to host(laptop)
+  msg = client.readStringUntil('\n');                                                        // Read the message through the socket until new line char(\n)
   path = msg;
+  move = true;
+  Serial.println(path);
 }
 
 void loop()
@@ -171,20 +183,25 @@ void loop()
 
   if (!(input2 && input3 && input4))
   { // switch to correct mode
-    mode = 1;
+    mode = 0;
   }
   else
   {
-    mode = 0;
+    mode = 1;
   }
+  Serial.print("mode ");
+  Serial.println(mode);
 
   if (move)
   { // start moving
+    Serial.println("MOVING...");
     digitalWrite(led_red, LOW);
     digitalWrite(led_green, HIGH);
     if (atNode)
     {
+      Serial.print("At a node... ");
       char command = path[i++];
+      Serial.println(command);
       if (command == 'l')
       {
         turn(command);
@@ -193,21 +210,24 @@ void loop()
       {
         turn(command);
       }
+      Serial.println("Moving ahead!");
       analogWrite(motor1f, speed1);
       analogWrite(motor2f, speed2); // pushing the robot out of the node
     }
+    Serial.println("Go to next");
     goToNextNode();
 
     if (i == path.length())
     {
+      Serial.println("path complete");
       move = false; // break out of the loop
       stop();
       digitalWrite(led_green, LOW);
       digitalWrite(led_red, HIGH);
-      digitalWrite(buzzer, HIGH);
+      digitalWrite(buzzer, LOW);
       delay(5000);
       digitalWrite(led_red, LOW);
-      digitalWrite(buzzer, LOW);
+      digitalWrite(buzzer, HIGH);
     }
   }
 }
