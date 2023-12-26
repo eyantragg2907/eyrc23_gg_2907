@@ -82,10 +82,14 @@ def upload_code(filename):
 @app.route('/run-code/<filename>', methods=['GET'])
 def run_code(filename):
     print("running code...")
-    pr = subprocess.check_output(f"conda activate GG_2907 && cd temp_models_quick && python task_4a_{filename}.py", shell=True).decode('utf-8')
-    output = pr
+    try:
+        pr = subprocess.check_output(f"conda activate GG_2907 && cd temp_models_quick && python task_4a_{filename}.py", shell=True).decode('utf-8')
+        output = pr
+        filename = f"arena_with_labels{filename}.jpg"
+    except Exception as e:
+        output = str(e)
+        filename = "firstframe.jpg"
     print("trying to show")
-    filename = f"arena_with_labels{filename}.jpg"
     return render_template("run_code.html", filename=filename, code_out=output)
 
 @app.route("/show-image/<filename>")
