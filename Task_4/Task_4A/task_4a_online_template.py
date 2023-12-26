@@ -29,6 +29,7 @@ filenames = "A.png B.png C.png D.png E.png".split()
 def classify_event(imagepath):
     global classmap
     # -->LOL<<--[[{{CLASSIFY_EVENT}}]]-->>LOL<<--
+    
     pass
 
 def get_events(frame):
