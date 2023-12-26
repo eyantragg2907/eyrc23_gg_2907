@@ -1,27 +1,3 @@
-"""
-*****************************************************************************************
-*
-*        		===============================================
-*           		Geo Guide (GG) Theme (eYRC 2023-24)
-*        		===============================================
-*
-*  This script is to implement Task 4A of Geo Guide (GG) Theme (eYRC 2023-24).
-*  
-*  This software is made available on an "AS IS WHERE IS BASIS".
-*  Licensee/end user indemnifies and will keep e-Yantra indemnified from
-*  any and all claim(s) that emanate from the use of the Software or 
-*  breach of the terms of this agreement.
-*
-*****************************************************************************************
-"""
-
-# Team ID:			[ 2907 ]
-# Author List:		[ Arnav Rustagi, Subham Jalan]
-# Filename:			task_4a.py
-
-
-####################### IMPORT MODULES #######################
-
 import cv2
 import numpy as np
 import tensorflow as tf

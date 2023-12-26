@@ -112,8 +112,8 @@ def main():
         ret, frame = cap.read()
         # frame = increase_brightness(frame, value=30)
         filenames = "temp_fire.png temp_lol.png temp_lol2.png temp_lol3.png temp_lol4.png".split()
-
         frame, pts, events = get_events(frame, filenames)
+
         # save the photo
         if ret is True:
             print("Photo 01 taken")
