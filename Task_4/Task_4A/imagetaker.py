@@ -1,4 +1,4 @@
-CAMERA_ID = 0 # 0 for internal, 1 for external as a basis
+CAMERA_ID = 1 # 0 for internal, 1 for external as a basis
 
 import cv2
 from datetime import datetime
@@ -106,38 +106,38 @@ def main():
 
     num_of_frames_skip = 100
     # Initialize the camera
-    cap = cv2.VideoCapture(CAMERA_ID)
-    if not cap.open(CAMERA_ID):
-        print("CAMERA NOT OPEN. ERROR")
-    else:
-        # take a photo
-        for i in range(num_of_frames_skip):
-            ret, frame = cap.read()
-    
-        # frame = increase_brightness(frame, value=30)
-        
-        # set 01
-        A = "fire"
-        B = "destroyed_building"
-        C = "human_aid_rehabilitation"
-        D = "military_vehicles"
-        E = "combat"
+    cap = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+    # take a photo
+    for i in range(num_of_frames_skip):
+        ret, frame = cap.read()
 
-        c = 0
-        while c < 5:
-            ret, frame = cap.read()
-            # save the photo
-            if ret is True:
-                print(f"Photo {c} taken")
-                filenames = f"temp_train/{A}/{c}.png temp_train/{B}/{c}.png temp_train/{C}/{c}.png temp_train/{D}/{c}.png temp_train/{E}/{c}.png".split()
-                frame, pts, events = get_events(frame, filenames)
-                print(f"Photo {c} saved")
-            print("Now we wait")
-            time.sleep(120) # 2 minutes
-            print("Next frame")
-            c += 1
-        print("Done")
-        
+    # frame = increase_brightness(frame, value=30)
+    
+    # set 01
+    A = "fire"
+    B = "destroyed_building"
+    C = "human_aid_rehabilitation"
+    D = "military_vehicles"
+    E = "combat"
+
+    c = 0
+    while c < 5:
+        ret, frame = cap.read()
+        # save the photo
+        if ret is True:
+            print(f"Photo {c} taken")
+            cv2.imwrite(f"temp_save.jpg", frame)
+            filenames = f"temp_train/{A}/{c}.png temp_train/{B}/{c}.png temp_train/{C}/{c}.png temp_train/{D}/{c}.png temp_train/{E}/{c}.png".split()
+            frame, pts, events = get_events(frame, filenames)
+            print(f"Photo {c} saved")
+        print("Now we wait")
+        time.sleep(120) # 2 minutes
+        print("Next frame")
+        c += 1
+    print("Done")
+    
     cap.release()
 
 
