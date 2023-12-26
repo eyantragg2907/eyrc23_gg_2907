@@ -1,6 +1,6 @@
 #include <WiFi.h>
 
-const char *ssid = "PjrWifi";     // Enter your wifi hotspot ssid
+const char *ssid = "pjrWifi";     // Enter your wifi hotspot ssid
 const char *password = "SimplePass01"; // Enter your wifi hotspot password
 const uint16_t port = 8002;
 const char *host = "192.168.229.92";
@@ -95,9 +95,9 @@ void goToNextNode()
   {
     stop();
     atNode = true;
-    digitalWrite(buzzer, HIGH);
-    delay(1000);
     digitalWrite(buzzer, LOW);
+    delay(1000);
+    digitalWrite(buzzer, HIGH);
   }
 }
 
@@ -135,6 +135,8 @@ void setup()
   pinMode(led_red, OUTPUT);
   pinMode(buzzer, OUTPUT);
 
+  digitalWrite(buzzer, HIGH);
+
   Serial.begin(115200);
 
   // setting up wifi
@@ -147,15 +149,22 @@ void setup()
 
   Serial.print("WiFi connected with IP: ");
   Serial.println(WiFi.localIP());
+  
   digitalWrite(led_red, HIGH); // rest condition
-  if (!client.connect(host, port))
+  digitalWrite(led_green, LOW);
+
+  do
   {
     Serial.println("Connection to host failed");
-    digitalWrite(buzzer, HIGH);
-    digitalWrite(led_red, LOW);
+    // digitalWrite(buzzer, LOW);
+    digitalWrite(led_red, HIGH);
     delay(200);
-    return;
+    // digitalWrite(buzzer, HIGH);
   }
+  while (!client.connect(host, port));
+  
+  digitalWrite(led_red, LOW);
+
   msg = client.readStringUntil('\n');                                                        // Read the message through the socket until new line char(\n)
   client.print("Obese American ate 69 giant ramen bowl but still is lighter than your mom"); // Send an acknowledgement to host(laptop)
   path = msg;
@@ -204,10 +213,10 @@ void loop()
       stop();
       digitalWrite(led_green, LOW);
       digitalWrite(led_red, HIGH);
-      digitalWrite(buzzer, HIGH);
+      digitalWrite(buzzer, LOW);
       delay(5000);
       digitalWrite(led_red, LOW);
-      digitalWrite(buzzer, LOW);
+      digitalWrite(buzzer, HIGH);
     }
   }
 }
