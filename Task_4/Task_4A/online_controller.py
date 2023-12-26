@@ -82,8 +82,8 @@ def upload_code(filename):
 @app.route('/run-code/<filename>', methods=['GET'])
 def run_code(filename):
     print("running code...")
-    pr = subprocess.call(f"conda activate GG_2907; cd temp_models_quick; python task_4a_{filename}.py", shell=True)
-    output = "code ran"
+    pr = subprocess.check_output(f"conda activate GG_2907; cd temp_models_quick; python task_4a_{filename}.py", shell=True).decode('utf-8')
+    output = pr
     print("trying to show image...")
 
     try:
