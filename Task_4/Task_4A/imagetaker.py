@@ -1,15 +1,19 @@
-CAMERA_ID = 1 # 0 for internal, 1 for external as a basis
+CAMERA_ID = 0 # 0 for internal, 1 for external as a basis
 
 import cv2
 from datetime import datetime
 import time
 import numpy as np
+import matplotlib.pyplot as plt
 
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 parameters = cv2.aruco.DetectorParameters()
 detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 
 def get_aruco_data(frame):
+    # plt.figure()
+    # plt.imshow(frame)
+    # plt.show()
     global detector
     c, i, r = detector.detectMarkers(frame)
 
@@ -53,6 +57,7 @@ def transform_frame(frame):
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
 
     if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
+        print(f"{pt_A=}, {pt_B=}, {pt_C=}, {pt_D=}")
         raise Exception("Corners not detected")
     
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
@@ -66,7 +71,7 @@ def transform_frame(frame):
     s = min(maxHeight, maxWidth)
     input_pts = np.float32([pt_A, pt_B, pt_C, pt_D]) # type: ignore
     output_pts = np.float32([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]]) # type: ignore
-    M = cv2.getPerspectiveTransform(input_pts, output_pts)
+    M = cv2.getPerspectiveTransform(input_pts, output_pts) # type: ignore
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
     # out = cv2.resize(out, (1024,1024), interpolation = cv2.INTER_AREA)
@@ -119,17 +124,19 @@ def main():
         E = "combat"
 
         c = 0
-        while True:
+        while c < 5:
             ret, frame = cap.read()
             # save the photo
             if ret is True:
                 print(f"Photo {c} taken")
                 filenames = f"temp_train/{A}/{c}.png temp_train/{B}/{c}.png temp_train/{C}/{c}.png temp_train/{D}/{c}.png temp_train/{E}/{c}.png".split()
                 frame, pts, events = get_events(frame, filenames)
+                print(f"Photo {c} saved")
             print("Now we wait")
             time.sleep(120) # 2 minutes
             print("Next frame")
             c += 1
+        print("Done")
         
     cap.release()
 
