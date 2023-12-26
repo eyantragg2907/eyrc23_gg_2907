@@ -250,7 +250,7 @@ def task_4a_return():
         frame = cv2.imread("arena.jpeg")
         ret = True
     if ret is True:
-        frame = increase_brightness(frame, value=30)
+        # frame = increase_brightness(frame, value=30)
         cv2.imwrite("firstframe.jpg", frame)
     else:
         raise Exception("No frame found")
