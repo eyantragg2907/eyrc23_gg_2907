@@ -81,20 +81,19 @@ def upload_code(filename):
 
 @app.route('/run-code/<filename>', methods=['GET'])
 def run_code(filename):
-    pr = subprocess.run(f"conda activate GG_2907; python temp_models_quick/task_4a_{filename}.py", capture_output=True, shell=True)
-    output = pr.stdout.decode("utf-8")
-    output = output.replace("\n", "<br>")
-    output = output.replace(" ", "&nbsp;")
-    
+    print("running code...")
+    pr = subprocess.call(f"conda activate GG_2907; cd temp_models_quick; python task_4a_{filename}.py", shell=True)
+    output = "code ran"
+    print("trying to show image...")
+
     try:
         im = cv2.imread(f"temp_models_quick/arena_with_labels{filename}.jpg")
-        cv2.imwrite(f"static/arena_with_labels{filename}.jpg", im)
+        cv2.imwrite(f"static/show.jpg", im)
     except: 
         im = np.zeros((100, 100, 3), dtype=np.uint8)
-        cv2.imwrite(f"static/arena_with_labels{filename}.jpg", im)
-    
-    filename = f"arena_with_labels{filename}.jpg"
-    return render_template("run_code.html", filename=filename, code_out=output)
+        cv2.imwrite(f"static/show.jpg", im)
+
+    return render_template("run_code.html", code_out=output)
 
 # st.title("Task 4A: Model Injection")
 # st.header("I'm telling you, don't inject weird stuff, or I might anger you")
