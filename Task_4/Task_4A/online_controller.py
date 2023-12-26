@@ -1,5 +1,6 @@
 import os
 from flask import Flask, flash, render_template, request, redirect, url_for
+import numpy as np
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import subprocess
@@ -85,8 +86,13 @@ def run_code(filename):
     output = output.replace("\n", "<br>")
     output = output.replace(" ", "&nbsp;")
     
-    im = cv2.imread(f"arena_with_labels{filename}.jpg")
-    cv2.imwrite(f"static/arena_with_labels{filename}.jpg", im)
+    try:
+        im = cv2.imread(f"temp_models_quick/arena_with_labels{filename}.jpg")
+        cv2.imwrite(f"static/arena_with_labels{filename}.jpg", im)
+    except: 
+        im = np.zeros((100, 100, 3), dtype=np.uint8)
+        cv2.imwrite(f"static/arena_with_labels{filename}.jpg", im)
+    
     filename = f"arena_with_labels{filename}.jpg"
     return render_template("run_code.html", filename=filename, code_out=output)
 
