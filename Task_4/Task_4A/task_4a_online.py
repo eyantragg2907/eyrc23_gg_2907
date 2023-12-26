@@ -27,6 +27,7 @@ import numpy as np
 import tensorflow as tf
 import sys
 from datetime import datetime
+import streamlit as st
 
 ##############################################################
 
@@ -42,14 +43,15 @@ classmap = [
     "military_vehicles",
 ]
 
-modelpath = "FINAL.h5"
 
-model = tf.keras.models.load_model(modelpath, compile=False)
-model.compile(
-    optimizer="adam",
-    loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-    metrics=["accuracy"],
-)
+def model_load():
+    modelpath = "FINAL.h5"
+    model = tf.keras.models.load_model(modelpath, compile=False)
+    model.compile(
+        optimizer="adam",
+        loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+        metrics=["accuracy"],
+    )
 
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 parameters = cv2.aruco.DetectorParameters()
@@ -64,11 +66,6 @@ def classify_event(image):
     ADD YOUR CODE HERE
     """
     img = tf.keras.preprocessing.image.load_img(image, target_size=(75, 75))
-    """
-    if DEBUG:
-        addr = f"temp_tomodelafterresize_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
-        cv2.imwrite(addr, img.numpy())
-    """
 
     img = np.array(img, dtype=np.float32)
     print(img.shape)
