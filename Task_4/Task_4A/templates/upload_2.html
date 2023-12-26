@@ -11,9 +11,17 @@
  {% endif %}
 {% endwith %}
 <center>
+  <h2>
+    Don't inject bad code or I will kill you promptly. Remember, I have your IP.
+  </h2>
     MODEL = {{ filename }}
 <form method=post enctype=multipart/form-data id="mainform">
+  the code_load should be the CONTENT of a function that loads the model.<br>
+  it should return model at the end. please write that.<br>
+  the model name is given above, use that name.<br>
   CODE_LOAD: <textarea name="code_load" rows="10" cols="80"></textarea><br>
+  this needs to call the above function (<pre>model = model_load()</pre>) and then classify the image.<br>
+  it should return the class. The classmap variable is available. The function also takes an input as imagepath, which is the path to the image being classified.<br>
   CODE_CLASSIFY: <textarea name="code_classify" rows="10" cols="80"></textarea><br>
   <input type=submit value="Submit">
 </form>
