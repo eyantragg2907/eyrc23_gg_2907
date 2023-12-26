@@ -214,14 +214,14 @@ def task_4a_return():
 
     frame = add_rects_labels(frame, pts, labels)
     video.release()
-    cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
+    # cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
     frametoshow = cv2.resize(frame, (480, 480))
     cv2.imwrite("arena_with_labels__{{REPLACE THIS}}__.jpg", frametoshow)
-    cv2.imshow("Arena Feed", frametoshow)
-    while True:
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            cv2.destroyAllWindows()
-            break
+    # cv2.imshow("Arena Feed", frametoshow)
+    # while True:
+    #     if cv2.waitKey(1) & 0xFF == ord("q"):
+    #         cv2.destroyAllWindows()
+    #         break
     ##################################################
     return identified_labels
 
