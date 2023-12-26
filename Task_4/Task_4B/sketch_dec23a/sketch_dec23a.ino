@@ -114,7 +114,7 @@ void turn(char x)
     analogWrite(motor1f, speed1);
     analogWrite(motor2r, speed2);
   }
-  stop()
+  stop();
 }
 void setup()
 {
