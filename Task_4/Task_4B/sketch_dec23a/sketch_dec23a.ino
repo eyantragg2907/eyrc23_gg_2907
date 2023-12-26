@@ -1,9 +1,9 @@
 #include <WiFi.h>
 
-const char *ssid = "";     // Enter your wifi hotspot ssid
-const char *password = ""; // Enter your wifi hotspot password
+const char *ssid = "PjrWifi";     // Enter your wifi hotspot ssid
+const char *password = "SimplePass01"; // Enter your wifi hotspot password
 const uint16_t port = 8002;
-const char *host = "";
+const char *host = "192.168.229.92";
 
 const int IR1 = 5; // IR sensors pins
 const int IR2 = 18;
@@ -24,7 +24,7 @@ const int buzzer = 23;
 int speed1 = 255; // motor speeds
 int speed2 = 255;
 
-int turntime = 1000;
+int turntime = 1000; // in milliseconds
 
 int input1, input2, input3, input4, input5; // inputs of IR sensors, returns LOW when black line
 
@@ -103,7 +103,8 @@ void goToNextNode()
 
 void turn(char x)
 {
-  stop() if (x == 'l')
+  stop(); 
+  if (x == 'l')
   {
     analogWrite(motor2f, speed2);
     analogWrite(motor1r, speed1);

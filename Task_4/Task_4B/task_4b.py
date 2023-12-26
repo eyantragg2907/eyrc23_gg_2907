@@ -41,17 +41,17 @@ dictionary = aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
 parameters = aruco.DetectorParameters()
 detector = aruco.ArucoDetector(dictionary, parameters)
 
-ip = ""     # Enter IP address of laptop after connecting it to WIFI hotspot
+ip = "192.168.229.92"     # Enter IP address of laptop after connecting it to WIFI hotspot
 commandsent = 0
 command = "nnnrlrrnrnln"
 ################# ADD UTILITY FUNCTIONS HERE #################
 
 def signal_handler(sig, frame):
     print('Clean-up !')
-    cleanup()
+    # cleanup(sig)
     sys.exit(0)
 
-def cleanup():
+def cleanup(s):
     s.close()
     print("cleanup done")
     
@@ -68,8 +68,8 @@ def send_to_robot():
                 print(data)
                 print(command)
                 conn.sendall(str.encode(str(command)))
-                sleep(1)
-                cleanup()
+                time.sleep(1)
+                cleanup(s)
     
 def update_position(frame):
     frame, side = transform_frame(frame)
@@ -79,6 +79,7 @@ def update_position(frame):
 def transform_frame(frame):
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
 
+    if pt_A is None or pt_B is None or pt_C is None or pt_D is None: raise Exception("Corners not found correctly")
     print(f"{pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
 
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
