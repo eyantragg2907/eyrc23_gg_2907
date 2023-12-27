@@ -127,8 +127,10 @@ void turn(char x)
   analogWrite(motor2f, speed2); //  move forward till we leave the node
   // delay(200); // another logic is to move a little and then rotate till the next node.
   // stop();
-  if (input2 && input4) // we leave the middle node when the middle left and middle right ir sensor is on gray
+  if (input2 && input4)
+  { // we leave the middle node when the middle left and middle right ir sensor is on gray
     stop();
+  }
   while (!input3) // rotate till it leaves the current black line
   {
     if (x == 'l')
