@@ -26,7 +26,7 @@ int speed2 = 255;
 
 int turntime = 1000; // in milliseconds
 
-int input1, input2, input3, input4, input5; // inputs of IR sensors, returns LOW when black line
+int input1, input2, input3, input4, input5; // inputs of IR sensors, returns HIGH when black line
 
 bool mode = 0; // 0 is bang bang, 1 is the middle line
 
@@ -37,47 +37,11 @@ char incomingPacket[80];
 WiFiClient client;
 
 String msg = "0";
-int counter = 0;
 
 int i = 0; // flags
-int move = false;
-bool atNode = true;
-void forward()
-{
-  Serial.println("MOVING FORWARD");
-  if (mode == 0)
-  { // bang bang
-    if (!input1)
-    { // left IR hits black
-      analogWrite(motor1f, speed1);
-    }
-    else if (!input5)
-    { // right IR hits black
-      analogWrite(motor2f, speed2);
-    }
-    else
-    {
-      analogWrite(motor1f, speed1);
-      analogWrite(motor2f, speed2);
-    }
-  }
-  else
-  { // middle black line
-    if (!input3)
-    { // following the line
-      analogWrite(motor1f, speed1);
-      analogWrite(motor2f, speed2);
-    }
-    if (!input4)
-    { // right IR touches black
-      analogWrite(motor1f, speed1);
-    }
-    if (!input2)
-    { // left IR touches black
-      analogWrite(motor2f, speed2);
-    }
-  }
-}
+int operation = 0;
+// 0 for forward, 1 for "on node now check command", 2 for rotating left, 3 for rotating right, 4 for leaving the node, 5 terminating
+int rotflag = 0;
 void stop()
 {
   analogWrite(motor1f, 0);
@@ -85,86 +49,126 @@ void stop()
   analogWrite(motor1r, 0);
   analogWrite(motor2r, 0);
 }
-void goToNextNode()
+
+int moveforwardtillreachnode()
 {
-  atNode = false;
-  if (!(input2 || input3 || input4))
-  { // go ahead until middle IRs see black
-    Serial.println("black forward march");
-    forward();
+  if (!(input2 == 1 && input3 == 1 && input4 == 1)) // if not at a node
+  {
+    if (input2 == 0 && input3 == 0 && input4 == 0) // bang bang controller
+    {
+      if (input1 == 1 && input5 == 0) // left line detected by left sensor
+      {
+        analogWrite(motor1f, speed1);
+        analogWrite(motor2f, 0);
+      }
+      else if (input5 == 1 && input1 == 0) // right line detected by  right sensor
+      {
+        analogWrite(motor1f, 0);
+        analogWrite(motor2f, speed2);
+      }
+      else
+      {
+        analogWrite(motor1f, speed1);
+        analogWrite(motor2f, speed2);
+      }
+    }
+    else if (input3 == 1 && (input2 == 0 && input4 == 0)) // move forward if middle line detected only by middle sensor
+    {
+      analogWrite(motor1f, speed1);
+      analogWrite(motor2f, speed2);
+    }
+    else if (input2 == 1 && input4 == 0) // middle line detected by middle left sensor
+    {
+      analogWrite(motor1f, 0);
+      analogWrite(motor2f, speed2);
+    }
+    else if (input4 == 1 && input2 == 0) // middle line detected by middle right sensor
+    {
+      analogWrite(motor1f, speed1);
+      analogWrite(motor2f, 0);
+    }
+    return 0;
   }
   else
-  {
+  { // reached a node for sure
     stop();
-    Serial.println("NODE");
-    atNode = true;
-    digitalWrite(buzzer, LOW);
-    delay(1000);
-    digitalWrite(buzzer, HIGH);
+    return 1;
   }
 }
-
-// void turn(char x)
+// int turn(int mode)
 // {
 //   stop();
-//   if (x == 'l')
+//   if (mode == 0)
 //   {
-//     analogWrite(motor2f, speed2);
-//     analogWrite(motor1r, speed1);
+// analogWrite(motor1r, speed1);
+// analogWrite(motor2f, speed2);
+// analogWrite(motor2r, 0);
+// analogWrite(motor1f, 0);
 //     }
 //   else
 //   {
-//     analogWrite(motor1f, speed1);
-//     analogWrite(motor2r, speed2);
+// analogWrite(motor1r, 0);
+// analogWrite(motor2f, 0);
+// analogWrite(motor1f, speed1);
+// analogWrite(motor2r, speed2);
 //   }
 //   delay(turntime);
 //   stop();
+// return 1;
 // }
-void turn(char x)
+int turn(int mode)
 {
-  stop();
-  analogWrite(motor1f, speed1);
-  analogWrite(motor2f, speed2); //  move forward till we leave the node
-  // delay(200); // another logic is to move a little and then rotate till the next node.
-  // stop();
-  if (input2 && input4)
-  { // we leave the middle node when the middle left and middle right ir sensor is on gray
-    stop();
-  }
-  while (!input3) // rotate till it leaves the current black line
-  {
-    if (x == 'l')
-    {
-      analogWrite(motor1r, speed1);
-      analogWrite(motor2f, speed2);
-    }
-    else
-    {
-      analogWrite(motor1f, speed1);
-      analogWrite(motor2r, speed2);
-    }
-  }
-  // till now we have left the current black line
-  // now we will rotate will we find the next black line
-  if (x == 'l')
-  {
-    analogWrite(motor1r, speed1);
+  if (input2 == 1 && input3 == 1 && input4 == 1)
+  { // at a node
+    analogWrite(motor1f, speed1);
     analogWrite(motor2f, speed2);
   }
   else
   {
-    analogWrite(motor1f, speed1);
-    analogWrite(motor2r, speed2);
+    if (rotflag == 0) // rotate a little bit to leave the middle black line
+    {
+      if (mode == 0) // rotate left
+      {
+        analogWrite(motor1r, speed1);
+        analogWrite(motor2f, speed2);
+        analogWrite(motor2r, 0);
+        analogWrite(motor1f, 0);
+      }
+      else // rotate right
+      {
+        analogWrite(motor1r, 0);
+        analogWrite(motor2f, 0);
+        analogWrite(motor1f, speed1);
+        analogWrite(motor2r, speed2);
+      }
+      delay(300);
+      rotflag = 1;
+    }
+    if (input3 == 1) // reached the middle line again, we completed rotation
+    {
+      Serial.println("Rotation Completed");
+      rotflag = 0;
+      return 1;
+    }
+    if (mode == 0) // rotate left
+    {
+      analogWrite(motor1r, speed1);
+      analogWrite(motor2f, speed2);
+      analogWrite(motor2r, 0);
+      analogWrite(motor1f, 0);
+    }
+    else // rotate right
+    {
+      analogWrite(motor1r, 0);
+      analogWrite(motor2f, 0);
+      analogWrite(motor1f, speed1);
+      analogWrite(motor2r, speed2);
+    }
   }
-  while (input3)
-  {
-    Serial.println("rotating till it finds the middle line again");
-  }
-  stop();
+  return 0;
 }
 void setup()
 {
-
   // set  modes
   pinMode(IR1, INPUT);
   pinMode(IR2, INPUT);
@@ -207,12 +211,14 @@ void setup()
     // digitalWrite(buzzer, HIGH);
   } while (!client.connect(host, port));
 
-  digitalWrite(led_red, LOW);
   client.print("Obese American ate 69 giant ramen bowl but still is lighter than your mom"); // Send an acknowledgement to host(laptop)
   msg = client.readStringUntil('\n');                                                        // Read the message through the socket until new line char(\n)
   path = msg;
   move = true;
   Serial.println(path);
+  Serial.println("Starting the run!");
+  digitalWrite(led_red, LOW);
+  digitalWrite(led_green, HIGH);
 }
 
 void loop()
@@ -222,47 +228,87 @@ void loop()
   input3 = digitalRead(IR3);
   input4 = digitalRead(IR4);
   input5 = digitalRead(IR5);
-
-  if (!(input2 && input3 && input4))
-  { // switch to correct mode
-    mode = 0;
-  }
-  else
+  if (operation == 0) // move forward
   {
-    mode = 1;
-  }
-  Serial.print("mode ");
-  Serial.println(mode);
-
-  if (move)
-  { // start moving
-    Serial.println("MOVING...");
-    digitalWrite(led_red, LOW);
-    digitalWrite(led_green, HIGH);
-    if (atNode)
+    if (moveforwardtillreachnode())
     {
-      Serial.print("At a node... ");
-      char command = path[i++];
-      Serial.println(command);
-      if (command == 'l')
-      {
-        turn(command);
-      }
-      if (command == 'r')
-      {
-        turn(command);
-      }
-      Serial.println("Moving ahead!");
-      analogWrite(motor1f, speed1);
-      analogWrite(motor2f, speed2); // pushing the robot out of the node
+      operation = 1;
     }
-    Serial.println("Go to next");
-    goToNextNode();
-
-    if (i == path.length())
+  }
+  else if (operation == 1) // Next Command
+  {
+    char command = path[i++];
+    if (command == 'l')
     {
-      Serial.println("path complete");
-      move = false; // break out of the loop
+      Serial.println("Command to rotate left");
+      operation = 2;
+    }
+    else if (command == 'r')
+    {
+      Serial.println("Command to rotate right");
+      operation = 3;
+    }
+    else
+    {
+      Serial.println("Command to move normally");
+      operation = 4;
+    }
+  }
+  else if (operation == 2) // rotate left
+  {
+    if (turn(0))
+    {
+      operation = 1;
+    }
+  }
+  else if (operation == 3) // rotate right
+  {
+    if (turn(1))
+    {
+      operation = 1;
+    }
+  }
+  else if (operation == 4) // leave the current node
+  {
+    if (input2 == 1 && input3 == 1 && input4 == 1)
+    { // at a node
+      analogWrite(motor1f, speed1);
+      analogWrite(motor2f, speed2);
+    }
+    else if (i == path.length())
+    {
+      stop();
+      Serial.println("path complete, starting the terminating sequence ");
+      operation = 5;
+    }
+    else
+    {
+      stop();
+      operation = 0;
+    }
+  }
+  else if (operation == 5) // terminate
+  {
+    Serial.println("Going to the ending node!");
+    if (input3 == 1 && (input2 == 0 && input4 == 0)) // move forward if middle line detected only by middle sensor
+    {
+      analogWrite(motor1f, speed1);
+      analogWrite(motor2f, speed2);
+    }
+    else if (input2 == 1 && input4 == 0) // middle line detected by middle left sensor
+    {
+      analogWrite(motor1f, 0);
+      analogWrite(motor2f, speed2);
+    }
+    else if (input4 == 1 && input2 == 0) // middle line detected by middle right sensor
+    {
+      analogWrite(motor1f, speed1);
+      analogWrite(motor2f, 0);
+    }
+    else if (input3 == 0 && input2 == 0 && input4 == 0) // stop sign reached
+    {
+      // starting victory sequence
+      Serial.println("Reached the ending node!");
       stop();
       digitalWrite(led_green, LOW);
       digitalWrite(led_red, HIGH);
@@ -270,6 +316,20 @@ void loop()
       delay(5000);
       digitalWrite(led_red, LOW);
       digitalWrite(buzzer, HIGH);
+      operation = 7;
     }
+  }
+  else if (operation == 6) // Node Found now what to do
+  {
+    Serial.println("NODE FOUND!! Stopping all engines!"); // starting the node reaching ritual
+    stop();
+    digitalWrite(buzzer, LOW);
+    delay(1000);
+    digitalWrite(buzzer, HIGH);
+    operation = 1;
+  }
+  else
+  {
+    Serial.println("WE HAVE DONE IT!");
   }
 }
