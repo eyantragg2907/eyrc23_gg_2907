@@ -42,7 +42,7 @@ classmap = [
     "military_vehicles",
 ]
 
-modelpath = "FINAL.h5"
+modelpath = "model.tf"
 
 model = tf.keras.models.load_model(modelpath, compile=False)
 if model is None: raise Exception("Model not found at path")
