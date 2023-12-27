@@ -104,19 +104,59 @@ void goToNextNode()
   }
 }
 
+// void turn(char x)
+// {
+//   stop();
+//   if (x == 'l')
+//   {
+//     analogWrite(motor2f, speed2);
+//     analogWrite(motor1r, speed1);
+//     }
+//   else
+//   {
+//     analogWrite(motor1f, speed1);
+//     analogWrite(motor2r, speed2);
+//   }
+//   delay(turntime);
+//   stop();
+// }
 void turn(char x)
 {
   stop();
+  analogWrite(motor1f, speed1);
+  analogWrite(motor2f, speed2); //  move forward till we leave the node
+  // delay(200); // another logic is to move a little and then rotate till the next node.
+  // stop();
+  if (input2 && input4) // we leave the middle node when the middle left and middle right ir sensor is on gray
+    stop();
+  while (!input3) // rotate till it leaves the current black line
+  {
+    if (x == 'l')
+    {
+      analogWrite(motor1r, speed1);
+      analogWrite(motor2f, speed2);
+    }
+    else
+    {
+      analogWrite(motor1f, speed1);
+      analogWrite(motor2r, speed2);
+    }
+  }
+  // till now we have left the current black line
+  // now we will rotate will we find the next black line
   if (x == 'l')
   {
-    analogWrite(motor2f, speed2);
     analogWrite(motor1r, speed1);
-    delay(turntime);
+    analogWrite(motor2f, speed2);
   }
   else
   {
     analogWrite(motor1f, speed1);
     analogWrite(motor2r, speed2);
+  }
+  while (input3)
+  {
+    Serial.println("rotating till it finds the middle line again");
   }
   stop();
 }

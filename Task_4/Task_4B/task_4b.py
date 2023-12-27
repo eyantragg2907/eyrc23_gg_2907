@@ -46,10 +46,6 @@ commandsent = 0
 command = "nnnrlrrnrnln"
 ################# ADD UTILITY FUNCTIONS HERE #################
 
-def signal_handler(sig, frame):
-    print('Clean-up !')
-    # cleanup(sig)
-    sys.exit(0)
 
 def cleanup(s):
     s.close()
