@@ -44,6 +44,7 @@ detector = aruco.ArucoDetector(dictionary, parameters)
 ip = "192.168.229.92"     # Enter IP address of laptop after connecting it to WIFI hotspot
 commandsent = 0
 command = "nnnrlrrnrnln"
+command = "nnnn"
 ################# ADD UTILITY FUNCTIONS HERE #################
 
 def signal_handler(sig, frame):
