@@ -141,4 +141,5 @@ def show_image(filename):
 # st.image(im, caption="Arena with labels", use_column_width=True)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
+ 
