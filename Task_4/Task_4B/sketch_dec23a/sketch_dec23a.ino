@@ -44,14 +44,14 @@ int move = false;
 bool atNode = true;
 void forward()
 {
-  Serial.println("MOVING FORWARD");
+  Serial.println("MOVING FORWARD (ACTUAL)");
   if (mode == 0)
   { // bang bang
-    if (!input1)
+    if (input1)
     { // left IR hits black
       analogWrite(motor1f, speed1);
     }
-    else if (!input5)
+    else if (input5)
     { // right IR hits black
       analogWrite(motor2f, speed2);
     }
@@ -63,20 +63,22 @@ void forward()
   }
   else
   { // middle black line
-    if (!input3)
+    if (input3)
     { // following the line
       analogWrite(motor1f, speed1);
       analogWrite(motor2f, speed2);
     }
-    if (!input4)
+    if (input4)
     { // right IR touches black
       analogWrite(motor1f, speed1);
     }
-    if (!input2)
+    if (input2)
     { // left IR touches black
       analogWrite(motor2f, speed2);
     }
   }
+  Serial.println("Leaving the node... (800ms)");
+  delay(800); // move forward actually
 }
 void stop()
 {
@@ -88,7 +90,7 @@ void stop()
 void goToNextNode()
 {
   atNode = false;
-  if (!(input2 || input3 || input4))
+  if (input2 == 0 || input3 == 0 || input4 == 0)
   { // go ahead until middle IRs see black
     Serial.println("black forward march");
     forward();
@@ -96,7 +98,7 @@ void goToNextNode()
   else
   {
     stop();
-    Serial.println("NODE");
+    Serial.println(">>>> FOUND NODE <<<<");
     atNode = true;
     digitalWrite(buzzer, LOW);
     delay(1000);
@@ -222,15 +224,25 @@ void loop()
   input3 = digitalRead(IR3);
   input4 = digitalRead(IR4);
   input5 = digitalRead(IR5);
+  Serial.print(input1);
+  Serial.print(" ");
+  Serial.print(input2);
+  Serial.print(" ");
+  Serial.print(input3);
+  Serial.print(" ");
+  Serial.print(input4);
+  Serial.print(" ");
+  Serial.println(input5);
 
   if (!(input2 && input3 && input4))
   { // switch to correct mode
-    mode = 0;
+    mode = 1;
   }
   else
   {
-    mode = 1;
+    mode = 0;
   }
+
   Serial.print("mode ");
   Serial.println(mode);
 
