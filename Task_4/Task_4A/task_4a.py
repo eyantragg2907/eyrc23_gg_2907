@@ -140,7 +140,7 @@ def transform_frame(frame):
     out = out[:s, :s]
     out = cv2.resize(out, (1080, 1080), interpolation=cv2.INTER_AREA)
 
-    return out, s
+    return out, 1080
 
 
 def increase_brightness(img, value=100):
@@ -292,6 +292,7 @@ def task_4a_return():
         if "aruco-only" in sys.argv:
             frame, pts, events = get_events(frame)
             cv2.imwrite("frame.png", frame)
+            frame = add_rects_labels(frame, pts, ["placeholder"]*5)
             cv2.imshow("frame", frame)
             cv2.waitKey(0)
         elif "return_frame" in sys.argv:
