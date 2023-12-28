@@ -140,7 +140,7 @@ def transform_frame(frame):
     out = out[:s, :s]
     out = cv2.resize(out, (1080, 1080), interpolation=cv2.INTER_AREA)
 
-    return out, s
+    return out, 1080
 
 
 def increase_brightness(img, value=100):
