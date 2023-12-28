@@ -52,7 +52,8 @@ if len(sys.argv) < 1:
     modelpath = "model.tf"
 
     model = tf.keras.models.load_model(modelpath, compile=False)
-    if model is None: raise Exception("Model not found at path")
+    if model is None:
+        raise Exception("Model not found at path")
     model.compile(
         optimizer="adam",
         loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -73,15 +74,16 @@ def get_clean_video_frame(frames_to_skip=100):
         video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
     else:
         video = cv2.VideoCapture(1)
-    
+
     frames_to_skip = 100
     for _ in range(frames_to_skip):
         ret, frame = video.read()
 
     ret, frame = video.read()
-    if not ret: raise Exception("No frame found")
+    if not ret:
+        raise Exception("No frame found")
 
-    return frame 
+    return frame
 
 
 def classify_event(image):
@@ -136,7 +138,7 @@ def transform_frame(frame):
     M = cv2.getPerspectiveTransform(input_pts, output_pts)
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
-    out = cv2.resize(out, (1080,1080), interpolation = cv2.INTER_AREA)
+    out = cv2.resize(out, (1080, 1080), interpolation=cv2.INTER_AREA)
 
     return out, s
 
@@ -236,6 +238,7 @@ def add_rects_labels(frame, pts, labels):
         )
     return frame
 
+
 def initialise_identified_labels():
     global filenames
     labels = []
@@ -243,6 +246,7 @@ def initialise_identified_labels():
         label = classify_event(img)
         labels.append(label)
         identified_labels[key] = label
+
 
 def show_feed_and_release_video(video, frame):
     video.release()
@@ -288,7 +292,7 @@ def task_4a_return():
         if "aruco-only" in sys.argv:
             frame, pts, events = get_events(frame)
             cv2.imwrite("frame.png", frame)
-            cv2.imshow("frame",frame)
+            cv2.imshow("frame", frame)
             cv2.waitKey(0)
         elif "return_frame" in sys.argv:
             cv2.imwrite("frame.jpg", frame)
