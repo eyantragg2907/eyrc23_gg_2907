@@ -122,7 +122,7 @@ def transform_frame(frame):
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
 
     if DEBUG:
-        print(f"{pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
+        print(f"[DEBUG]\n{pt_A=}\n{pt_B=}\n{pt_C=}\n{pt_D=}\n[DEBUG END]")
 
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
     width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
@@ -156,6 +156,10 @@ def increase_brightness(img, value=100):
 
     return img
 
+def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
+    gaussian_3 = cv2.GaussianBlur(image, (0, 0), 2.0)
+    return cv2.addWeighted(image, 2.0, gaussian_3, -1.0, 0)
+
 
 def get_points_from_aruco(frame):
     (
@@ -171,7 +175,7 @@ def get_points_from_aruco(frame):
             continue
 
         if DEBUG:
-            print(f"{markerID=}\n")
+            print(f"[DEBUG] {markerID=}")
 
         corners = markerCorner.reshape((4, 2))
         (topLeft, topRight, bottomRight, bottomLeft) = corners
@@ -202,12 +206,12 @@ def get_aruco_data(frame):
 
 
 def get_pts_from_frame(frame, s):
-    S = 937
-    Apts = (np.array([[811 / S, 887 / S], [194 / S, 269 / S]]) * s).astype(int)
-    Bpts = (np.array([[628 / S, 705 / S], [620 / S, 695 / S]]) * s).astype(int)
-    Cpts = (np.array([[444 / S, 519 / S], [628 / S, 701 / S]]) * s).astype(int)
-    Dpts = (np.array([[440 / S, 516 / S], [183 / S, 260 / S]]) * s).astype(int)
-    Epts = (np.array([[136 / S, 212 / S], [200 / S, 276 / S]]) * s).astype(int)
+    S = 1080
+    Apts = (np.array([[940 / S, 1026 / S], [222 / S, 308 / S]]) * s).astype(int)
+    Bpts = (np.array([[729 / S, 816 / S], [717 / S, 802 / S]]) * s).astype(int)
+    Cpts = (np.array([[513 / S, 601 / S], [725 / S, 811 / S]]) * s).astype(int)
+    Dpts = (np.array([[509 / S, 597 / S], [206 / S, 293 / S]]) * s).astype(int)
+    Epts = (np.array([[157 / S, 245 / S], [227 / S, 313 / S]]) * s).astype(int)
 
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
@@ -217,6 +221,7 @@ def get_event_images(frame, pts):
     events = []
     for p, f in zip(pts, filenames):
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
+        event = unsharp_mask(event)
         cv2.imwrite(f, event)
         events.append(event)
     return events
@@ -291,8 +296,8 @@ def task_4a_return():
     if len(sys.argv) > 1:
         if "aruco-only" in sys.argv:
             frame, pts, events = get_events(frame)
+            frame = add_rects_labels(frame, pts, "ABCDE")
             cv2.imwrite("frame.png", frame)
-            frame = add_rects_labels(frame, pts, ["placeholder"]*5)
             cv2.imshow("frame", frame)
             cv2.waitKey(0)
         elif "return_frame" in sys.argv:
