@@ -120,12 +120,12 @@ def run_code(filename):
     try:
         pr = subprocess.check_output(
             f"conda activate GG_2907 && cd temp_models_quick && python task_4a_{filename}.py",
-            shell=True,
+            shell=True, stderr=subprocess.STDOUT,
         ).decode("utf-8")
         output = pr
         filename = f"arena_with_labels{filename}.jpg"
-    except Exception as e:
-        output = str(e)
+    except subprocess.CalledProcessError as e:
+        output = str(e) + "\nreturncode: " + str(e.returncode) +  "\n" + str(e.output) 
         filename = "firstframe.jpg"
     print("trying to show")
     return render_template("run_code.html", filename=filename, code_out=output)
