@@ -127,7 +127,7 @@ int turn(int mode)
   {
     if (rotflag == 0) // rotate a little bit to leave the middle black line
     {
-      if (mode == 0) // rotate left
+      if (mode == 1) // rotate left
       {
         analogWrite(motor1r, speed1);
         analogWrite(motor2f, speed2);
@@ -150,7 +150,7 @@ int turn(int mode)
       rotflag = 0;
       return 1;
     }
-    if (mode == 0) // rotate left
+    if (mode == 1) // rotate left
     {
       analogWrite(motor1r, speed1);
       analogWrite(motor2f, speed2);
@@ -232,7 +232,7 @@ void loop()
   {
     if (moveforwardtillreachnode())
     {
-      operation = 1;
+      operation = 6;
     }
   }
   else if (operation == 1) // Next Command
