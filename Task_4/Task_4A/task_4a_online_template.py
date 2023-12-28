@@ -20,17 +20,20 @@ def model_load():
     # -->LOL<<--[[{{LOAD_MODEL}}]]-->>LOL<<--
     pass
 
+
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 parameters = cv2.aruco.DetectorParameters()
 detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 
 filenames = "A.png B.png C.png D.png E.png".split()
 
+
 def classify_event(imagepath):
     global classmap
     # -->LOL<<--[[{{CLASSIFY_EVENT}}]]-->>LOL<<--
-    
+
     pass
+
 
 def get_events(frame):
     frame, side = transform_frame(frame)
@@ -45,7 +48,7 @@ def transform_frame(frame):
 
     if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
         raise Exception("Corners not detected")
-    
+
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
     width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
     maxWidth = max(int(width_AD), int(width_BC))
@@ -56,7 +59,7 @@ def transform_frame(frame):
 
     s = min(maxHeight, maxWidth)
     input_pts = np.float32([pt_A, pt_B, pt_C, pt_D])  # type: ignore
-    output_pts = np.float32([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]]) # type: ignore
+    output_pts = np.float32([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]])  # type: ignore
     M = cv2.getPerspectiveTransform(input_pts, output_pts)
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
@@ -229,6 +232,5 @@ def task_4a_return():
 
 ###############	Main Function	#################
 if __name__ == "__main__":
-
     identified_labels = task_4a_return()
     print(identified_labels)
