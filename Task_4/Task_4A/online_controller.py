@@ -54,8 +54,21 @@ def upload_file():
                 filename = secure_filename(filename_timestamped) # type: ignore
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 unzip = request.form.get("unzip")
-                
-                return redirect(url_for('upload_code', filename=filename))
+
+                if unzip:
+                    if extension == "zip":
+                        subprocess.check_output(
+                            f"conda activate GG_2907 && cd temp_models_quick && unzip {filename}",
+                            shell=True,
+                        )
+                        # now set filename to the unzipped folder
+                        filename = filename.split(".")[0]
+                        return redirect(url_for('upload_code', filename=filename))
+                    else:
+                        flash("File type not allowed for unzipping")
+                        return redirect(request.url)
+                else:
+                    return redirect(url_for('upload_code', filename=filename))
             else:
                 flash("File type not allowed")
                 return redirect(request.url)

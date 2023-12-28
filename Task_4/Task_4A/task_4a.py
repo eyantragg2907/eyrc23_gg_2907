@@ -82,7 +82,8 @@ def get_clean_video_frame(frames_to_skip=100):
     ret, frame = video.read()
     if not ret:
         raise Exception("No frame found")
-
+    
+    video.release()
     return frame
 
 
@@ -244,7 +245,8 @@ def add_rects_labels(frame, pts, labels):
     return frame
 
 
-def initialise_identified_labels():
+def initialise_identified_labels(identified_labels):
+
     global filenames
     labels = []
     for key, img in zip("ABCDE", filenames):
@@ -252,9 +254,10 @@ def initialise_identified_labels():
         labels.append(label)
         identified_labels[key] = label
 
+    return labels, identified_labels
 
-def show_feed_and_release_video(video, frame):
-    video.release()
+
+def show_feed_and_release_video(frame):
     cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
     frametoshow = cv2.resize(frame, (960, 960))
     cv2.imshow("Arena Feed", frametoshow)
@@ -302,12 +305,14 @@ def task_4a_return():
             cv2.waitKey(0)
         elif "return_frame" in sys.argv:
             cv2.imwrite("frame.jpg", frame)
+    
     frame, pts, events = get_events(frame)
 
-    identified_labels = intialise_identified_labels()
+    labels, identified_labels = initialise_identified_labels(identified_labels)
+
     frame = add_rects_labels(frame, pts, labels)
 
-    show_feed_and_release_video(video, frame)
+    show_feed_and_release_video(frame)
     ##################################################
     return identified_labels
 
