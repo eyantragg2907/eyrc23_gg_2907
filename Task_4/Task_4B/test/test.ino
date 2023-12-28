@@ -147,7 +147,7 @@ int turn(int mode)
       rotflag = 1;
       Serial.println("Rotated for 300ms to leave the middle black line!");
     }
-    else if (input3 == 1 && (input2 == 0 && input4 == 0)) // reached the middle line again, we completed rotation
+    else if (input3 == 1 && (input2 == 0 && input4 == 0) && (input1 == 0 && input5 == 0)) // reached the middle line again, we completed rotation
     {
       if (mode == 1) // getting the robot in the middle
       {
@@ -166,8 +166,6 @@ int turn(int mode)
       delay(200);
       Serial.println("Rotation Completed");
       rotflag = 0;
-      // stop();
-      // delay(10000);
       return 1;
     }
     else if (mode == 1) // rotate right
