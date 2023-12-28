@@ -14,8 +14,8 @@ from datetime import datetime
 import subprocess
 import cv2
 
-UPLOAD_FOLDER = "temp_models_quick/"
-ALLOWED_EXTENSIONS = {"h5", "pt", "keras", "pth"}
+UPLOAD_FOLDER = 'temp_models_quick/'
+ALLOWED_EXTENSIONS = {'h5', 'pt', 'keras', 'pth', 'zip', 'tf'}
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -51,10 +51,11 @@ def upload_file():
             if allowed_file(file.filename):
                 extension = file.filename.rsplit(".", 1)[1].lower()  # type: ignore
                 filename_timestamped = f"model_{str(datetime.now().timestamp()).replace('.', '_')}.{extension}"
-                filename = secure_filename(filename_timestamped)  # type: ignore
-                file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-
-                return redirect(url_for("upload_code", filename=filename))
+                filename = secure_filename(filename_timestamped) # type: ignore
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                unzip = request.form.get("unzip")
+                
+                return redirect(url_for('upload_code', filename=filename))
             else:
                 flash("File type not allowed")
                 return redirect(request.url)
