@@ -1,5 +1,13 @@
 import os
-from flask import Flask, flash, render_template, request, redirect, send_from_directory, url_for
+from flask import (
+    Flask,
+    flash,
+    render_template,
+    request,
+    redirect,
+    send_from_directory,
+    url_for,
+)
 import numpy as np
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -7,7 +15,7 @@ import subprocess
 import cv2
 
 UPLOAD_FOLDER = 'temp_models_quick/'
-ALLOWED_EXTENSIONS = {'h5', 'pt', 'keras', 'pth'}
+ALLOWED_EXTENSIONS = {'h5', 'pt', 'keras', 'pth', 'zip', 'tf'}
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -16,43 +24,59 @@ if not os.path.exists("temp_code_quick"):
 
 app = Flask(__name__)
 
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 app.secret_key = "e05o0504054oqp5"
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/', methods=['GET', 'POST'])
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route("/", methods=["GET", "POST"])
 def upload_file():
-    if request.method == 'POST':
+    if request.method == "POST":
         # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
+        if "file" not in request.files:
+            flash("No file part")
             return redirect(request.url)
-        file = request.files['file']
+        file = request.files["file"]
         # If the user does not select a file, the browser submits an
         # empty file without a filename.
-        if file.filename == '':
-            flash('No selected file')
+        if file.filename == "":
+            flash("No selected file")
             return redirect(request.url)
 
         if file:
             if allowed_file(file.filename):
-                extension = file.filename.rsplit('.', 1)[1].lower() # type: ignore
+                extension = file.filename.rsplit(".", 1)[1].lower()  # type: ignore
                 filename_timestamped = f"model_{str(datetime.now().timestamp()).replace('.', '_')}.{extension}"
                 filename = secure_filename(filename_timestamped) # type: ignore
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                unzip = request.form.get("unzip")
 
-                return redirect(url_for('upload_code', filename=filename))
+                if unzip:
+                    if extension == "zip":
+                        subprocess.check_output(
+                            f"conda activate GG_2907 && cd temp_models_quick && unzip {filename}",
+                            shell=True,
+                        )
+                        # now set filename to the unzipped folder
+                        filename = filename.split(".")[0]
+                        return redirect(url_for('upload_code', filename=filename))
+                    else:
+                        flash("File type not allowed for unzipping")
+                        return redirect(request.url)
+                else:
+                    return redirect(url_for('upload_code', filename=filename))
             else:
-                flash('File type not allowed')
+                flash("File type not allowed")
                 return redirect(request.url)
-        
+
     return render_template("upload.html")
 
-@app.route('/upload-code/<filename>', methods=['GET', 'POST'])
+
+@app.route("/upload-code/<filename>", methods=["GET", "POST"])
 def upload_code(filename):
     if request.method == "POST":
         code_load = request.form.get("code_load")
@@ -66,24 +90,37 @@ def upload_code(filename):
             with open(f"temp_models_quick/task_4a_{filename}.py", "w") as f:
                 with open("task_4a_online_template.py", "r") as template:
                     # add 4 space indent to each line of text_load
-                    code_load = "\n".join(["    " + line for line in code_load.split("\n")])
+                    code_load = "\n".join(
+                        ["    " + line for line in code_load.split("\n")]
+                    )
                     # add 4 space indent to each line of text_inference
-                    code_classify = "\n".join(["    " + line for line in code_classify.split("\n")])
+                    code_classify = "\n".join(
+                        ["    " + line for line in code_classify.split("\n")]
+                    )
                     templ = template.read()
-                    templ = templ.replace("    # -->LOL<<--[[{{LOAD_MODEL}}]]-->>LOL<<--", code_load)
-                    templ = templ.replace("    # -->LOL<<--[[{{CLASSIFY_EVENT}}]]-->>LOL<<--", code_classify)
+                    templ = templ.replace(
+                        "    # -->LOL<<--[[{{LOAD_MODEL}}]]-->>LOL<<--", code_load
+                    )
+                    templ = templ.replace(
+                        "    # -->LOL<<--[[{{CLASSIFY_EVENT}}]]-->>LOL<<--",
+                        code_classify,
+                    )
                     templ = templ.replace("__{{REPLACE THIS}}__", filename)
                     f.write(templ)
 
-            return redirect(url_for('run_code', filename=filename))
-        
+            return redirect(url_for("run_code", filename=filename))
+
     return render_template("upload_2.html", filename=filename)
 
-@app.route('/run-code/<filename>', methods=['GET'])
+
+@app.route("/run-code/<filename>", methods=["GET"])
 def run_code(filename):
     print("running code...")
     try:
-        pr = subprocess.check_output(f"conda activate GG_2907 && cd temp_models_quick && python task_4a_{filename}.py", shell=True).decode('utf-8')
+        pr = subprocess.check_output(
+            f"conda activate GG_2907 && cd temp_models_quick && python task_4a_{filename}.py",
+            shell=True,
+        ).decode("utf-8")
         output = pr
         filename = f"arena_with_labels{filename}.jpg"
     except Exception as e:
@@ -92,9 +129,12 @@ def run_code(filename):
     print("trying to show")
     return render_template("run_code.html", filename=filename, code_out=output)
 
+
 @app.route("/show-image/<filename>")
 def show_image(filename):
     return send_from_directory("temp_models_quick", filename, as_attachment=True)
+
+
 # st.title("Task 4A: Model Injection")
 # st.header("I'm telling you, don't inject weird stuff, or I might anger you")
 
@@ -142,4 +182,3 @@ def show_image(filename):
 
 if __name__ == "__main__":
     app.run(debug=False)
- 

@@ -116,48 +116,50 @@ int moveforwardtillreachnode()
 //   stop();
 // return 1;
 // }
+
 int turn(int mode)
 {
   if (input2 == 1 && input3 == 1 && input4 == 1)
   { // at a node
     analogWrite(motor1f, speed1);
     analogWrite(motor2f, speed2);
-  }
+    delay(200);
+  } // Now we have left the node for sure!
   else
   {
     if (rotflag == 0) // rotate a little bit to leave the middle black line
     {
-      if (mode == 1) // rotate left
+      if (mode == 1) // rotate right
       {
         analogWrite(motor1r, speed1);
         analogWrite(motor2f, speed2);
         analogWrite(motor2r, 0);
         analogWrite(motor1f, 0);
       }
-      else // rotate right
+      else // rotate left
       {
         analogWrite(motor1r, 0);
         analogWrite(motor2f, 0);
         analogWrite(motor1f, speed1);
         analogWrite(motor2r, speed2);
       }
-      delay(300);
+      delay(400);
       rotflag = 1;
     }
-    if (input3 == 1) // reached the middle line again, we completed rotation
+    else if (input3 == 1) // reached the middle line again, we completed rotation
     {
       Serial.println("Rotation Completed");
       rotflag = 0;
       return 1;
     }
-    if (mode == 1) // rotate left
+    else if (mode == 1) // rotate right
     {
       analogWrite(motor1r, speed1);
       analogWrite(motor2f, speed2);
       analogWrite(motor2r, 0);
       analogWrite(motor1f, 0);
     }
-    else // rotate right
+    else // rotate left
     {
       analogWrite(motor1r, 0);
       analogWrite(motor2f, 0);
@@ -167,6 +169,7 @@ int turn(int mode)
   }
   return 0;
 }
+
 void setup()
 {
   // set  modes
@@ -228,6 +231,16 @@ void loop()
   input3 = digitalRead(IR3);
   input4 = digitalRead(IR4);
   input5 = digitalRead(IR5);
+  Serial.print(input1);
+  Serial.print(" ");
+  Serial.print(input2);
+  Serial.print(" ");
+  Serial.print(input3);
+  Serial.print(" ");
+  Serial.print(input4);
+  Serial.print(" ");
+  Serial.println(input5);
+  Serial.println(operation);
   if (operation == 0) // move forward
   {
     if (moveforwardtillreachnode())

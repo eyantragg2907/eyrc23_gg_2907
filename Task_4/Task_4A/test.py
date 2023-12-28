@@ -1,18 +1,28 @@
 from io import BytesIO
-import tensorflow as tf 
+import tensorflow as tf
 import numpy as np
 import cv2
 
-classmap = ["combat", "destroyedbuilding", "fire", "humanitarianaid", "militaryvehicles"]
+classmap = [
+    "combat",
+    "destroyedbuilding",
+    "fire",
+    "humanitarianaid",
+    "militaryvehicles",
+]
 modelpath = r"FINAL.h5"
 model = tf.keras.models.load_model(modelpath, compile=False)
-model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-              metrics=['accuracy'])
+model.compile(
+    optimizer="adam",
+    loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    metrics=["accuracy"],
+)
+
+
 def classify_event(image):
-    '''
+    """
     ADD YOUR CODE HERE
-    '''
+    """
 
     img = tf.keras.preprocessing.image.load_img(image, target_size=(75, 75))
     img = np.array(img, dtype=np.float32)
@@ -23,6 +33,7 @@ def classify_event(image):
     event = classmap[predicted_class]
 
     return event
+
 
 # prompt: load mv.png and call classify_evennt
 

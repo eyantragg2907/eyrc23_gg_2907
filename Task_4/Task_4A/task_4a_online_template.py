@@ -7,6 +7,9 @@ from datetime import datetime
 import torch
 import torchvision
 
+import torch
+import torchvision
+
 DEBUG = True
 
 classmap = [
@@ -22,17 +25,20 @@ def model_load():
     # -->LOL<<--[[{{LOAD_MODEL}}]]-->>LOL<<--
     pass
 
+
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 parameters = cv2.aruco.DetectorParameters()
 detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 
 filenames = "A.png B.png C.png D.png E.png".split()
 
+
 def classify_event(imagepath):
     global classmap
     # -->LOL<<--[[{{CLASSIFY_EVENT}}]]-->>LOL<<--
-    
+
     pass
+
 
 def get_events(frame):
     frame, side = transform_frame(frame)
@@ -47,7 +53,7 @@ def transform_frame(frame):
 
     if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
         raise Exception("Corners not detected")
-    
+
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
     width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
     maxWidth = max(int(width_AD), int(width_BC))
@@ -58,13 +64,13 @@ def transform_frame(frame):
 
     s = min(maxHeight, maxWidth)
     input_pts = np.float32([pt_A, pt_B, pt_C, pt_D])  # type: ignore
-    output_pts = np.float32([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]]) # type: ignore
+    output_pts = np.float32([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]])  # type: ignore
     M = cv2.getPerspectiveTransform(input_pts, output_pts)
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
-    # out = cv2.resize(out, (1024,1024), interpolation = cv2.INTER_AREA)
-
-    return out, s
+    out = cv2.resize(out, (1080, 1080), interpolation=cv2.INTER_AREA)
+    
+    return out, 1080  # why is this hardcoded?
 
 
 def increase_brightness(img, value=100):
@@ -126,12 +132,12 @@ def get_aruco_data(frame):
 
 
 def get_pts_from_frame(frame, s):
-    S = 937
-    Apts = (np.array([[811 / S, 887 / S], [194 / S, 269 / S]]) * s).astype(int)
-    Bpts = (np.array([[628 / S, 705 / S], [620 / S, 695 / S]]) * s).astype(int)
-    Cpts = (np.array([[444 / S, 519 / S], [628 / S, 701 / S]]) * s).astype(int)
-    Dpts = (np.array([[440 / S, 516 / S], [183 / S, 260 / S]]) * s).astype(int)
-    Epts = (np.array([[136 / S, 212 / S], [200 / S, 276 / S]]) * s).astype(int)
+    S = 1080
+    Apts = (np.array([[940 / S, 1026 / S], [222 / S, 308 / S]]) * s).astype(int)
+    Bpts = (np.array([[729 / S, 816 / S], [717 / S, 802 / S]]) * s).astype(int)
+    Cpts = (np.array([[513 / S, 601 / S], [725 / S, 811 / S]]) * s).astype(int)
+    Dpts = (np.array([[509 / S, 597 / S], [206 / S, 293 / S]]) * s).astype(int)
+    Epts = (np.array([[157 / S, 245 / S], [227 / S, 313 / S]]) * s).astype(int)
 
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
@@ -141,9 +147,14 @@ def get_event_images(frame, pts):
     events = []
     for p, f in zip(pts, filenames):
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
+        event = unsharp_mask(event)
         cv2.imwrite(f, event)
         events.append(event)
     return events
+
+def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
+    gaussian_3 = cv2.GaussianBlur(image, (0, 0), 2.0)
+    return cv2.addWeighted(image, 2.0, gaussian_3, -1.0, 0)
 
 
 def add_rects_labels(frame, pts, labels):
@@ -165,6 +176,37 @@ def add_rects_labels(frame, pts, labels):
 
 ##############################################################
 
+def get_clean_video_frame(frames_to_skip=100):
+    cap = None
+    if sys.platform == "win32":
+        cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+    else:
+        cap = cv2.VideoCapture(1)
+
+    for _ in range(frames_to_skip):
+        ret, frame = cap.read()
+
+    ret, frame = cap.read()
+
+    if not ret:
+        raise Exception("No frame found")
+
+    cap.release()
+
+    return frame
+
+def initialise_identified_labels(identified_labels):
+
+    global filenames
+    labels = []
+    for key, img in zip("ABCDE", filenames):
+        label = classify_event(img)
+        labels.append(label)
+        identified_labels[key] = label
+
+    return labels, identified_labels
 
 def task_4a_return():
     """
@@ -186,51 +228,24 @@ def task_4a_return():
     identified_labels = {}
 
     ##############	ADD YOUR CODE HERE	##############
-    if sys.platform == "win32":
-        video = cv2.VideoCapture(1, cv2.CAP_DSHOW)
-        video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-        video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
-    else:
-        video = cv2.VideoCapture(1)
 
-    num_of_frames_skip = 100
-    for i in range(num_of_frames_skip):
-        ret, frame = video.read()
-
-    ret, frame = video.read()
-    if len(sys.argv) > 1:
-        frame = cv2.imread("arena.jpeg")
-        ret = True
-    if ret is True:
-        frame = increase_brightness(frame, value=30)
-        cv2.imwrite("firstframe.jpg", frame)
-    else:
-        raise Exception("No frame found")
+    frame = get_clean_video_frame()
 
     frame, pts, events = get_events(frame)
 
-    labels = []
-    for key, img in zip("ABCDE", filenames):
-        label = classify_event(img)
-        labels.append(label)
-        identified_labels[key] = label
-
+    
+    labels, identified_labels = initialise_identified_labels(identified_labels)
+    
     frame = add_rects_labels(frame, pts, labels)
-    video.release()
-    # cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
+
     frametoshow = cv2.resize(frame, (480, 480))
+
     cv2.imwrite("arena_with_labels__{{REPLACE THIS}}__.jpg", frametoshow)
-    # cv2.imshow("Arena Feed", frametoshow)
-    # while True:
-    #     if cv2.waitKey(1) & 0xFF == ord("q"):
-    #         cv2.destroyAllWindows()
-    #         break
-    ##################################################
+
     return identified_labels
 
 
 ###############	Main Function	#################
 if __name__ == "__main__":
-
     identified_labels = task_4a_return()
     print(identified_labels)
