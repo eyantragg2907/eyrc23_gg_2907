@@ -57,8 +57,9 @@ def upload_file():
 
                 if unzip:
                     if extension == "zip":
+                        folder_out = filename.rsplit(".", 1)[0]
                         subprocess.check_output(
-                            f"conda activate GG_2907 && cd temp_models_quick && unzip {filename}",
+                            f"cd temp_models_quick && unzip {filename} -d {folder_out}",
                             shell=True,
                         )
                         # now set filename to the unzipped folder
