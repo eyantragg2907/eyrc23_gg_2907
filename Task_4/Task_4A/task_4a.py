@@ -42,21 +42,46 @@ classmap = [
     "military_vehicles",
 ]
 
-modelpath = "model.tf"
-
-model = tf.keras.models.load_model(modelpath, compile=False)
-if model is None: raise Exception("Model not found at path")
-model.compile(
-    optimizer="adam",
-    loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-    metrics=["accuracy"],
-)
-
-dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
-parameters = cv2.aruco.DetectorParameters()
-detector = cv2.aruco.ArucoDetector(dictionary, parameters)
-
 filenames = "A.png B.png C.png D.png E.png".split()
+
+modelpath = None
+model = None
+detector = None
+
+if len(sys.argv) < 1:
+    modelpath = "model.tf"
+
+    model = tf.keras.models.load_model(modelpath, compile=False)
+    if model is None: raise Exception("Model not found at path")
+    model.compile(
+        optimizer="adam",
+        loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+        metrics=["accuracy"],
+    )
+
+if True:
+    dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
+    parameters = cv2.aruco.DetectorParameters()
+    detector = cv2.aruco.ArucoDetector(dictionary, parameters)
+
+
+def get_clean_video_frame(frames_to_skip=100):
+    video = None
+    if sys.platform == "win32":
+        video = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+        video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+    else:
+        video = cv2.VideoCapture(1)
+    
+    frames_to_skip = 100
+    for _ in range(frames_to_skip):
+        ret, frame = video.read()
+
+    ret, frame = video.read()
+    if not ret: raise Exception("No frame found")
+
+    return frame 
 
 
 def classify_event(image):
@@ -111,7 +136,7 @@ def transform_frame(frame):
     M = cv2.getPerspectiveTransform(input_pts, output_pts)
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
-    # out = cv2.resize(out, (1024,1024), interpolation = cv2.INTER_AREA)
+    out = cv2.resize(out, (1080,1080), interpolation = cv2.INTER_AREA)
 
     return out, s
 
@@ -211,6 +236,24 @@ def add_rects_labels(frame, pts, labels):
         )
     return frame
 
+def initialise_identified_labels():
+    global filenames
+    labels = []
+    for key, img in zip("ABCDE", filenames):
+        label = classify_event(img)
+        labels.append(label)
+        identified_labels[key] = label
+
+def show_feed_and_release_video(video, frame):
+    video.release()
+    cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
+    frametoshow = cv2.resize(frame, (960, 960))
+    cv2.imshow("Arena Feed", frametoshow)
+    while True:
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            cv2.destroyAllWindows()
+            break
+
 
 ##############################################################
 
@@ -235,44 +278,26 @@ def task_4a_return():
     identified_labels = {}
 
     ##############	ADD YOUR CODE HERE	##############
-    if sys.platform == "win32":
-        video = cv2.VideoCapture(1, cv2.CAP_DSHOW)
-        video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-        video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
-    else:
-        video = cv2.VideoCapture(1)
-
-    num_of_frames_skip = 100
-    for i in range(num_of_frames_skip):
-        ret, frame = video.read()
-
-    ret, frame = video.read()
-    if len(sys.argv) > 1:
+    frame = None
+    if len(sys.argv) > 1 and "no-video" in sys.argv:
         frame = cv2.imread("arena.jpeg")
-        ret = True
-    if ret is True:
-        # frame = increase_brightness(frame, value=30)
-        cv2.imwrite("firstframe.jpg", frame)
     else:
-        raise Exception("No frame found")
+        frame = get_clean_video_frame()
 
+    if len(sys.argv) > 1:
+        if "aruco-only" in sys.argv:
+            frame, pts, events = get_events(frame)
+            cv2.imwrite("frame.png", frame)
+            cv2.imshow("frame",frame)
+            cv2.waitKey(0)
+        elif "return_frame" in sys.argv:
+            cv2.imwrite("frame.jpg", frame)
     frame, pts, events = get_events(frame)
 
-    labels = []
-    for key, img in zip("ABCDE", filenames):
-        label = classify_event(img)
-        labels.append(label)
-        identified_labels[key] = label
-
+    identified_labels = intialise_identified_labels()
     frame = add_rects_labels(frame, pts, labels)
-    video.release()
-    cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
-    frametoshow = cv2.resize(frame, (480, 480))
-    cv2.imshow("Arena Feed", frametoshow)
-    while True:
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            cv2.destroyAllWindows()
-            break
+
+    show_feed_and_release_video(video, frame)
     ##################################################
     return identified_labels
 
