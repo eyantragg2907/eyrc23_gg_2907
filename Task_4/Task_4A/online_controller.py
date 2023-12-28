@@ -15,7 +15,7 @@ import subprocess
 import cv2
 
 UPLOAD_FOLDER = "temp_models_quick/"
-ALLOWED_EXTENSIONS = {"h5", "pt", "keras", "pth"}
+ALLOWED_EXTENSIONS = {"h5", "pt", "keras", "pth", "zip", "tf"}
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -53,8 +53,23 @@ def upload_file():
                 filename_timestamped = f"model_{str(datetime.now().timestamp()).replace('.', '_')}.{extension}"
                 filename = secure_filename(filename_timestamped)  # type: ignore
                 file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+                unzip = request.form.get("unzip")
 
-                return redirect(url_for("upload_code", filename=filename))
+                if unzip:
+                    if extension == "zip":
+                        folder_out = filename.rsplit(".", 1)[0]
+                        subprocess.check_output(
+                            f"cd temp_models_quick && unzip {filename} -d {folder_out}",
+                            shell=True,
+                        )
+                        # now set filename to the unzipped folder
+                        filename = filename.split(".")[0]
+                        return redirect(url_for("upload_code", filename=filename))
+                    else:
+                        flash("File type not allowed for unzipping")
+                        return redirect(request.url)
+                else:
+                    return redirect(url_for("upload_code", filename=filename))
             else:
                 flash("File type not allowed")
                 return redirect(request.url)
@@ -106,11 +121,13 @@ def run_code(filename):
         pr = subprocess.check_output(
             f"conda activate GG_2907 && cd temp_models_quick && python task_4a_{filename}.py",
             shell=True,
-        ).decode("utf-8")
+            stderr=subprocess.STDOUT,
+            universal_newlines=True,
+        )
         output = pr
         filename = f"arena_with_labels{filename}.jpg"
-    except Exception as e:
-        output = str(e)
+    except subprocess.CalledProcessError as e:
+        output = str(e) + "\nreturncode: " + str(e.returncode) + "\n" + str(e.output)
         filename = "firstframe.jpg"
     print("trying to show")
     return render_template("run_code.html", filename=filename, code_out=output)
