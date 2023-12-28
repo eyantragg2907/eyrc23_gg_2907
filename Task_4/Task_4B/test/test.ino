@@ -166,6 +166,8 @@ int turn(int mode)
       delay(200);
       Serial.println("Rotation Completed");
       rotflag = 0;
+      stop();
+      delay(10000);
       return 1;
     }
     else if (mode == 1) // rotate right
