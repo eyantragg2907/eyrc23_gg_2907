@@ -143,11 +143,27 @@ int turn(int mode)
         analogWrite(motor1f, speed1);
         analogWrite(motor2r, speed2);
       }
-      delay(400);
+      delay(300);
       rotflag = 1;
+      Serial.println("Rotated for 400ms to leave the middle black line!");
     }
-    else if (input3 == 1) // reached the middle line again, we completed rotation
+    else if (input3 == 1 && (input2 == 0 && input4 == 0)) // reached the middle line again, we completed rotation
     {
+      if (mode == 1) // getting the robot in the middle
+      {
+        analogWrite(motor1r, speed1);
+        analogWrite(motor2f, speed2);
+        analogWrite(motor2r, 0);
+        analogWrite(motor1f, 0);
+      }
+      else // rotate left
+      {
+        analogWrite(motor1r, 0);
+        analogWrite(motor2f, 0);
+        analogWrite(motor1f, speed1);
+        analogWrite(motor2r, speed2);
+      }
+      delay(200);
       Serial.println("Rotation Completed");
       rotflag = 0;
       return 1;
