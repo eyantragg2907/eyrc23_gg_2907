@@ -282,3 +282,6 @@ Task_4/Task_4A/E.png
 Task_4/Task_4A/pjrtrain/**
 Task_4/Task_4A/pjrtest/**
 Task_4/Task_4A/pjr_model_*
+
+Task_4/Task_4A/model.tf
+Task_4/Task_4A/modelzip.zip
