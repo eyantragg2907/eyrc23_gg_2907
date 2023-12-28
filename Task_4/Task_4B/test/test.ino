@@ -145,7 +145,7 @@ int turn(int mode)
       }
       delay(300);
       rotflag = 1;
-      Serial.println("Rotated for 400ms to leave the middle black line!");
+      Serial.println("Rotated for 300ms to leave the middle black line!");
     }
     else if (input3 == 1 && (input2 == 0 && input4 == 0)) // reached the middle line again, we completed rotation
     {
@@ -166,8 +166,8 @@ int turn(int mode)
       delay(200);
       Serial.println("Rotation Completed");
       rotflag = 0;
-      stop();
-      delay(10000);
+      // stop();
+      // delay(10000);
       return 1;
     }
     else if (mode == 1) // rotate right
