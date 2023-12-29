@@ -24,7 +24,7 @@ const int buzzer = 23;
 int speed1 = 255; // motor speeds
 int speed2 = 255;
 
-int turntime = 1000; // in milliseconds
+int turntime = 750; // in milliseconds
 
 int input1, input2, input3, input4, input5; // inputs of IR sensors, returns HIGH when black line
 
@@ -99,7 +99,7 @@ int moveforwardtillreachnode()
 int turn(int mode)
 {
   stop();
-  if (mode == 0)
+  if (mode == 1)
   {
     analogWrite(motor1r, speed1);
     analogWrite(motor2f, speed2);
