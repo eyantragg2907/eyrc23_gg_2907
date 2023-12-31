@@ -24,6 +24,8 @@ const int buzzer = 23;
 int speed1 = 255; // motor speeds
 int speed2 = 255;
 
+const int TURN_SPEED = 180;
+
 int turntime = 1000; // in milliseconds
 
 int input1, input2, input3, input4, input5; // inputs of IR sensors, returns HIGH when black line
@@ -112,8 +114,8 @@ int turn(int mode)
     {
       if (mode == 1) // rotate left
       {
-        analogWrite(motor1r, speed1);
-        analogWrite(motor2f, speed2);
+        analogWrite(motor1r, TURN_SPEED);
+        analogWrite(motor2f, TURN_SPEED);
         analogWrite(motor2r, 0);
         analogWrite(motor1f, 0);
       }
@@ -121,8 +123,8 @@ int turn(int mode)
       {
         analogWrite(motor1r, 0);
         analogWrite(motor2f, 0);
-        analogWrite(motor1f, speed1);
-        analogWrite(motor2r, speed2);
+        analogWrite(motor1f, TURN_SPEED);
+        analogWrite(motor2r, TURN_SPEED);
       }
     }
     else
@@ -205,7 +207,7 @@ void loop()
   Serial.print(input4);
   Serial.print(" ");
   Serial.println(input5);
-  
+
   if (operation == 0) // move forward
   {
     if (moveforwardtillreachnode())
