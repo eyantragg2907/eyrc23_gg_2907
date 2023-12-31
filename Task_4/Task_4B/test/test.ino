@@ -3,7 +3,7 @@
 const char *ssid = "pjrWifi";          // Enter your wifi hotspot ssid
 const char *password = "SimplePass01"; // Enter your wifi hotspot password
 const uint16_t port = 8002;
-const char *host = "192.168.229.144";
+const char *host = "192.168.54.92";
 
 const int IR1 = 5; // IR sensors pins
 const int IR2 = 18;
