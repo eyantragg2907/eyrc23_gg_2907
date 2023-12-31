@@ -286,3 +286,4 @@ Task_4/Task_4A/pjr_model_*
 Task_4/Task_4A/model.tf
 Task_4/Task_4A/modelzip.zip
 Task_4/Task_4A/train_og
+Task_4/Task_4B/test/logs/**
