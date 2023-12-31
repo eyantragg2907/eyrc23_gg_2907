@@ -52,6 +52,7 @@ void stop()
 
 int moveforwardtillreachnode()
 {
+  Serial.println("Moving forward");
   if (!(input2 == 1 && input3 == 1 && input4 == 1)) // if not at a node
   {
     if (input2 == 0 && input3 == 0 && input4 == 0) // bang bang controller
@@ -195,6 +196,16 @@ void loop()
   input3 = digitalRead(IR3);
   input4 = digitalRead(IR4);
   input5 = digitalRead(IR5);
+  Serial.print(input1);
+  Serial.print(" ");
+  Serial.print(input2);
+  Serial.print(" ");
+  Serial.print(input3);
+  Serial.print(" ");
+  Serial.print(input4);
+  Serial.print(" ");
+  Serial.println(input5);
+  
   if (operation == 0) // move forward
   {
     if (moveforwardtillreachnode())

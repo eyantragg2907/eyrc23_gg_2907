@@ -1,0 +1,7524 @@
+...
+...
+...
+WiFi connected with IP: 192.168.54.50
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+Connection to host failed
+nnnn
+Starting the run!
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 1 1 1 0
+Moving forward
+0 1 1 1 0
+NODE FOUND!! Stopping all engines!
+0 1 1 0 1
+Command to move normally
+0 1 1 0 1
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 1 1
+Moving forward
+0 1 1 1 1
+NODE FOUND!! Stopping all engines!
+0 1 1 1 1
+Command to move normally
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 1
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+0 0 1 1 0
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+ 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 1 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 0 0 0
+Moving forward
+0 0 0 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 0 0 0
+Moving forward
+0 0 0 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 1 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 1 1 1 0
+Moving forward
+0 1 1 1 0
+NODE FOUND!! Stopping all engines!
+0 1 1 1 0
+Command to move normally
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+1 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 1 1 1 0
+0 0 1 1 0
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+1 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 0 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 1 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 1
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 0 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 0 1 1 0
+Moving forward
+0 1 1 1 0
+Moving forward
+0 1 1 1 0
+NODE FOUND!! Stopping all engines!
+0 0 1 1 0
+Command to move normally
+0 0 1 1 0
+path complete, starting the terminating sequence 
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 1 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 1 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 1 0 0
+Going to the ending node!
+0 0 0 0 0
+Going to the ending node!
+Reached the ending node!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE DONE IT!
+0 0 0 0 0
+WE HAVE
