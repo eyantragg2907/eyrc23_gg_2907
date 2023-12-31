@@ -44,26 +44,26 @@ def cleanup(s):
     sys.exit(0)
 
     
-def send_to_robot():
+def send_to_robot(s,conn):
+    data = conn.recv(1024)
+    print(data)
+    print(command)
+    conn.sendall(str.encode(str(command)))
+    time.sleep(1)
+    cleanup(s)
+    
+def give_s_conn():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((ip, 8002))
         s.listen()
         conn, addr = s.accept()
-        with conn:
-            print(f"Connected by {addr}")
-            data = conn.recv(1024)
-            print(data)
-            print(command)
-            conn.sendall(str.encode(str(command)))
-            time.sleep(1)
-            cleanup(s)
-    
-
-
+        print(f"Connected by {addr}")
+        return s,conn
 
 ###############	Main Function	#################
 if __name__ == "__main__":
     if commandsent == 0:
-        send_to_robot()
+        s,conn=give_s_conn()
+        send_to_robot(s,conn)
         commandsent = 1

@@ -33,7 +33,6 @@ import time
 import pandas as pd
 import socket
 import signal		
-import math
 
 ##############################################################
 OUT_FILE_LOC = "live_location.csv"
@@ -47,77 +46,31 @@ commandsent = 0
 command = "nnnrlrrnrnln"
 command = "nnnn"
 ################# ADD UTILITY FUNCTIONS HERE #################
-def get_current_rot(frame):
-    allcorners, ids, rejected = detector.detectMarkers(frame)
-    index= np.where(ids == 97)[0][0]
-    corners = allcorners[index]
-    tl = corners[0][0]	# top left
-    tr = corners[0][1]	# top right
-    br = corners[0][2]	# bottom right
-    bl = corners[0][3]	# bottom left
-    top = (tl[0]+tr[0])/2, -((tl[1]+tr[1])/2)
-    centre = (tl[0]+tr[0]+bl[0]+br[0])/4, -((tl[1]+tr[1]+bl[1]+br[1])/4)
-    angle=0
-    try:
-        angle = round(math.degrees(np.arctan((top[1]-centre[1])/(top[0]-centre[0]))))
-    except:
-        # add some conditions for 90 and 270
-        if(top[1]>centre[1]):
-            angle = 90
-        elif(top[1]<centre[1]):
-            angle = 270
-    if(top[0] >= centre[0] and top[1] < centre[1]):
-        angle = 360 + angle
-    elif(top[0]<centre[0]):
-        angle = 180 + angle
-    return angle
 
-def look_for_rotation(s,conn,video):
-    data = conn.recv(1024)
-    if data == 'rotate': # rotation started get the current angle of aruco 97
-        frame = update_position(video)
-        startrot=get_current_rot(frame) # current rotation
-        rot=startrot
-        print("THE start ROTATION IS ",startrot)
-        diff =abs(rot-startrot)%180
-        while diff < 85:
-            frame = update_position(video)
-            rot = get_current_rot(frame) # update rot based on aruco rotation
-            diff=abs(rot-startrot)%180
-            print("rotating...")
-            print(f"THE start angle: {startrot}, the curr angle: {rot}, the rotation: {diff}")
-            time.sleep(0.5)
-        print("we rotated about:",diff)
-        conn.sendall(str.encode(str("STOP")))
 
 def cleanup(s):
     s.close()
     print("cleanup done")
     sys.exit(0)
+
     
-def send_to_robot(s,conn):
-    data = conn.recv(1024)
-    print(data)
-    print(command)
-    conn.sendall(str.encode(str(command)))
-    time.sleep(1)
-    
-def give_s_conn():
+def send_to_robot():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((ip, 8002))
         s.listen()
         conn, addr = s.accept()
-        print(f"Connected by {addr}")
-        return s,conn
+        with conn:
+            print(f"Connected by {addr}")
+            while True:
+                data = conn.recv(1024)
+                print(data)
+                print(command)
+                conn.sendall(str.encode(str(command)))
+                time.sleep(1)
+                cleanup(s)
     
-def get_frame(video):
-    ret, frame = video.read()
-    frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
-    return frame
-
-def update_position(video):
-    frame = get_frame(video)
+def update_position(frame):
     frame, side = transform_frame(frame)
     get_robot_coords(frame)
     return frame
@@ -126,7 +79,7 @@ def transform_frame(frame):
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
 
     if pt_A is None or pt_B is None or pt_C is None or pt_D is None: raise Exception("Corners not found correctly")
-    # print(f"{pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
+    print(f"{pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
 
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
     width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
@@ -159,7 +112,7 @@ def get_points_from_aruco(frame):
         if markerID not in reqd_ids:
             continue
 
-        # print(f"{markerID=}\n")
+        print(f"{markerID=}\n")
 
         corners = markerCorner.reshape((4, 2))
         (topLeft, topRight, bottomRight, bottomLeft) = corners
@@ -217,7 +170,7 @@ def get_robot_coords(frame):
         return None
     try:
         coordinate = arucolat_long.loc[NearestMarker]
-        # print(f'Nearest Marker ID: {NearestMarker} and Nearest marker lat_long: {coordinate}')
+        print(f'Nearest Marker ID: {NearestMarker} and Nearest marker lat_long: {coordinate}')
         write_csv(coordinate, OUT_FILE_LOC)
         return coordinate
     except:
@@ -248,22 +201,25 @@ if __name__ == "__main__":
     for i in range(num_of_frames_skip):
         ret, frame = video.read()
     while True:
-        frame = update_position(video) # gets the new frame updates, transforms it, gets the robot coords
-        corners, ids, rejected = detector.detectMarkers(frame)
-        aruco.drawDetectedMarkers(frame, corners, ids)
-        cv2.imshow("Arena Feed", frame)
-        
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break 
-          
+        ret, frame = video.read()
+        # if len(sys.argv) > 1:
+        #     frame = cv2.imread("arena.jpg")
+        # if ret is True:
+        #     addr = f"temp_snap_{str(datetime.now().timestamp()).replace('.', '-')}.png"
+        #     cv2.imwrite(addr, frame)
+        frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
+        frame = update_position(frame)
         if commandsent == 0:
             s,conn = give_s_conn()
             send_to_robot(s,conn)
             commandsent = 1
-        else:
-            look_for_rotation(s,conn,video)
-        time.sleep(0.25) 
+        corners, ids, rejected = detector.detectMarkers(frame)
+        aruco.drawDetectedMarkers(frame, corners, ids)
+        cv2.imshow("Arena Feed", frame)
 
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
+        time.sleep(0.25)
 
     video.release()
     cv2.destroyAllWindows()
