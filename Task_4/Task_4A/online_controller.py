@@ -125,12 +125,22 @@ def run_code(filename):
             universal_newlines=True,
         )
         output = pr
+        Aimg = f"A{filename}.png"
+        Bimg = f"B{filename}.png"
+        Cimg = f"C{filename}.png"
+        Dimg = f"D{filename}.png"
+        Eimg = f"E{filename}.png"
         filename = f"arena_with_labels{filename}.jpg"
     except subprocess.CalledProcessError as e:
         output = str(e) + "\nreturncode: " + str(e.returncode) + "\n" + str(e.output)
+        Aimg = f"A.png"
+        Bimg = f"B.png"
+        Cimg = f"C.png"
+        Dimg = f"D.png"
+        Eimg = f"E.png"
         filename = "firstframe.jpg"
     print("trying to show")
-    return render_template("run_code.html", filename=filename, code_out=output)
+    return render_template("run_code.html", filename=filename, A=Aimg, B=Bimg, C=Cimg, D=Dimg, E=Eimg, code_out=output)
 
 
 @app.route("/show-image/<filename>")
