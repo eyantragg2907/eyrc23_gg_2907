@@ -41,21 +41,25 @@ with torch.inference_mode():
 
             print(f"Predicted class: {class_pred}")
 
-# def model_load():
-#     modelpath = "pjr_model_overfit_75_20231228_124401.pt"
-#     model = torch.jit.load(modelpath, map_location="cpu")  # type: ignore
-#     model.eval()
-#     return model
+"""
+# LOAD
 
-# def predict(model, imagepath):
-#     model = model_load()
-#     img = torchvision.io.read_image(imagepath).float()
-#     img = torchvision.transforms.Compose([torchvision.transforms.Resize((75, 75), antialias=True)])(img) 
-#     x = torch.unsqueeze(img, 0)
-#     with torch.inference_mode():
-#         y_pred = model(x)
+modelpath = "pjr_model_overfit_75_20231228_124401.pt"
+model = torch.jit.load(modelpath, map_location="cpu")  # type: ignore
+model.eval()
+return model
 
-#     class_val = int(y_pred.argmax(dim=1)[0])
-#     class_pred = classmap[class_val]
+# PRED
 
-#     return class_pred
+model = model_load()
+img = torchvision.io.read_image(imagepath).float()
+img = torchvision.transforms.Compose([torchvision.transforms.Resize((75, 75), antialias=True)])(img) 
+x = torch.unsqueeze(img, 0)
+with torch.inference_mode():
+    y_pred = model(x)
+
+class_val = int(y_pred.argmax(dim=1)[0])
+class_pred = classmap[class_val]
+
+return class_pred
+"""

@@ -30,7 +30,7 @@ dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 parameters = cv2.aruco.DetectorParameters()
 detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 
-filenames = "A.png B.png C.png D.png E.png".split()
+filenames = "A__{{REPLACE THIS}}__.png B__{{REPLACE THIS}}__.png C__{{REPLACE THIS}}__.png D__{{REPLACE THIS}}__.png E__{{REPLACE THIS}}__.png".split()
 
 
 def classify_event(imagepath):

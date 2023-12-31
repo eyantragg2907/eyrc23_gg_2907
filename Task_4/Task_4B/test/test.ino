@@ -3,7 +3,7 @@
 const char *ssid = "pjrWifi";          // Enter your wifi hotspot ssid
 const char *password = "SimplePass01"; // Enter your wifi hotspot password
 const uint16_t port = 8002;
-const char *host = "192.168.229.92";
+const char *host = "192.168.229.144";
 
 const int IR1 = 5; // IR sensors pins
 const int IR2 = 18;
@@ -125,7 +125,7 @@ int turn(int mode)
   { // at a node
     analogWrite(motor1f, speed1);
     analogWrite(motor2f, speed2);
-    delay(400);
+    delay(600); // 600
     node = false;
   } // Now we have left the node for sure!
   else
