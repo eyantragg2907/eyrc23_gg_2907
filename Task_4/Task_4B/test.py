@@ -50,13 +50,12 @@ def send_to_robot():
         conn, addr = s.accept()
         with conn:
             print(f"Connected by {addr}")
-            while True:
-                data = conn.recv(1024)
-                print(data)
-                print(command)
-                conn.sendall(str.encode(str(command)))
-                time.sleep(1)
-                cleanup(s)
+            data = conn.recv(1024)
+            print(data)
+            print(command)
+            conn.sendall(str.encode(str(command)))
+            time.sleep(1)
+            cleanup(s)
     
 
 
