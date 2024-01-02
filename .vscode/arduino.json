@@ -1,6 +1,6 @@
 {
     "configuration": "FlashFreq=80,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
     "board": "esp32:esp32:esp32doit-devkit-v1",
-    "sketch": "Task_4/Task_4B/test/test.ino",
+    "sketch": "Task_4/Task_4B/oldmethodtest/oldmethodtest.ino",
     "port": "/dev/tty.usbserial-0001"
 }
