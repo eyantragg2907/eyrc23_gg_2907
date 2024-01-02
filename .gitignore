@@ -283,6 +283,7 @@ Task_4/Task_4A/data
 Task_4/Task_4A/data/pjrtrain
 Task_4/Task_4A/data/pjrtest
 Task_4/Task_4A/pjr_model_*
+Task_4/Task_4A/pjr_models
 
 Task_4/Task_4A/model.tf
 Task_4/Task_4A/modelzip.zip
@@ -292,3 +293,4 @@ Task_4/Task_4B/test/logs/**
 Task_4/Task_4A/arena.jpeg
 Task_4/Task_4A/firstframe.jpg
 Task_4/Task_4A/frame.png
+Task_4/Task_4A/server/log.txt

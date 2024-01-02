@@ -1,20 +1,79 @@
-<<!doctype html>
-<title>New Model Test</title>
-<h1>New Model Test: Results</h1>
-<center>
-    <h2>Results</h2>
-    <img src="{{ url_for('show_image', filename=filename) }}" alt="arena image" width="500" height="500"><br>
-    <img src="{{ url_for('show_image', filename=A) }}" alt="A image" width="100" height="100">
-    <img src="{{ url_for('show_image', filename=B) }}" alt="B image" width="100" height="100">
-    <img src="{{ url_for('show_image', filename=C) }}" alt="C image" width="100" height="100">
-    <img src="{{ url_for('show_image', filename=D) }}" alt="D image" width="100" height="100">
-    <img src="{{ url_for('show_image', filename=E) }}" alt="E image" width="100" height="100">
-    <a href="{{ url_for('show_image', filename=filename) }}">Show arena</a><br>
-    <a href="{{ url_for('show_image', filename=A) }}">Show A</a><br>
-    <a href="{{ url_for('show_image', filename=B) }}">Show B</a><br>
-    <a href="{{ url_for('show_image', filename=C) }}">Show C</a><br>
-    <a href="{{ url_for('show_image', filename=D) }}">Show D</a><br>
-    <a href="{{ url_for('show_image', filename=E) }}">Show E</a><br>
-    <h2>Code Out</h2>
-    <textarea name="code_out" rows="10" cols="80">{{ code_out }}</textarea><br>
-</center>
+<!DOCTYPE html>
+<html lang="en">
+
+</html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 4A: Test AI Model</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <style>
+        .arenaimg:hover {
+            opacity: 0.7;
+            border: 4px solid blue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sticky-top end-0 pe-4" style="background-color: aliceblue;">
+        <p class="text-end fs-6 fw-light text-secondary">Utility to test new AI Models for Task 4A developed by Pranjal Rastogi |
+            v<span>{{
+                version }}</span></p>
+    </div>
+    <div class="container mt-4" style="width: 80vw">
+        <h1>Test a new AI Model for Task 4A</h1>
+        <h2>Results</h2>
+        {% if success %}
+        <div class="text-success fw-bold fs-5 text-center">Successful code run. Took <span class="fw-light">{{ timetaken }}</span>.</div>
+
+        <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                    <a href="{{ url_for('show_image', filename=filename) }}">
+                        <img src="{{ url_for('show_image', filename=filename) }}" class="arenaimg" alt="Image of Arena"
+                            width="500" height="500">
+                    </a>
+                </div>
+            </div>
+            <div class="row row-cols-auto mt-3 d-flex justify-content-center">
+                {% for img in imgs %}
+                <div class="col">
+                    <a href="{{ url_for('show_image', filename=img) }}"><img class="arenaimg"
+                            src="{{ url_for('show_image', filename=img) }}" alt="Image titled {{ img }}" width="100"
+                            height="100">
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="fst-italic">Click on the images to download them. Bottom images are in order of A to
+                        E, left to right.</p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-danger fw-bold fs-5">Unsuccesful code run.  Took <span class="fw-light">{{ timetaken }}</span>.</p>
+        {% endif %}
+        <h2><span class="font-monospace">stdout and stderr:</span></h2>
+        <div class="m-4">
+            <textarea class="form-control font-monospace" name="code_out" rows="20" cols="90"
+                disabled>{{ code_out }}</textarea>
+        </div>
+        <h3 class="text-center">Thank you for using this utility.</h3>
+        <div class="text-center mb-5">
+            <a href="{{ url_for('upload_file') }}" class="btn btn-secondary">Do another</a>
+        </div>
+    </div>
+</body>
+
+</html>

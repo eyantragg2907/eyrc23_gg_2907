@@ -1,28 +1,95 @@
-<!doctype html>
-<title>New Model Test</title>
-<h1>New Model Test: Upload Code (INJECTION)</h1>
-{% with messages = get_flashed_messages() %}
- {% if messages %}
-  <ul>
-  {% for message in messages %}
-    <li>{{ message }}</li>
-  {% endfor %}
-  </ul>
- {% endif %}
-{% endwith %}
-<center>
-  <h2>
-    Don't inject bad code or I will kill you promptly. Remember, I have your IP.
-  </h2>
-    MODEL = {{ filename }}
-<form method=post enctype=multipart/form-data id="mainform">
-  the code_load should be the CONTENT of a function that loads the model.<br>
-  it should return model at the end. please write that.<br>
-  the model name is given above, use that name.<br>
-  CODE_LOAD: <textarea name="code_load" rows="10" cols="80"></textarea><br>
-  this needs to call the above function (<pre>model = model_load()</pre>) and then classify the image.<br>
-  it should return the class. The classmap variable is available. The function also takes an input as imagepath, which is the path to the image being classified.<br>
-  CODE_CLASSIFY: <textarea name="code_classify" rows="10" cols="80"></textarea><br>
-  <input type=submit value="Submit">
-</form>
-</center>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 4A: Test AI Model</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body>
+
+  <div class="sticky-top end-0 pe-4" style="background-color: aliceblue;">
+    <p class="text-end fs-6 fw-light text-secondary">Utility to test new AI Models for Task 4A developed by Pranjal Rastogi | v<span>{{
+        version }}</span></p>
+  </div>
+
+  <div class="container mt-4" style="width: 80vw">
+    <h1>Test a new AI Model for Task 4A</h1>
+    <h2>Upload Code - Injection (Part 2 of 2)</h2>
+    <h3 class="text-danger fst-italic">Don't inject bad code or I will kill you. Remember, I have your IP.</h3>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger" role="alert">
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <p class="fs-5">The uploaded model is stored as <span class="font-monospace fw-bold">{{ filename }}</span></p>
+    <div class="fs-6 fw-light">If you zipped a folder, this path contains the folder. Hence, your final path could be of
+      the form <span class="font-monospace">r'above_path\folder_you_zipped'</span>. This is not the case if you archived
+      files directly.</div>
+    <form method=post enctype=multipart/form-data id="mainform">
+      <div class="mb-3">
+        <label class="form-label" for="loadingCodeField" aria-describedby="loadHelp">Code to Load the Model:</label>
+        <textarea class="form-control font-monospace" id="loadingCodeField" name="code_load" rows="10"
+          cols="90"></textarea>
+        <div id="loadHelp" class="form-text">
+          <ul>
+            <li>The above should be the <strong class="fst-italic">content</strong> of a function that loads the model,
+              so assume one level of indent already.</li>
+            <li>The function has <strong>no arguments</strong> passed to it.</li>
+            <li>The function <strong>needs to return the model</strong> at the end of it. A recommended way to achieve
+              this is adding
+              <span class="font-monospace">return model</span> at the end of your code block.
+            </li>
+            <li>Please use the model path given above.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="inferenceCodeField" aria-describedby="infHelp">Code to Classify
+          (Inference):</label>
+        <textarea class="form-control font-monospace" id="inferenceCodeField" name="code_classify" rows="10"
+          cols=90"></textarea>
+        <div id="infHelp" class="form-text">
+          <ul>
+            <li>
+              Again, the code is the <strong class="fst-italic">content</strong> of a function that classifies the
+              image. Assume one level of indent already.
+            </li>
+            <li>
+              The function has one argument passed to it, <span class="font-monospace">imagepath</span>, which is the
+              path to the image which needs to be classified.
+            </li>
+            <li>
+              The function has to return the class. The <span class="font-monospace">classmap</span> variable is
+              available in the scope of the function.
+            </li>
+            <li>
+              It is recommended to use <span class="font-monospace">model = model_load()</span> to load the model, and
+              then use it to classify the image. The model is <strong>not</strong> loaded automatically.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" type=submit>Run Code</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
