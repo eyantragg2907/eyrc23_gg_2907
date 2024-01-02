@@ -63,8 +63,8 @@ def transform_frame(frame):
     maxHeight = max(int(height_AB), int(height_CD))
 
     s = min(maxHeight, maxWidth)
-    input_pts = np.float32([pt_A, pt_B, pt_C, pt_D])  # type: ignore
-    output_pts = np.float32([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]])  # type: ignore
+    input_pts = np.array([pt_A, pt_B, pt_C, pt_D], dtype=np.float32)
+    output_pts = np.array([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]], dtype=np.float32)
     M = cv2.getPerspectiveTransform(input_pts, output_pts)
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
