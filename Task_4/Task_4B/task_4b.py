@@ -42,10 +42,10 @@ dictionary = aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
 parameters = aruco.DetectorParameters()
 detector = aruco.ArucoDetector(dictionary, parameters)
 
-ip = "192.168.229.92"  # Enter IP address of laptop after connecting it to WIFI hotspot
+ip = "192.168.54.144"  # Enter IP address of laptop after connecting it to WIFI hotspot
 commandsent = 0
 command = "nnnrlrrnrnln"
-command = "nnnn"
+command = "nrnn"
 
 
 ################# ADD UTILITY FUNCTIONS HERE #################
@@ -79,6 +79,7 @@ def get_current_rot(frame):
 
 def look_for_rotation(s, conn, video):
     data = conn.recv(1024)
+    data = data.decode("utf-8")
     if data == "rotate":  # rotation started get the current angle of aruco 97
         frame = update_position(video)
         startrot = get_current_rot(frame)  # current rotation
@@ -93,7 +94,7 @@ def look_for_rotation(s, conn, video):
             print(
                 f"THE start angle: {startrot}, the curr angle: {rot}, the rotation: {diff}"
             )
-            time.sleep(0.5)
+            # time.sleep(0.5)
         print("we rotated about:", diff)
         conn.sendall(str.encode(str("STOP")))
 
@@ -109,7 +110,7 @@ def send_to_robot(s, conn):
     print(data)
     print(command)
     conn.sendall(str.encode(str(command)))
-    time.sleep(1)
+    # time.sleep(1)
 
 
 def give_s_conn():
@@ -124,12 +125,14 @@ def give_s_conn():
 
 def get_frame(video):
     ret, frame = video.read()
+    print(frame.shape)
     frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
     return frame
 
 
 def update_position(video):
     frame = get_frame(video)
+
     frame, side = transform_frame(frame)
     get_robot_coords(frame)
     return frame
@@ -139,8 +142,8 @@ def transform_frame(frame):
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
 
     if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
+        print(f"{pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
         raise Exception("Corners not found correctly")
-    # print(f"{pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
 
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
     width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
@@ -212,12 +215,16 @@ def get_pxcoords(id, ids, corners):
         return []
 
 
+prevclosestmarker = None
 def get_nearestmarker(id, ids, corners):
+    global prevclosestmarker
     mindist = float("inf")
     closestmarker = None
     coords1 = get_pxcoords(id, ids, corners)
-    # if coords1 == []:
-    # return None
+    print(coords1)
+    if len(coords1) == 0:
+        return prevclosestmarker
+    
     for markerCorner, markerID in zip(corners, ids):
         if markerID != 97:
             corners = markerCorner.reshape((4, 2))
@@ -226,6 +233,7 @@ def get_nearestmarker(id, ids, corners):
             if dist < mindist:  # type: ignore
                 closestmarker = markerID
                 mindist = dist
+    prevclosestmarker = closestmarker
     return closestmarker
 
 
@@ -261,7 +269,9 @@ if __name__ == "__main__":
         video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
         video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
     else:
-        video = cv2.VideoCapture(1)
+        video = cv2.VideoCapture(0)
+        video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
     num_of_frames_skip = 100
     for i in range(num_of_frames_skip):
         ret, frame = video.read()
@@ -282,7 +292,7 @@ if __name__ == "__main__":
             commandsent = 1
         else:
             look_for_rotation(s, conn, video)  # type: ignore
-        time.sleep(0.25)
+        time.sleep(0.10)
 
     video.release()
     cv2.destroyAllWindows()
