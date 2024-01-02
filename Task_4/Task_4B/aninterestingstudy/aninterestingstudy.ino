@@ -154,7 +154,7 @@ int turn(int mode)
             rotflag = 1;
             Serial.println("Rotated for 300ms to leave the middle black line!");
         }
-        else if (input234_binary == 0b110 || input234_binary == 0b011 || input234_binary == 0b010) // reached the middle line again, we completed rotation
+        else if ((input234_binary == 0b110 || input234_binary == 0b011 || input234_binary == 0b010) && (input5 == 0 && input1 == 0)) // reached the middle line again, we completed rotation
         {
             stop();
             // query IRs, for checking after momentum
@@ -166,7 +166,7 @@ int turn(int mode)
             input234_binary |= temp3 << 1;
             input234_binary |= temp4 << 0;
             // now if its okay, i can say we have reached line
-            if (input234_binary == 0b110 || input234_binary == 0b011 || input234_binary == 0b010) {
+            if (input234_binary == 0b010) {
                 Serial.println("Rotation Completed");
                 rotflag = 0;
                 delay(3000);

@@ -31,7 +31,7 @@ import signal
 
 ##############################################################
 
-ip = "192.168.229.144"     # Enter IP address of laptop after connecting it to WIFI hotspot
+ip = "192.168.54.144"     # Enter IP address of laptop after connecting it to WIFI hotspot
 commandsent = 0
 command = "nrnn"
 command = "nnrnlnrnrnrln"
