@@ -56,7 +56,7 @@ def upload_file():
                 # log IP address, time, and user agent
                 with open("log.txt", "a") as f:
                     f.write(
-                        f"{nowtime} - {request.remote_addr} - {request.user_agent}\n"
+                        f"{nowtime} - {request.remote_addr} - {request.user_agent} | OGNAM: {file.filename}\n"
                     )
 
                 extension = file.filename.rsplit(".", 1)[1].lower()
