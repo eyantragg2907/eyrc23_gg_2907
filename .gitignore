@@ -279,8 +279,9 @@ Task_4/Task_4A/C.png
 Task_4/Task_4A/D.png
 Task_4/Task_4A/E.png
 
-Task_4/Task_4A/pjrtrain/**
-Task_4/Task_4A/pjrtest/**
+Task_4/Task_4A/data
+Task_4/Task_4A/data/pjrtrain
+Task_4/Task_4A/data/pjrtest
 Task_4/Task_4A/pjr_model_*
 
 Task_4/Task_4A/model.tf

@@ -1,4 +1,4 @@
-CAMERA_ID = 1  # 0 for internal, 1 for external as a basis
+CAMERA_ID = 1  # 0 for internal, 1 for external (usually)
 
 import cv2
 from datetime import datetime
@@ -12,6 +12,8 @@ else:
     # take a photo
     for i in range(num_of_frames_skip):
         ret, frame = cap.read()
+
+    ret, frame = cap.read()
 
     # save the photo
     if ret is True:

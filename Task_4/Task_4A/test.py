@@ -1,3 +1,5 @@
+## Quick and dirty test script for Task 4A
+
 from io import BytesIO
 import tensorflow as tf
 import numpy as np
@@ -12,6 +14,8 @@ classmap = [
 ]
 modelpath = r"FINAL.h5"
 model = tf.keras.models.load_model(modelpath, compile=False)
+if model is None:
+    raise Exception("Model not found")
 model.compile(
     optimizer="adam",
     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),

@@ -103,6 +103,9 @@ def classify_event(image):
     # print(img.shape)
     img = tf.expand_dims(img, axis=0)
     # print(img.shape)
+    if model is None:
+        raise Exception("Don't infer before loading model")
+    
     prediction = model.predict(img)
     predicted_class = np.argmax(prediction[0], axis=-1)
 
@@ -125,6 +128,10 @@ def transform_frame(frame):
     if DEBUG:
         print(f"[DEBUG]\n{pt_A=}\n{pt_B=}\n{pt_C=}\n{pt_D=}\n[DEBUG END]")
 
+    if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
+        print(f"{pt_A=}, {pt_B=}, {pt_C=}, {pt_D=}")
+        raise Exception("Corners not detected")
+
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
     width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
     maxWidth = max(int(width_AD), int(width_BC))
@@ -134,8 +141,8 @@ def transform_frame(frame):
     maxHeight = max(int(height_AB), int(height_CD))
 
     s = min(maxHeight, maxWidth)
-    input_pts = np.float32([pt_A, pt_B, pt_C, pt_D])
-    output_pts = np.float32([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]])
+    input_pts = np.array([pt_A, pt_B, pt_C, pt_D], dtype=np.float32)
+    output_pts = np.array([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]], dtype=np.float32)
     M = cv2.getPerspectiveTransform(input_pts, output_pts)
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]

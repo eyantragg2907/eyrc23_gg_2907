@@ -1,4 +1,4 @@
-CAMERA_ID = 1 # 0 for internal, 1 for external as a basis
+CAMERA_ID = 1  # 0 for internal, 1 for external as a basis
 
 import cv2
 from datetime import datetime
@@ -10,6 +10,7 @@ dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 parameters = cv2.aruco.DetectorParameters()
 detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 
+
 def get_aruco_data(frame):
     # plt.figure()
     # plt.imshow(frame)
@@ -20,6 +21,7 @@ def get_aruco_data(frame):
     if len(c) == 0:
         raise Exception("No Aruco Markers Found")
     return c, i.flatten(), r
+
 
 def get_points_from_aruco(frame):
     (
@@ -59,7 +61,7 @@ def transform_frame(frame):
     if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
         print(f"{pt_A=}, {pt_B=}, {pt_C=}, {pt_D=}")
         raise Exception("Corners not detected")
-    
+
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
     width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
     maxWidth = max(int(width_AD), int(width_BC))
@@ -69,14 +71,16 @@ def transform_frame(frame):
     maxHeight = max(int(height_AB), int(height_CD))
 
     s = min(maxHeight, maxWidth)
-    input_pts = np.float32([pt_A, pt_B, pt_C, pt_D]) # type: ignore
-    output_pts = np.float32([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]]) # type: ignore
-    M = cv2.getPerspectiveTransform(input_pts, output_pts) # type: ignore
+    input_pts = np.array([pt_A, pt_B, pt_C, pt_D], dtype=np.float32)
+    output_pts = np.array([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]], dtype=np.float32)
+    M = cv2.getPerspectiveTransform(input_pts, output_pts)
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
     # out = cv2.resize(out, (1024,1024), interpolation = cv2.INTER_AREA)
 
     return out, s
+
+
 def get_pts_from_frame(frame, s):
     S = 937
     Apts = (np.array([[811 / S, 887 / S], [194 / S, 269 / S]]) * s).astype(int)
@@ -87,6 +91,7 @@ def get_pts_from_frame(frame, s):
 
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
+
 def get_event_images(frame, pts, filenames):
     events = []
     for p, f in zip(pts, filenames):
@@ -95,6 +100,7 @@ def get_event_images(frame, pts, filenames):
         events.append(event)
     return events
 
+
 def get_events(frame, filenames):
     frame, side = transform_frame(frame)
     pts = get_pts_from_frame(frame, side)
@@ -102,8 +108,8 @@ def get_events(frame, filenames):
 
     return frame, pts, events
 
-def main():
 
+def main():
     num_of_frames_skip = 100
     # Initialize the camera
     cap = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
@@ -114,7 +120,7 @@ def main():
         ret, frame = cap.read()
 
     # frame = increase_brightness(frame, value=30)
-    
+
     # set 02
     # A = "fire"
     # B = "destroyed_building"
@@ -146,10 +152,10 @@ def main():
         print("Now we wait")
         if c == 5:
             break
-        time.sleep(420) # 7 minutes
+        time.sleep(420)  # 7 minutes
         print("Next frame")
     print("Done")
-    
+
     cap.release()
 
 
