@@ -25,7 +25,6 @@
 import cv2
 import cv2.aruco as aruco
 import numpy as np
-import tensorflow as tf
 import sys
 from datetime import datetime
 import csv
@@ -54,21 +53,22 @@ def cleanup(s):
     sys.exit(0)
 
     
-def send_to_robot():
+def send_to_robot(s,conn):
+    data = conn.recv(1024)
+    print(data)
+    print(command)
+    conn.sendall(str.encode(str(command)))
+    time.sleep(1)
+    cleanup(s)
+    
+def give_s_conn():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((ip, 8002))
         s.listen()
         conn, addr = s.accept()
-        with conn:
-            print(f"Connected by {addr}")
-            while True:
-                data = conn.recv(1024)
-                print(data)
-                print(command)
-                conn.sendall(str.encode(str(command)))
-                time.sleep(1)
-                cleanup(s)
+        print(f"Connected by {addr}")
+        return s,conn
     
 def update_position(frame):
     frame, side = transform_frame(frame)
@@ -210,7 +210,7 @@ if __name__ == "__main__":
         frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
         frame = update_position(frame)
         if commandsent == 0:
-            s,conn = give_s_conn()
+            s,conn=give_s_conn()
             send_to_robot(s,conn)
             commandsent = 1
         corners, ids, rejected = detector.detectMarkers(frame)
