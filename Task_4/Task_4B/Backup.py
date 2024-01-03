@@ -152,8 +152,8 @@ def get_nearestmarker(id,ids,corners):
     mindist= float('inf')
     closestmarker = None
     coords1 = get_pxcoords(id,ids,corners)
-    # if coords1 == []: 
-        # return None
+    if len(coords1) == 0:
+        return prevclosestmarker
     for (markerCorner, markerID) in zip(corners, ids):
         if markerID != 97:
             corners = markerCorner.reshape((4, 2))
@@ -214,9 +214,9 @@ if __name__ == "__main__":
             s,conn=give_s_conn()
             send_to_robot(s,conn)
             commandsent = 1
-        corners, ids, rejected = detector.detectMarkers(frame)
-        aruco.drawDetectedMarkers(frame, corners, ids)
-        cv2.imshow("Arena Feed", frame)
+        # corners, ids, rejected = detector.detectMarkers(frame)
+        # aruco.drawDetectedMarkers(frame, corners, ids)
+        # cv2.imshow("Arena Feed", frame)
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
