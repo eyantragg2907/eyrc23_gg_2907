@@ -3,7 +3,7 @@
 const char *ssid = "pjrWifi";          // Enter your wifi hotspot ssid
 const char *password = "SimplePass01"; // Enter your wifi hotspot password
 const uint16_t port = 8002;
-const char *host = "192.168.54.144";
+const char *host = "192.168.54.92";
 
 const int IR1 = 5; // IR sensors pins
 const int IR2 = 18;
@@ -59,13 +59,13 @@ int moveforwardtillreachnode()
         {
             if (input1 == 1 && input5 == 0) // left line detected by left sensor
             {
-                analogWrite(motor1f, speed1);
+                analogWrite(motor1f, 150);
                 analogWrite(motor2f, 0);
             }
             else if (input5 == 1 && input1 == 0) // right line detected by  right sensor
             {
                 analogWrite(motor1f, 0);
-                analogWrite(motor2f, speed2);
+                analogWrite(motor2f, 150);
             }
             else
             {
@@ -81,11 +81,11 @@ int moveforwardtillreachnode()
         else if (input2 == 1 && input4 == 0 && input3 == 0) // middle line detected by middle left sensor
         {
             analogWrite(motor1f, 0);
-            analogWrite(motor2f, speed2);
+            analogWrite(motor2f, 150);
         }
         else if (input4 == 1 && input2 == 0 && input3 == 0) // middle line detected by middle right sensor
         {
-            analogWrite(motor1f, speed1);
+            analogWrite(motor1f, 150);
             analogWrite(motor2f, 0);
         }
         return 0;
@@ -125,7 +125,7 @@ int turn(int mode)
     { // at a node
         analogWrite(motor1f, speed1);
         analogWrite(motor2f, speed2);
-        delay(500);
+        delay(550);
         node = false;
     } // Now we have left the node for sure!
     else
@@ -155,7 +155,7 @@ int turn(int mode)
             Serial.println("Rotation Completed");
             rotflag = 0;
             stop();
-            delay(3000);
+            delay(100);
             node = true;
             return 1;
         }
@@ -294,7 +294,7 @@ void loop()
         { // at a node
             analogWrite(motor1f, speed1);
             analogWrite(motor2f, speed2);
-            delay(200);
+            delay(300);
         }
         else if (i == path.length())
         {
@@ -319,11 +319,11 @@ void loop()
         else if (input2 == 1 && input4 == 0 && input3 == 0) // middle line detected by middle left sensor
         {
             analogWrite(motor1f, 0);
-            analogWrite(motor2f, speed2);
+            analogWrite(motor2f, 150);
         }
         else if (input4 == 1 && input4 == 0 && input3 == 0) // middle line detected by middle right sensor
         {
-            analogWrite(motor1f, speed1);
+            analogWrite(motor1f, 150);
             analogWrite(motor2f, 0);
         }
         else if (input3 == 0 && input2 == 0 && input4 == 0) // stop sign reached
