@@ -25,7 +25,7 @@
 import cv2
 import cv2.aruco as aruco
 import numpy as np
-import tensorflow as tf
+# import tensorflow as tfs
 import sys
 from datetime import datetime
 import csv
@@ -42,7 +42,7 @@ dictionary = aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
 parameters = aruco.DetectorParameters()
 detector = aruco.ArucoDetector(dictionary, parameters)
 
-ip = "192.168.54.144"  # Enter IP address of laptop after connecting it to WIFI hotspot
+ip = "192.168.54.92"  # Enter IP address of laptop after connecting it to WIFI hotspot
 commandsent = 0
 command = "nnnrlrrnrnln"
 command = "nrnn"
@@ -50,31 +50,34 @@ command = "nrnn"
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 def get_current_rot(frame):
-    allcorners, ids, rejected = detector.detectMarkers(frame)
-    index = np.where(ids == 97)[0][0]
-    corners = allcorners[index]
-    tl = corners[0][0]  # top left
-    tr = corners[0][1]  # top right
-    br = corners[0][2]  # bottom right
-    bl = corners[0][3]  # bottom left
-    top = (tl[0] + tr[0]) / 2, -((tl[1] + tr[1]) / 2)
-    centre = (tl[0] + tr[0] + bl[0] + br[0]) / 4, -((tl[1] + tr[1] + bl[1] + br[1]) / 4)
-    angle = 0
     try:
-        angle = round(
-            math.degrees(np.arctan((top[1] - centre[1]) / (top[0] - centre[0])))
-        )
+        allcorners, ids, rejected = detector.detectMarkers(frame)
+        index = np.where(ids == 97)[0][0]
+        corners = allcorners[index]
+        tl = corners[0][0]  # top left
+        tr = corners[0][1]  # top right
+        br = corners[0][2]  # bottom right
+        bl = corners[0][3]  # bottom left
+        top = (tl[0] + tr[0]) / 2, -((tl[1] + tr[1]) / 2)
+        centre = (tl[0] + tr[0] + bl[0] + br[0]) / 4, -((tl[1] + tr[1] + bl[1] + br[1]) / 4)
+        angle = 0
+        try:
+            angle = round(
+                math.degrees(np.arctan((top[1] - centre[1]) / (top[0] - centre[0])))
+            )
+        except:
+            # add some conditions for 90 and 270
+            if top[1] > centre[1]:
+                angle = 90
+            elif top[1] < centre[1]:
+                angle = 270
+        if top[0] >= centre[0] and top[1] < centre[1]:
+            angle = 360 + angle
+        elif top[0] < centre[0]:
+            angle = 180 + angle
+        return angle
     except:
-        # add some conditions for 90 and 270
-        if top[1] > centre[1]:
-            angle = 90
-        elif top[1] < centre[1]:
-            angle = 270
-    if top[0] >= centre[0] and top[1] < centre[1]:
-        angle = 360 + angle
-    elif top[0] < centre[0]:
-        angle = 180 + angle
-    return angle
+        return None
 
 
 def look_for_rotation(s, conn, video):
@@ -82,13 +85,17 @@ def look_for_rotation(s, conn, video):
     data = data.decode("utf-8")
     if data == "rotate":  # rotation started get the current angle of aruco 97
         frame = update_position(video)
-        startrot = get_current_rot(frame)  # current rotation
+        startrot = get_current_rot(frame)  
+        # if startrot is None: startrot = 10# current rotation
+        if startrot is None: return None
         rot = startrot
         print("THE start ROTATION IS ", startrot)
         diff = abs(rot - startrot) % 180
         while diff < 85:  # rotate till 85 degrees
             frame = update_position(video)
             rot = get_current_rot(frame)  # update rot based on aruco rotation
+            # if rot is None: rot = 10
+            if rot is None: return None
             diff = abs(rot - startrot) % 180
             print("rotating...")
             print(
@@ -292,7 +299,7 @@ if __name__ == "__main__":
             commandsent = 1
         else:
             look_for_rotation(s, conn, video)  # type: ignore
-        time.sleep(0.10)
+        # time.sleep(0.10)
 
     video.release()
     cv2.destroyAllWindows()

@@ -16,7 +16,7 @@
 """
 
 # Team ID:			[ 2907 ]
-# Author List:		[ Arnav Rustagi, Subham Jalan]
+# Author List:		[ Arnav Rustagi, Subham Jalan ]
 # Filename:			task_4a.py
 
 

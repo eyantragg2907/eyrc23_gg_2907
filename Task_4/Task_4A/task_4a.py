@@ -27,6 +27,7 @@ import numpy as np
 import sys
 from datetime import datetime
 import tensorflow as tf
+import threading
 
 ##############################################################
 
@@ -257,6 +258,7 @@ def get_events_from_frame(frame):
 
 
 def classify_and_get_labels(identified_labels):
+    load_model()
     global filenames
     labels = []
     for key, img in zip("ABCDE", FILENAMES):
@@ -275,7 +277,7 @@ def get_frame_with_rects(frame, pts, labels):
         frame = cv2.putText(
             frame,
             str(l),
-            (p[1, 0], p[0, 0] - 15),
+            (p[1, 0], p[0, 0] + 120),
             cv2.FONT_HERSHEY_COMPLEX,
             0.8,
             (0, 255, 0),
@@ -327,8 +329,8 @@ def task_4a_return():
 
     labels, identified_labels = classify_and_get_labels(identified_labels)
 
-    # TODO: put this on another thread
-    show_feed(frame, pts, labels)
+    thread_func = threading.Thread(target=show_feed, args=(frame, pts, labels))
+    thread_func.start()
 
     ##################################################
     return identified_labels
