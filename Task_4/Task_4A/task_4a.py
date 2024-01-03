@@ -15,43 +15,65 @@
 *****************************************************************************************
 """
 
-# Team ID:			[ 2907 ]
-# Author List:		[ Arnav Rustagi, Subham Jalan]
+# Team ID:			[ GG_2907 ]
+# Author List:		[ Arnav Rustagi, Subham Jalan, Pranjal Rastogi ]
 # Filename:			task_4a.py
 
 
 ####################### IMPORT MODULES #######################
-
+import os
 import cv2
 import numpy as np
-import tensorflow as tf
 import sys
 from datetime import datetime
+import tensorflow as tf
 
 ##############################################################
 
 
-################# ADD UTILITY FUNCTIONS HERE #################c
-DEBUG = True
+################# ADD UTILITY FUNCTIONS HERE #################
 
-classmap = [
+"""
+You are allowed to add any number of functions to this code.
+"""
+
+# constants
+CLASS_MAP = [
     "combat",
     "destroyed_buildings",
     "fire",
     "human_aid_rehabilitation",
     "military_vehicles",
 ]
+FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
-filenames = "A.png B.png C.png D.png E.png".split()
+MODEL_PATH = "model.tf"  # model.tf should be a folder containing the model
 
-modelpath = None
+CAMERA_ID = 1
+
+ARUCO_REQD_IDS = {4, 5, 6, 7}  # the ids of the corners!
+
+IDEAL_FRAME_SIZE = 1080
+
 model = None
-detector = None
 
-if len(sys.argv) < 1:
-    modelpath = "model.tf"
 
-    model = tf.keras.models.load_model(modelpath, compile=False)
+def load_model():
+    """
+    Purpose:
+    ---
+    This function loads the model from the model's saved path into a global variable named `model`
+
+    Input Arguments:
+    ---
+    None
+
+    Returns:
+    ---
+    None
+    """
+    global model
+    model = tf.keras.models.load_model(MODEL_PATH, compile=False)
     if model is None:
         raise Exception("Model not found at path")
     model.compile(
@@ -60,182 +82,192 @@ if len(sys.argv) < 1:
         metrics=["accuracy"],
     )
 
-if True:
-    dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
-    parameters = cv2.aruco.DetectorParameters()
-    detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 
-
-def get_clean_video_frame(frames_to_skip=100):
-    video = None
-    if sys.platform == "win32":
-        video = cv2.VideoCapture(1, cv2.CAP_DSHOW)
-        video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-        video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
-    else:
-        video = cv2.VideoCapture(1)
-
-    frames_to_skip = 100
-    for _ in range(frames_to_skip):
-        ret, frame = video.read()
-
-    ret, frame = video.read()
-    if not ret:
-        raise Exception("No frame found")
-    
-    video.release()
-    return frame
-
-
-def classify_event(image):
-    global classmap, model
-    """
-    ADD YOUR CODE HERE
-    """
-    img = tf.keras.preprocessing.image.load_img(image, target_size=(75, 75))
-    """
-    if DEBUG:
-        addr = f"temp_tomodelafterresize_{str(datetime.now().timestamp()).replace('.', '-')}.jpg"
-        cv2.imwrite(addr, img.numpy())
-    """
-
-    img = np.array(img, dtype=np.float32)
-    # print(img.shape)
-    img = tf.expand_dims(img, axis=0)
-    # print(img.shape)
+def classify_event(imagepath):
     if model is None:
-        raise Exception("Don't infer before loading model")
-    
+        raise Exception("Model is not loaded")
+
+    img = tf.keras.preprocessing.image.load_img(imagepath, target_size=(75, 75))
+    img = np.array(img, dtype=np.float32)
+    img = tf.expand_dims(img, axis=0)
+
     prediction = model.predict(img)
     predicted_class = np.argmax(prediction[0], axis=-1)
 
-    event = classmap[predicted_class]
+    event = CLASS_MAP[predicted_class]
 
     return event
 
 
-def get_events(frame):
-    frame, side = transform_frame(frame)
-    pts = get_pts_from_frame(frame, side)
-    events = get_event_images(frame, pts)
+def get_aruco_detector():
+    dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
+    parameters = cv2.aruco.DetectorParameters()
+    detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 
-    return frame, pts, events
-
-
-def transform_frame(frame):
-    pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
-
-    if DEBUG:
-        print(f"[DEBUG]\n{pt_A=}\n{pt_B=}\n{pt_C=}\n{pt_D=}\n[DEBUG END]")
-
-    if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
-        print(f"{pt_A=}, {pt_B=}, {pt_C=}, {pt_D=}")
-        raise Exception("Corners not detected")
-
-    width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
-    width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
-    maxWidth = max(int(width_AD), int(width_BC))
-
-    height_AB = np.sqrt(((pt_A[0] - pt_B[0]) ** 2) + ((pt_A[1] - pt_B[1]) ** 2))
-    height_CD = np.sqrt(((pt_C[0] - pt_D[0]) ** 2) + ((pt_C[1] - pt_D[1]) ** 2))
-    maxHeight = max(int(height_AB), int(height_CD))
-
-    s = min(maxHeight, maxWidth)
-    input_pts = np.array([pt_A, pt_B, pt_C, pt_D], dtype=np.float32)
-    output_pts = np.array([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]], dtype=np.float32)
-    M = cv2.getPerspectiveTransform(input_pts, output_pts)
-    out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
-    out = out[:s, :s]
-    out = cv2.resize(out, (1080, 1080), interpolation=cv2.INTER_AREA)
-
-    return out, 1080
+    return detector
 
 
-def increase_brightness(img, value=100):
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    h, s, v = cv2.split(hsv)
+def get_clean_video_frame(frames_to_skip=100):
+    capture = None
+    if sys.platform == "win32":
+        capture = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
+    else:
+        capture = cv2.VideoCapture(CAMERA_ID)
 
-    lim = 255 - value
-    v[v > lim] = 255
-    v[v <= lim] += value
+    # ensure 1920x1080 resolution
+    capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
-    final_hsv = cv2.merge((h, s, v))
-    img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
+    for _ in range(frames_to_skip):
+        ret, frame = capture.read()
 
-    return img
+    # clean frame
+    ret, frame = capture.read()
 
-def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
-    gaussian_3 = cv2.GaussianBlur(image, (0, 0), 2.0)
-    return cv2.addWeighted(image, 2.0, gaussian_3, -1.0, 0)
+    if not ret:
+        raise Exception("Fatal camera error")
 
+    capture.release()
 
-def get_points_from_aruco(frame):
-    (
-        corners,
-        ids,
-        _,
-    ) = get_aruco_data(frame)
-    reqd_ids = {4, 5, 6, 7}
-    pt_A, pt_B, pt_C, pt_D = None, None, None, None
-
-    for markerCorner, markerID in zip(corners, ids):
-        if markerID not in reqd_ids:
-            continue
-
-        if DEBUG:
-            print(f"[DEBUG] {markerID=}")
-
-        corners = markerCorner.reshape((4, 2))
-        (topLeft, topRight, bottomRight, bottomLeft) = corners
-
-        topRight = (int(topRight[0]), int(topRight[1]))
-        bottomRight = (int(bottomRight[0]), int(bottomRight[1]))
-        bottomLeft = (int(bottomLeft[0]), int(bottomLeft[1]))
-        topLeft = (int(topLeft[0]), int(topLeft[1]))
-
-        if markerID == 5:
-            pt_A = topLeft
-        elif markerID == 7:
-            pt_B = bottomLeft
-        elif markerID == 6:
-            pt_C = bottomRight
-        elif markerID == 4:
-            pt_D = topRight
-    return pt_A, pt_B, pt_C, pt_D
+    return frame
 
 
 def get_aruco_data(frame):
-    global detector
+    detector = get_aruco_detector()
+
     c, i, r = detector.detectMarkers(frame)
 
     if len(c) == 0:
         raise Exception("No Aruco Markers Found")
+
     return c, i.flatten(), r
 
 
-def get_pts_from_frame(frame, s):
-    S = 1080
-    Apts = (np.array([[940 / S, 1026 / S], [222 / S, 308 / S]]) * s).astype(int)
-    Bpts = (np.array([[729 / S, 816 / S], [717 / S, 802 / S]]) * s).astype(int)
-    Cpts = (np.array([[513 / S, 601 / S], [725 / S, 811 / S]]) * s).astype(int)
-    Dpts = (np.array([[509 / S, 597 / S], [206 / S, 293 / S]]) * s).astype(int)
-    Epts = (np.array([[157 / S, 245 / S], [227 / S, 313 / S]]) * s).astype(int)
+def get_points_from_aruco(frame):
+    corners, ids, _ = get_aruco_data(frame)
+
+    pt_A, pt_B, pt_C, pt_D = None, None, None, None
+
+    for markerCorner, markerID in zip(corners, ids):
+        if markerID not in ARUCO_REQD_IDS:
+            continue
+
+        corners = markerCorner.reshape((4, 2))
+        top_left, top_right, bottom_right, bottom_left = corners
+
+        top_right = list(map(int, top_right))
+        bottom_right = list(map(int, bottom_right))
+        bottom_left = list(map(int, bottom_left))
+        top_left = list(map(int, top_left))
+
+        if markerID == 5:
+            pt_A = top_left
+        elif markerID == 6:
+            pt_B = bottom_right
+        elif markerID == 7:
+            pt_C = bottom_left
+        elif markerID == 4:
+            pt_D = top_right
+
+    return pt_A, pt_B, pt_C, pt_D
+
+
+def transform_frame_based_on_markers(frame):
+    pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
+
+    if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
+        raise Exception("Corners not detected properly")
+
+    width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
+    width_BC = np.sqrt(((pt_B[0] - pt_C[0]) ** 2) + ((pt_B[1] - pt_C[1]) ** 2))
+    max_width = max(int(width_AD), int(width_BC))
+
+    height_AB = np.sqrt(((pt_A[0] - pt_B[0]) ** 2) + ((pt_A[1] - pt_B[1]) ** 2))
+    height_CD = np.sqrt(((pt_C[0] - pt_D[0]) ** 2) + ((pt_C[1] - pt_D[1]) ** 2))
+    max_height = max(int(height_AB), int(height_CD))
+
+    s = min(max_height, max_width)
+    input_pts = np.array([pt_A, pt_B, pt_C, pt_D], dtype=np.float32)
+    output_pts = np.array(
+        [[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]], dtype=np.float32
+    )
+    M = cv2.getPerspectiveTransform(input_pts, output_pts)
+    out = cv2.warpPerspective(frame, M, (max_width, max_height), flags=cv2.INTER_LINEAR)
+    out = out[:s, :s]
+    out = cv2.resize(
+        out, (IDEAL_FRAME_SIZE, IDEAL_FRAME_SIZE), interpolation=cv2.INTER_AREA
+    )
+
+    return out, IDEAL_FRAME_SIZE
+
+
+def get_image_pts_from_frame(side_len):
+    Apts = (
+        np.array([[940 / side_len, 1026 / side_len], [222 / side_len, 308 / side_len]])
+        * side_len
+    ).astype(int)
+    Bpts = (
+        np.array([[729 / side_len, 816 / side_len], [717 / side_len, 802 / side_len]])
+        * side_len
+    ).astype(int)
+    Cpts = (
+        np.array([[513 / side_len, 601 / side_len], [725 / side_len, 811 / side_len]])
+        * side_len
+    ).astype(int)
+    Dpts = (
+        np.array([[509 / side_len, 597 / side_len], [206 / side_len, 293 / side_len]])
+        * side_len
+    ).astype(int)
+    Epts = (
+        np.array([[157 / side_len, 245 / side_len], [227 / side_len, 313 / side_len]])
+        * side_len
+    ).astype(int)
 
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
 
+def unsharp_mask(image):
+    gaussian_3 = cv2.GaussianBlur(image, (0, 0), 2.0)
+    return cv2.addWeighted(image, 2.0, gaussian_3, -1.0, 0)
+
+
 def get_event_images(frame, pts):
-    global filenames
     events = []
-    for p, f in zip(pts, filenames):
+    for p, f in zip(pts, FILENAMES):
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
+        # unsharp mask is for preprocessing the image
         event = unsharp_mask(event)
         cv2.imwrite(f, event)
         events.append(event)
     return events
 
 
-def add_rects_labels(frame, pts, labels):
+def cleanup():
+    # delete all the files
+    for f in FILENAMES:
+        os.remove(f)
+
+
+def get_events_from_frame(frame):
+    frame, side_len = transform_frame_based_on_markers(frame)
+    image_pts = get_image_pts_from_frame(side_len)
+    events = get_event_images(frame, image_pts)
+
+    return frame, image_pts, events
+
+
+def classify_and_get_labels(identified_labels):
+    global filenames
+    labels = []
+    for key, img in zip("ABCDE", FILENAMES):
+        label = classify_event(img)
+        labels.append(label)
+        identified_labels[key] = label
+
+    return labels, identified_labels
+
+
+def get_frame_with_rects(frame, pts, labels):
     for p, l in zip(pts, labels):
         frame = cv2.rectangle(
             frame, (p[1, 0], p[0, 0]), (p[1, 1], p[0, 1]), (0, 255, 0), 2
@@ -252,27 +284,19 @@ def add_rects_labels(frame, pts, labels):
     return frame
 
 
-def initialise_identified_labels(identified_labels):
+def show_feed(frame, pts, labels):
+    frame = get_frame_with_rects(frame, pts, labels)
 
-    global filenames
-    labels = []
-    for key, img in zip("ABCDE", filenames):
-        label = classify_event(img)
-        labels.append(label)
-        identified_labels[key] = label
-
-    return labels, identified_labels
-
-
-def show_feed_and_release_video(frame):
     cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
-    frametoshow = cv2.resize(frame, (960, 960))
+    cv2.resizeWindow("Arena Feed", (500, 500))
+    frametoshow = cv2.resize(frame, (500, 500))
+
     cv2.imshow("Arena Feed", frametoshow)
+
     while True:
-        if cv2.waitKey(1) & 0xFF == ord("q"):
+        if cv2.waitKey(1) == ord("q"):
             cv2.destroyAllWindows()
             break
-
 
 ##############################################################
 
@@ -297,34 +321,20 @@ def task_4a_return():
     identified_labels = {}
 
     ##############	ADD YOUR CODE HERE	##############
-    frame = None
-    if len(sys.argv) > 1 and "no-video" in sys.argv:
-        frame = cv2.imread("arena.jpeg")
-    else:
-        frame = get_clean_video_frame()
+    frame = get_clean_video_frame()
 
-    if len(sys.argv) > 1:
-        if "aruco-only" in sys.argv:
-            frame, pts, events = get_events(frame)
-            frame = add_rects_labels(frame, pts, "ABCDE")
-            cv2.imwrite("frame.png", frame)
-            cv2.imshow("frame", frame)
-            cv2.waitKey(0)
-        elif "return_frame" in sys.argv:
-            cv2.imwrite("frame.jpg", frame)
-    
-    frame, pts, events = get_events(frame)
+    frame, pts, _ = get_events_from_frame(frame)
 
-    labels, identified_labels = initialise_identified_labels(identified_labels)
+    labels, identified_labels = classify_and_get_labels(identified_labels)
 
-    frame = add_rects_labels(frame, pts, labels)
+    # TODO: put this on another thread
+    show_feed(frame, pts, labels)
 
-    show_feed_and_release_video(frame)
     ##################################################
     return identified_labels
 
 
-###############	Main Function	#################
+###############	Main Function ################
 if __name__ == "__main__":
     identified_labels = task_4a_return()
     print(identified_labels)
