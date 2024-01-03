@@ -27,6 +27,7 @@ import numpy as np
 import sys
 from datetime import datetime
 import tensorflow as tf
+import threading
 
 ##############################################################
 
@@ -327,8 +328,8 @@ def task_4a_return():
 
     labels, identified_labels = classify_and_get_labels(identified_labels)
 
-    # TODO: put this on another thread
-    show_feed(frame, pts, labels)
+    thread_func = threading.Thread(target=show_feed, args=(frame, pts, labels))
+    thread_func.start()
 
     ##################################################
     return identified_labels
