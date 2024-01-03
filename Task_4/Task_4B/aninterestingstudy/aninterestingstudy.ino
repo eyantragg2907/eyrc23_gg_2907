@@ -129,7 +129,7 @@ int turn(int mode)
     { // at a node
         analogWrite(motor1f, speed1);
         analogWrite(motor2f, speed2);
-        delay(600);
+        delay(600);                     
         node = false;
     } // Now we have left the node for sure!
     else
