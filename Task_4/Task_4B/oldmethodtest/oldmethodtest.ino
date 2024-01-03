@@ -321,7 +321,7 @@ void loop()
             analogWrite(motor1f, 0);
             analogWrite(motor2f, 150);
         }
-        else if (input4 == 1 && input4 == 0 && input3 == 0) // middle line detected by middle right sensor
+        else if (input4 == 1 && input2 == 0 && input3 == 0) // middle line detected by middle right sensor
         {
             analogWrite(motor1f, 150);
             analogWrite(motor2f, 0);
