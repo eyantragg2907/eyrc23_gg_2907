@@ -78,12 +78,12 @@ int moveforwardtillreachnode()
             analogWrite(motor1f, speed1);
             analogWrite(motor2f, speed2);
         }
-        else if (input2 == 1 && input4 == 0) // middle line detected by middle left sensor
+        else if (input2 == 1 && input4 == 0 && input3 == 0) // middle line detected by middle left sensor
         {
             analogWrite(motor1f, 0);
             analogWrite(motor2f, 150);
         }
-        else if (input4 == 1 && input2 == 0) // middle line detected by middle right sensor
+        else if (input4 == 1 && input2 == 0 && input3 == 0) // middle line detected by middle right sensor
         {
             analogWrite(motor1f, 150);
             analogWrite(motor2f, 0);
@@ -316,16 +316,12 @@ void loop()
             analogWrite(motor1f, speed1);
             analogWrite(motor2f, speed2);
         }
-        else if (input2 == 1 && input4 == 0) // middle line detected by middle left sensor
+        else if (input2 == 1 && input4 == 0 && input3 == 0) // middle line detected by middle left sensor
         {
             analogWrite(motor1f, 0);
             analogWrite(motor2f, 150);
         }
-<<<<<<< HEAD
         else if (input4 == 1 && input2 == 0 && input3 == 0) // middle line detected by middle right sensor
-=======
-        else if (input4 == 1 && input2 == 0) // middle line detected by middle right sensor
->>>>>>> dc9641c477d45f9d6a0c89e805651b9e6596d2cb
         {
             analogWrite(motor1f, 150);
             analogWrite(motor2f, 0);
