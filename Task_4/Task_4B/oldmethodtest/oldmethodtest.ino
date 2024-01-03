@@ -134,8 +134,8 @@ int turn(int mode)
         {
             if (mode == 1) // rotate right
             {
-                analogWrite(motor1r, speed1);
-                analogWrite(motor2f, speed2);
+                analogWrite(motor1r, speed1 - 80);
+                analogWrite(motor2f, speed2 - 80);
                 analogWrite(motor2r, 0);
                 analogWrite(motor1f, 0);
             }
@@ -143,8 +143,8 @@ int turn(int mode)
             {
                 analogWrite(motor1r, 0);
                 analogWrite(motor2f, 0);
-                analogWrite(motor1f, speed1);
-                analogWrite(motor2r, speed2);
+                analogWrite(motor1f, speed1 - 80);
+                analogWrite(motor2r, speed2 - 80);
             }
             delay(300);
             rotflag = 1;
@@ -161,8 +161,8 @@ int turn(int mode)
         }
         else if (mode == 1) // rotate right
         {
-            analogWrite(motor1r, speed1);
-            analogWrite(motor2f, speed2);
+            analogWrite(motor1r, speed1 - 80);
+            analogWrite(motor2f, speed2 - 80);
             analogWrite(motor2r, 0);
             analogWrite(motor1f, 0);
         }
@@ -170,8 +170,8 @@ int turn(int mode)
         {
             analogWrite(motor1r, 0);
             analogWrite(motor2f, 0);
-            analogWrite(motor1f, speed1);
-            analogWrite(motor2r, speed2);
+            analogWrite(motor1f, speed1 - 80);
+            analogWrite(motor2r, speed2 - 80);
         }
     }
     return 0;
