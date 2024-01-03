@@ -31,7 +31,7 @@ import csv
 import time
 import pandas as pd
 import socket
-import signal		
+# import signal		
 
 ##############################################################
 OUT_FILE_LOC = "live_location.csv"
@@ -40,10 +40,11 @@ dictionary = aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
 parameters = aruco.DetectorParameters()
 detector = aruco.ArucoDetector(dictionary, parameters)
 
-ip = "192.168.54.144"     # Enter IP address of laptop after connecting it to WIFI hotspot
+ip = "192.168.54.92"     # Enter IP address of laptop after connecting it to WIFI hotspot
 commandsent = 0
 command = "nnrnlnrnrnnrnnlnn"
 command = "nnnn"
+command = "nnrnlnrnrnnrnnlnn"
 ################# ADD UTILITY FUNCTIONS HERE #################
 
 
