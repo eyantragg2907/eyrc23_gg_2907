@@ -41,9 +41,9 @@ dictionary = aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
 parameters = aruco.DetectorParameters()
 detector = aruco.ArucoDetector(dictionary, parameters)
 
-ip = "192.168.229.92"     # Enter IP address of laptop after connecting it to WIFI hotspot
+ip = "192.168.54.144"     # Enter IP address of laptop after connecting it to WIFI hotspot
 commandsent = 0
-command = "nnnrlrrnrnln"
+command = "nnrnlnrnrnnrnnlnn"
 command = "nnnn"
 ################# ADD UTILITY FUNCTIONS HERE #################
 

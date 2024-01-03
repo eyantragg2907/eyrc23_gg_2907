@@ -35,6 +35,8 @@ ip = "192.168.54.92"     # Enter IP address of laptop after connecting it to WIF
 commandsent = 0
 # command = "nrnn"
 command = "nnrnlnrnrnrnln"
+command = "nrnn"
+# command = "nnrnlnrnrnnrnnlnn"
 # command = "nn"
 command = "nnrnlnrnrnnrnnlnn"
 ################# ADD UTILITY FUNCTIONS HERE #################
