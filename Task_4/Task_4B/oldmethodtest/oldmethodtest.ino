@@ -153,7 +153,7 @@ int turn(int mode)
 
         else if (mode == 1) // rotate right
         {
-            if (input3 == 1 && (input2 == 0 && input4 == 0)) // reached the middle line again, we completed rotation
+            if (input3 == 1) // reached the middle line again, we completed rotation
             {
                 Serial.println("Rotation Completed");
                 rotflag = 0;
