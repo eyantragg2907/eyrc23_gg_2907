@@ -52,7 +52,7 @@ CLASS_MAP = [
 ]
 FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
-MODEL_PATH = "model.tf"  # model.tf should be a folder containing the model
+MODEL_PATH = r"..\model.tf"  # model.tf should be a folder containing the model
 
 CAMERA_ID = 1
 
