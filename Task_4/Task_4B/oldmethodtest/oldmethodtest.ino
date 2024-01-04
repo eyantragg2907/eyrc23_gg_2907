@@ -310,7 +310,7 @@ void loop()
         { // at a node
             analogWrite(motor1f, speed1);
             analogWrite(motor2f, speed2);
-            delay(300);
+            delay(500);
         }
         else if (i == path.length())
         {
