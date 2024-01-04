@@ -336,20 +336,22 @@ void loop()
         {
             analogWrite(motor1f, 0);
             analogWrite(motor2f, 150);
+            delay(100);
         }
         else if (input4 == 1 && input2 == 0) // middle line detected by middle right sensor
         {
             analogWrite(motor1f, 150);
             analogWrite(motor2f, 0);
+            delay(100);
         }
         else if (input3 == 0 && input2 == 0 && input4 == 0) // stop sign reached
         {
-            analogWrite(motor1f, 150);
-            analogWrite(motor2f, 0);
-            delay(200);
-            analogWrite(motor1f, 150);
-            analogWrite(motor2f, 150);
-            delay(400);
+            // analogWrite(motor1f, 150);
+            // analogWrite(motor2f, 0);
+            // delay(200);
+            // analogWrite(motor1f, 150);
+            // analogWrite(motor2f, 150);
+            // delay(400);
             // starting victory sequence
             Serial.println("Reached the ending node!");
             stop();
