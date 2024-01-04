@@ -45,6 +45,7 @@ commandsent = 0
 command = "nnrnlnrnrnnrnnlnn"
 command = "nnnn"
 command = "nnrnlnrnrnnrnnlnn"
+pt_A, pt_B, pt_C, pt_D = None, None, None, None
 ################# ADD UTILITY FUNCTIONS HERE #################
 
 
@@ -107,14 +108,8 @@ def transform_frame(frame):
     return out, s
 
 def get_points_from_aruco(frame):
-    (
-        corners,
-        ids,
-        _,
-    ) = get_aruco_data(frame)
+    corners,ids,_, = get_aruco_data(frame)
     reqd_ids = {4, 5, 6, 7}
-    pt_A, pt_B, pt_C, pt_D = None, None, None, None
-
     for markerCorner, markerID in zip(corners, ids):
         if markerID not in reqd_ids:
             continue
@@ -129,13 +124,13 @@ def get_points_from_aruco(frame):
         bottomLeft = (int(bottomLeft[0]), int(bottomLeft[1]))
         topLeft = (int(topLeft[0]), int(topLeft[1]))
 
-        if markerID == 5:
+        if markerID == 5 and topleft!=None:
             pt_A = topLeft
-        elif markerID == 7:
+        elif markerID == 7 and bottomLeft!=None:
             pt_B = bottomLeft
-        elif markerID == 6:
+        elif markerID == 6 and bottomRight!=None:
             pt_C = bottomRight
-        elif markerID == 4:
+        elif markerID == 4 and topRight!=None:
             pt_D = topRight
     return pt_A, pt_B, pt_C, pt_D
 
