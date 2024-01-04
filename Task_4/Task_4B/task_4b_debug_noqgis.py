@@ -6,57 +6,64 @@
 
 ##############################################################
 
-import os
 import sys
 import time
-import pandas as pd
 import socket
 
 ##############################################################
 
-ip = "192.168.54.92"  # Enter IP address of laptop after connecting it to WIFI hotspot
-commandsent = 0
-# command = "nrnn"
-command = "nnrnlnrnrnrnln"
-command = "nrnn"
-# command = "nnrnlnrnrnnrnnlnn"
-# command = "nn"
-command = "nnrnlnrnrnnrnnlnn"
+ip = "192.168.54.92"  # IP of the Laptop on Hotspot
+command = "nnrnlnrnrnnrnnlnn"  # the full cycle command
+
 ################# ADD UTILITY FUNCTIONS HERE #################
 
 
 def cleanup(s):
     s.close()
-    print("cleanup done")
-    sys.exit(0)
 
 
-def send_to_robot(s, conn):
+def send_to_robot(s: socket.socket, conn: socket.socket):
     data = conn.recv(1024)
-    print(data)
-    print(command)
-    conn.sendall(str.encode(str(command)))
-    time.sleep(1)
-    cleanup(s)
+    data = data.decode("utf-8")
+
+    if data == "ACK_REQ_FROM_ROBOT":
+        pass
+    else:
+        print("Error in connection")
+        cleanup(s)
+        sys.exit(1)
+    
+    conn.sendall(str.encode(command))
+
+    print(f"Sent command to robot: {command}")
 
 
-def give_s_conn():
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        s.bind((ip, 8002))
-        s.listen()
-        conn, addr = s.accept()
-        print(f"Connected by {addr}")
-        return s, conn
+def init_connection():
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as soc:
+        soc.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        soc.bind((ip, 8002))
+        soc.listen()
+
+        conn, addr = soc.accept()
+        print(f"Connected to {addr}")
+
+        return soc, conn
+
+def listen_and_print(s, conn):
+    while True:
+        data = conn.recv(1024)
+        data = data.decode("utf-8")
+        print(f"recv: {data}")
+        time.sleep(1)
 
 
 ###############	Main Function	#################
 if __name__ == "__main__":
-    if not os.path.exists("lat_long.csv"):
-        with open("lat_long.csv", "w") as f:
-            f.writelines(["id,lat,lon", "23,39.6128542,-74.3629792"])
 
-    if commandsent == 0:
-        s, conn = give_s_conn()
-        send_to_robot(s, conn)
-        commandsent = 1
+    soc, conn = init_connection()
+    send_to_robot(soc, conn)
+
+    listen_and_print(soc, conn)
+
+    cleanup(soc)
+    

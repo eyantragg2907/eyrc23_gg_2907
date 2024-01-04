@@ -243,7 +243,7 @@ void setup()
         // digitalWrite(buzzer, HIGH);
     } while (!client.connect(host, port));
 
-    client.print("Obese American ate 69 giant ramen bowl but still is lighter than your mom"); // Send an acknowledgement to host(laptop)
+    client.print("ACK_REQ_FROM_ROBOT"); // Send an acknowledgement to host(laptop)
     msg = client.readStringUntil('\n');                                                        // Read the message through the socket until new line char(\n)
     path = msg;
     // move = true;
