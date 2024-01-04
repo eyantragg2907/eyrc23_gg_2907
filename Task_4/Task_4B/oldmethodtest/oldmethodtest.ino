@@ -146,9 +146,9 @@ int turn(int mode)
                 analogWrite(motor1f, speed1 - 80);
                 analogWrite(motor2r, speed2 - 80);
             }
-            delay(300);
+            delay(200);
             rotflag = 1;
-            Serial.println("Rotated for 300ms to leave the middle black line!");
+            Serial.println("Rotated for 200ms to leave the middle black line!");
         }
 
         else if (mode == 1) // rotate right
