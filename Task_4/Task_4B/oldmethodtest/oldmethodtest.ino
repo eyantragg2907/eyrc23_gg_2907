@@ -21,8 +21,8 @@ const int led_red = 2; // misc
 const int led_green = 15;
 const int buzzer = 23;
 
-int speed1 = 255; // motor speeds
-int speed2 = 255;
+int speed1 = 220; // motor speeds
+int speed2 = 220;
 
 int turntime = 750; // in milliseconds
 
