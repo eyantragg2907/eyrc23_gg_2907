@@ -1,0 +1,2 @@
+Team ID = GG_2907
+Trained weights drive link = "https://plakshauniversity1-my.sharepoint.com/:f:/g/personal/pranjal_rastogi_plaksha_edu_in/EnbJ4tnVavpMt8y_SQ1AOt0BAVkIqSmTcM3DaSVBMc-zoQ?e=FkNgIS"
