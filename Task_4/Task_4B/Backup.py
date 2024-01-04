@@ -107,6 +107,8 @@ def transform_frame(frame):
     return out, s
 
 def get_points_from_aruco(frame):
+    global pt_A, pt_B, pt_C, pt_D  
+
     corners,ids,_, = get_aruco_data(frame)
     reqd_ids = {4, 5, 6, 7}
     for markerCorner, markerID in zip(corners, ids):
@@ -123,7 +125,7 @@ def get_points_from_aruco(frame):
         bottomLeft = (int(bottomLeft[0]), int(bottomLeft[1]))
         topLeft = (int(topLeft[0]), int(topLeft[1]))
 
-        if markerID == 5 and topleft!=None:
+        if markerID == 5 and topLeft !=None:
             pt_A = topLeft
         elif markerID == 7 and bottomLeft!=None:
             pt_B = bottomLeft
@@ -131,6 +133,7 @@ def get_points_from_aruco(frame):
             pt_C = bottomRight
         elif markerID == 4 and topRight!=None:
             pt_D = topRight
+    
     return pt_A, pt_B, pt_C, pt_D
 
 def get_aruco_data(frame):
