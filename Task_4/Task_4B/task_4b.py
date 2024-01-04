@@ -139,7 +139,6 @@ def get_frame(video):
 
 def update_position(video):
     frame = get_frame(video)
-
     frame, side = transform_frame(frame)
     get_robot_coords(frame)
     return frame

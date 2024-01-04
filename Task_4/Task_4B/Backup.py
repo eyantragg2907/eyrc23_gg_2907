@@ -51,7 +51,6 @@ command = "nnrnlnrnrnnrnnlnn"
 def cleanup(s):
     s.close()
     print("cleanup done")
-    sys.exit(0)
 
     
 def send_to_robot(s,conn):
@@ -71,7 +70,8 @@ def give_s_conn():
         print(f"Connected by {addr}")
         return s,conn
     
-def update_position(frame):
+def update_position(video):
+    frame = get_frame(video)
     frame, side = transform_frame(frame)
     get_robot_coords(frame)
     return frame
@@ -148,20 +148,24 @@ def get_pxcoords(id,ids,corners):
     except:
         return []
 
-def get_nearestmarker(id,ids,corners):
-    mindist= float('inf')
+prevclosestmarker = None
+def get_nearestmarker(id, ids, corners):
+    global prevclosestmarker
+    mindist = float("inf")
     closestmarker = None
-    coords1 = get_pxcoords(id,ids,corners)
+    coords1 = get_pxcoords(id, ids, corners)
+    print(coords1)
     if len(coords1) == 0:
         return prevclosestmarker
-    for (markerCorner, markerID) in zip(corners, ids):
+    for markerCorner, markerID in zip(corners, ids):
         if markerID != 97:
             corners = markerCorner.reshape((4, 2))
             marker_center = np.mean(corners, axis=0)
-            dist = np.linalg.norm(coords1-marker_center)
-            if dist < mindist:
+            dist = np.linalg.norm(coords1 - marker_center)
+            if dist < mindist:  # type: ignore
                 closestmarker = markerID
                 mindist = dist
+    prevclosestmarker = closestmarker
     return closestmarker
 
 def get_robot_coords(frame):
@@ -197,19 +201,16 @@ if __name__ == "__main__":
         video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
         video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
     else:
-        video = cv2.VideoCapture(1)
+        video = cv2.VideoCapture(0)
+        video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
     num_of_frames_skip = 100
     for i in range(num_of_frames_skip):
         ret, frame = video.read()
     while True:
-        ret, frame = video.read()
-        # if len(sys.argv) > 1:
-        #     frame = cv2.imread("arena.jpg")
-        # if ret is True:
-        #     addr = f"temp_snap_{str(datetime.now().timestamp()).replace('.', '-')}.png"
-        #     cv2.imwrite(addr, frame)
-        frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
-        frame = update_position(frame)
+        frame = update_position(
+            video
+        )  # gets the new frame updates, transforms it, gets the robot coords
         if commandsent == 0:
             s,conn=give_s_conn()
             send_to_robot(s,conn)
@@ -218,9 +219,9 @@ if __name__ == "__main__":
         # aruco.drawDetectedMarkers(frame, corners, ids)
         # cv2.imshow("Arena Feed", frame)
 
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
+        # if cv2.waitKey(1) & 0xFF == ord("q"):
+        #     break
         time.sleep(0.25)
 
     video.release()
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
