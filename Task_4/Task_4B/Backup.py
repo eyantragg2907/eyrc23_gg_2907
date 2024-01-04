@@ -69,7 +69,13 @@ def give_s_conn():
         conn, addr = s.accept()
         print(f"Connected by {addr}")
         return s,conn
-    
+
+def get_frame(video):
+    ret, frame = video.read()
+    print(frame.shape)
+    frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_AREA)
+    return frame
+
 def update_position(video):
     frame = get_frame(video)
     frame, side = transform_frame(frame)
@@ -91,8 +97,8 @@ def transform_frame(frame):
     maxHeight = max(int(height_AB), int(height_CD))
 
     s = min(maxHeight, maxWidth)
-    input_pts = np.float32([pt_A, pt_B, pt_C, pt_D])
-    output_pts = np.float32([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]])
+    input_pts = np.array([pt_A, pt_B, pt_C, pt_D], dtype=np.float32)
+    output_pts = np.array([[0, 0], [0, s - 1], [s - 1, s - 1], [s - 1, 0]], dtype=np.float32)
     M = cv2.getPerspectiveTransform(input_pts, output_pts)
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
