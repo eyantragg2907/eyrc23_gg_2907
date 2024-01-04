@@ -153,7 +153,7 @@ int turn(int mode)
 
         else if (mode == 1) // rotate right
         {
-            if (input4 == 1 && (input2 == 0 && input3 == 0) && (input1 == 0 && input5 == 0)) // reached the middle line again, we completed rotation
+            if (input3 == 1 && (input2 == 0 && input4 == 0) && (input1 == 0 && input5 == 0)) // reached the middle line again, we completed rotation
             {
                 Serial.println("Rotation Completed");
                 rotflag = 0;
@@ -172,7 +172,7 @@ int turn(int mode)
         }
         else // rotate left
         {
-            if (input2 == 1 && (input3 == 0 && input4 == 0) && (input1 == 0 && input5 == 0)) // reached the middle line again, we completed rotation
+            if (input3 == 1 && (input2 == 0 && input4 == 0) && (input1 == 0 && input5 == 0)) // reached the middle line again, we completed rotation
             {
                 Serial.println("Rotation Completed");
                 rotflag = 0;
