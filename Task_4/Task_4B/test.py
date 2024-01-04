@@ -39,6 +39,8 @@ command = "nrnn"
 # command = "nnrnlnrnrnnrnnlnn"
 # command = "nn"
 command = "nnrnlnrnrnnrnnlnn"
+
+command = "ln"
 ################# ADD UTILITY FUNCTIONS HERE #################
 
 
