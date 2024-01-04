@@ -48,7 +48,8 @@ modelpath = None
 model = None
 detector = None
 
-if len(sys.argv) < 1:
+if len(sys.argv) == 1:
+
     modelpath = "model.tf"
 
     model = tf.keras.models.load_model(modelpath, compile=False)
@@ -59,6 +60,8 @@ if len(sys.argv) < 1:
         loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
         metrics=["accuracy"],
     )
+
+    print("==== MODEL LOADED ====")
 
 if True:
     dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
@@ -185,10 +188,10 @@ def get_points_from_aruco(frame):
 
         if DEBUG:
             print(f"[DEBUG] {markerID=}")
-
+        print(f"{markerID=}\n")
         corners = markerCorner.reshape((4, 2))
         (topLeft, topRight, bottomRight, bottomLeft) = corners
-
+        print(f"{topLeft=}\n{topRight=}\n{bottomRight=}\n{bottomLeft=}\n")   
         topRight = (int(topRight[0]), int(topRight[1]))
         bottomRight = (int(bottomRight[0]), int(bottomRight[1]))
         bottomLeft = (int(bottomLeft[0]), int(bottomLeft[1]))
@@ -202,6 +205,7 @@ def get_points_from_aruco(frame):
             pt_C = bottomRight
         elif markerID == 4:
             pt_D = topRight
+
     return pt_A, pt_B, pt_C, pt_D
 
 

@@ -25,9 +25,13 @@ import os
 import cv2
 import numpy as np
 import sys
-from datetime import datetime
-import tensorflow as tf
+import logging
 import threading
+
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # suppress tensorflow warnings
+logging.getLogger('tensorflow').setLevel(logging.FATAL)
+
+import tensorflow as tf
 
 ##############################################################
 
@@ -74,12 +78,12 @@ def load_model():
     None
     """
     global model
-    model = tf.keras.models.load_model(MODEL_PATH, compile=False)
+    model = tf.keras.models.load_model(MODEL_PATH, compile=False) # type: ignore
     if model is None:
         raise Exception("Model not found at path")
     model.compile(
         optimizer="adam",
-        loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+        loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), # type: ignore
         metrics=["accuracy"],
     )
 
@@ -88,11 +92,11 @@ def classify_event(imagepath):
     if model is None:
         raise Exception("Model is not loaded")
 
-    img = tf.keras.preprocessing.image.load_img(imagepath, target_size=(75, 75))
+    img = tf.keras.preprocessing.image.load_img(imagepath, target_size=(75, 75)) # type: ignore
     img = np.array(img, dtype=np.float32)
     img = tf.expand_dims(img, axis=0)
 
-    prediction = model.predict(img)
+    prediction = model.predict(img, verbose=0)
     predicted_class = np.argmax(prediction[0], axis=-1)
 
     event = CLASS_MAP[predicted_class]
@@ -154,21 +158,21 @@ def get_points_from_aruco(frame):
             continue
 
         corners = markerCorner.reshape((4, 2))
-        top_left, top_right, bottom_right, bottom_left = corners
+        (top_left, top_right, bottom_right, bottom_left) = corners
 
-        top_right = list(map(int, top_right))
-        bottom_right = list(map(int, bottom_right))
-        bottom_left = list(map(int, bottom_left))
-        top_left = list(map(int, top_left))
+        top_right = (int(top_right[0]), int(top_right[1]))
+        bottom_right = (int(bottom_right[0]), int(bottom_right[1]))
+        bottom_left = (int(bottom_left[0]), int(bottom_left[1]))
+        top_left = (int(top_left[0]), int(top_left[1]))
 
-        if markerID == 5:
+        if markerID == 4:
+            pt_D = top_right
+        elif markerID == 5:
             pt_A = top_left
         elif markerID == 6:
-            pt_B = bottom_right
+            pt_C = bottom_right
         elif markerID == 7:
-            pt_C = bottom_left
-        elif markerID == 4:
-            pt_D = top_right
+            pt_B = bottom_left
 
     return pt_A, pt_B, pt_C, pt_D
 
@@ -331,6 +335,8 @@ def task_4a_return():
 
     thread_func = threading.Thread(target=show_feed, args=(frame, pts, labels))
     thread_func.start()
+
+    cleanup() # delete all the files generated
 
     ##################################################
     return identified_labels
