@@ -21,8 +21,8 @@ const int led_red = 2; // misc
 const int led_green = 15;
 const int buzzer = 23;
 
-int speed1 = 220; // motor speeds
-int speed2 = 220;
+int speed1 = 200; // motor speeds
+int speed2 = 200;
 
 int turntime = 750; // in milliseconds
 
@@ -125,7 +125,7 @@ int turn(int mode)
     { // at a node
         analogWrite(motor1f, speed1);
         analogWrite(motor2f, speed2);
-        delay(550);
+        delay(600);
         node = false;
     } // Now we have left the node for sure!
     else
@@ -146,7 +146,7 @@ int turn(int mode)
                 analogWrite(motor1f, speed1 - 80);
                 analogWrite(motor2r, speed2 - 80);
             }
-            delay(200);
+            delay(150);
             rotflag = 1;
             Serial.println("Rotated for 200ms to leave the middle black line!");
         }
