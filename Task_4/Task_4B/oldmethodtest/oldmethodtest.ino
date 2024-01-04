@@ -150,28 +150,44 @@ int turn(int mode)
             rotflag = 1;
             Serial.println("Rotated for 300ms to leave the middle black line!");
         }
-        else if (input3 == 1 && (input2 == 0 && input4 == 0) && (input1 == 0 && input5 == 0)) // reached the middle line again, we completed rotation
-        {
-            Serial.println("Rotation Completed");
-            rotflag = 0;
-            stop();
-            delay(100);
-            node = true;
-            return 1;
-        }
+
         else if (mode == 1) // rotate right
         {
-            analogWrite(motor1r, speed1 - 80);
-            analogWrite(motor2f, speed2 - 80);
-            analogWrite(motor2r, 0);
-            analogWrite(motor1f, 0);
+            if (input4 == 1 && (input2 == 0 && input3 == 0) && (input1 == 0 && input5 == 0)) // reached the middle line again, we completed rotation
+            {
+                Serial.println("Rotation Completed");
+                rotflag = 0;
+                stop();
+                delay(100);
+                node = true;
+                return 1;
+            }
+            else
+            {
+                analogWrite(motor1r, speed1 - 80);
+                analogWrite(motor2f, speed2 - 80);
+                analogWrite(motor2r, 0);
+                analogWrite(motor1f, 0);
+            }
         }
         else // rotate left
         {
-            analogWrite(motor1r, 0);
-            analogWrite(motor2f, 0);
-            analogWrite(motor1f, speed1 - 80);
-            analogWrite(motor2r, speed2 - 80);
+            if (input2 == 1 && (input3 == 0 && input4 == 0) && (input1 == 0 && input5 == 0)) // reached the middle line again, we completed rotation
+            {
+                Serial.println("Rotation Completed");
+                rotflag = 0;
+                stop();
+                delay(100);
+                node = true;
+                return 1;
+            }
+            else
+            {
+                analogWrite(motor1r, 0);
+                analogWrite(motor2f, 0);
+                analogWrite(motor1f, speed1 - 80);
+                analogWrite(motor2r, speed2 - 80);
+            }
         }
     }
     return 0;
