@@ -12,8 +12,8 @@ import socket
 
 ##############################################################
 
-ip = "192.168.54.92"  # IP of the Laptop on Hotspot
-command = "nnrnlnrnrnnrnnlnn"  # the full cycle command
+IP_ADDRESS = "192.168.54.92"  # IP of the Laptop on Hotspot
+COMMAND = "nnrnlnrnrnnrnnlnn"  # the full cycle command
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
@@ -33,15 +33,15 @@ def send_to_robot(s: socket.socket, conn: socket.socket):
         cleanup(s)
         sys.exit(1)
     
-    conn.sendall(str.encode(command))
+    conn.sendall(str.encode(COMMAND))
 
-    print(f"Sent command to robot: {command}")
+    print(f"Sent command to robot: {COMMAND}")
 
 
 def init_connection():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as soc:
         soc.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        soc.bind((ip, 8002))
+        soc.bind((IP_ADDRESS, 8002))
         soc.listen()
 
         conn, addr = soc.accept()

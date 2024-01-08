@@ -227,7 +227,7 @@ void setup()
         delay(500);
         Serial.println("...");
     }
-
+    
     Serial.print("WiFi connected with IP: ");
     Serial.println(WiFi.localIP());
 
