@@ -50,11 +50,14 @@ def init_connection():
         return soc, conn
 
 def listen_and_print(s, conn):
-    while True:
-        data = conn.recv(1024)
-        data = data.decode("utf-8")
-        print(f"recv: {data}")
-        time.sleep(1)
+    try:
+        while True:
+            data = conn.recv(1024)
+            data = data.decode("utf-8")
+            print(f"recv: {data}")
+    except KeyboardInterrupt:
+        cleanup(s)
+        sys.exit(0)
 
 
 ###############	Main Function	#################
