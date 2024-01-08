@@ -35,7 +35,8 @@ ARUCO_ROBOT_ID = 97 # we chose this ID as it wasn't in the csv
 IDEAL_FRAME_SIZE = 1080 # camera frame
 
 IP_ADDRESS = "192.168.128.92"  # IP of the Laptop on Hotspot
-COMMAND = "nnrnlnrnrnnrnnlnn"  # the path
+COMMAND = "nnrnlnrnrnnrnnlnn\n"  # the path
+BuzzerCommand= "111111111011" # buzzer command
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
@@ -126,6 +127,7 @@ def send_to_robot(s: socket.socket, conn: socket.socket): # sends command to rob
         sys.exit(1)
     
     conn.sendall(str.encode(COMMAND))
+    conn.sendall(str.encode(BuzzerCommand))
 
     print(f"Sent command to robot: {COMMAND}")
 
