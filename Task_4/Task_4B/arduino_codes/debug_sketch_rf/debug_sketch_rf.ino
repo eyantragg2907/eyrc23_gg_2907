@@ -377,6 +377,7 @@ void loop()
 
         moveForwardLogic();
 
+        // TODO: implement history logic
         if (input3 == 0 && input2 == 0 && input4 == 0) // stop sign reached
         {
             client.print("REACHED NO LINE AREA");
