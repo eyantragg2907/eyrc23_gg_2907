@@ -17,6 +17,7 @@ import sys
 import csv
 import pandas as pd
 import socket
+import time
 
 ##############################################################
 OUT_FILE_LOC = "live_location.csv" # outputs live locations
@@ -542,6 +543,7 @@ if __name__ == "__main__":
             break
 
         if counter == 0:
+            time.sleep(5)
             soc, conn = init_connection()
             send_to_robot(soc, conn)
             cleanup(soc)
