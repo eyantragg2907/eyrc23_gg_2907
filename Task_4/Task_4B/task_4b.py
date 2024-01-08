@@ -545,7 +545,7 @@ if __name__ == "__main__":
             break
 
         if counter == 0:
-            time.sleep(5)
+            # time.sleep(5)
             soc, conn = init_connection()
             send_to_robot(soc, conn)
             cleanup(soc)
