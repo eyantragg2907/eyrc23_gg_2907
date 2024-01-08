@@ -4,7 +4,7 @@
 """IMPORTANT"""
 
 # Team ID:			[ 2907 ]
-# Author List:		[ Arnav Rustagi, Abhinav Lodha]
+# Author List:		[ Arnav Rustagi, Abhinav Lodha, Pranjal Rastogi]
 # Filename:			task_4b.py
 
 ####################### IMPORT MODULES #######################
@@ -33,7 +33,7 @@ ARUCO_REQD_IDS = {4, 5, 6, 7}
 ARUCO_ROBOT_ID = 97
 IDEAL_FRAME_SIZE = 1080
 
-IP_ADDRESS = "192.168.54.92"  # IP of the Laptop on Hotspot
+IP_ADDRESS = "192.168.128.92"  # IP of the Laptop on Hotspot
 COMMAND = "nnrnlnrnrnnrnnlnn"  # the full cycle command
 
 ################# ADD UTILITY FUNCTIONS HERE #################
