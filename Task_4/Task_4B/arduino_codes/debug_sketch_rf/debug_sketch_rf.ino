@@ -36,6 +36,7 @@ THIS IS THE SKETCH WITH DEBUG COMMANDS AND STUFF FOR EFFICIENT PERFORMANCE
 #define CENTER_CORRECTING_BEGINNING 200
 
 #define EVERY_NODE_DELAY 1000
+#define END_SKIP_FORWARD_DELAY 700
 #define END_DELAY 5000
 
 #define D90_TURNTIME 580
@@ -435,7 +436,7 @@ void loop()
     if (operation == -1) {
         if (moveForwardTillReachedNode()) {
 
-            if (buzzermessage[node_count]) {
+            if (buzzermessage[node_count] == '1') {
                 digitalWrite(buzzer, LOW);
                 delay(EVERY_NODE_DELAY);
                 digitalWrite(buzzer, HIGH);
@@ -570,6 +571,14 @@ void loop()
                 stop();
                 // second print after stopping
                 printIRs();
+                
+                analogWrite(motor1r, 0);
+                analogWrite(motor2r, 0);
+                analogWrite(motor1f, SPEED_LEFT);
+                analogWrite(motor2f, SPEED_RIGHT);
+                delay(END_SKIP_FORWARD_DELAY);
+                stop();
+
                 digitalWrite(led_green, LOW);
                 digitalWrite(led_red, HIGH);
                 digitalWrite(buzzer, LOW);
@@ -583,7 +592,7 @@ void loop()
     }
     else if (operation == 6) // Node Found now what to do
     {
-        if (buzzermessage[node_count]) {
+        if (buzzermessage[node_count] == '1') {
             digitalWrite(buzzer, LOW);
             delay(EVERY_NODE_DELAY);
             digitalWrite(buzzer, HIGH);
