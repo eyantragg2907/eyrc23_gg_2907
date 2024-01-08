@@ -28,12 +28,12 @@ if not os.path.exists(OUT_FILE_LOC):
 CAMERA_ID = 1
 
 
-ARUCO_REQD_IDS = {"4", "5", "6", "7"}
+ARUCO_REQD_IDS = {4, 5, 6, 7}
 
 ARUCO_ROBOT_ID = 97
 IDEAL_FRAME_SIZE = 1080
 
-IP_ADDRESS = "192.168.54.92"  # IP of the Laptop on Hotspot
+IP_ADDRESS = "192.168.128.92"  # IP of the Laptop on Hotspot
 COMMAND = "nnrnlnrnrnnrnnlnn"  # the full cycle command
 
 ################# ADD UTILITY FUNCTIONS HERE #################
@@ -84,6 +84,7 @@ def init_connection():
 
 def get_frame(video):
     ret, frame = video.read()
+
     if ret:
         return frame
     else:
@@ -162,6 +163,7 @@ def get_points_from_aruco(frame):
 
     if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
         # use the previous frame's points
+        print(f"Using previous frame's points, as {pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
         return prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D
     else:
         # update the previous frame's points
@@ -280,15 +282,15 @@ if __name__ == "__main__":
         # get a new frame, transform it and get the robots coordinates
         frame = update_qgis_position(capture)
 
-        corners, ids, rejected = get_aruco_data(frame, flatten=False)
-        aruco.drawDetectedMarkers(frame, corners, ids)
-
-        cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
-        cv2.resizeWindow("Arena Feed", (750, 750))
-        cv2.imshow("Arena Feed", cv2.resize(frame, (750, 750)))
-        if cv2.waitKey(1) == ord("q"):
-            cv2.destroyAllWindows()
-            break
+        # corners, ids, rejected = get_aruco_data(frame, flatten=False)
+        # aruco.drawDetectedMarkers(frame, corners, ids)
+        # cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
+        # cv2.resizeWindow("Arena Feed", (750, 750))
+        # cv2.imshow("Arena Feed", cv2.resize(frame, (750, 750)))
+        # if cv2.waitKey(1) == ord("q"):
+        #     cv2.destroyAllWindows()
+        #     break
+        
         if counter == 0:
             soc, conn = init_connection()
             send_to_robot(soc, conn)
