@@ -1,6 +1,6 @@
 /* A set of quick-fire tests */
 #define WIFI 1
-#define MOVE_SPEED 150
+#define MOVE_SPEED 180
 
 const char *ssid = "pjrWifi";
 const char *password = "SimplePass01";

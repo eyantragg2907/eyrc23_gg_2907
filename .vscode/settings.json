@@ -19,6 +19,8 @@
         "streambuf": "cpp",
         "tuple": "cpp",
         "utility": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp"
     }
 }
