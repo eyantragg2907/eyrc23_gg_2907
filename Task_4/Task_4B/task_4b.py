@@ -390,6 +390,21 @@ prev_closest_marker = None
 
 def get_nearestmarker(robot_id, ids, corners):
     """
+    Purpose:
+
+    This function returns the nearest marker
+
+    Input Arguments:
+
+    robot_id :   [ int ]
+
+    ids :   [ list ]
+
+    corners :   [ list ]
+
+    Returns:
+
+    closestmarker :   [ int ]
     """
     global prev_closest_marker
 
@@ -416,6 +431,21 @@ def get_nearestmarker(robot_id, ids, corners):
 
 
 def get_robot_coords(frame):
+    """
+
+    Purpose:
+
+    This function returns the coordinates of the robot
+
+    Input Arguments:
+
+    frame :   [ numpy array ]
+
+    Returns:
+
+    coordinate :   [ numpy array ]
+
+    """
     corners, ids, _ = get_aruco_data(frame)
     nearest_marker = get_nearestmarker(ARUCO_ROBOT_ID, ids, corners)
     arucolat_long = get_aruco_locs()
@@ -435,6 +465,24 @@ def get_robot_coords(frame):
 
 
 def write_csv(loc, csv_name):
+    """
+
+    Purpose:
+
+    This function writes the coordinates to the csv file
+
+    Input Arguments:
+
+    loc :   [ numpy array ]
+
+    csv_name :   [ string ]
+
+    Returns:
+
+    None
+
+    """
+
 
     with open(csv_name, "w") as f:
         writer = csv.writer(f)
@@ -443,6 +491,21 @@ def write_csv(loc, csv_name):
 
 
 def initialize_capture(frames_to_skip=100) -> cv2.VideoCapture:
+    """
+    Purpose:
+
+    This function initializes the camera
+
+    Input Arguments:
+
+    frames_to_skip :   [ int ]
+
+    Returns:
+
+    capture :   [ cv2.VideoCapture object ]
+
+    """
+    
     capture = None
     if sys.platform == "win32":
         capture = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
