@@ -1,5 +1,5 @@
 /* A set of quick-fire tests */
-#define WIFI 0
+#define WIFI 1
 
 const char *ssid = "pjrWifi";
 const char *password = "SimplePass01";
