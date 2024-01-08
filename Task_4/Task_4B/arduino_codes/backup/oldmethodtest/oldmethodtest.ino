@@ -3,7 +3,7 @@
 const char *ssid = "pjrWifi";          // Enter your wifi hotspot ssid
 const char *password = "SimplePass01"; // Enter your wifi hotspot password
 const uint16_t port = 8002;
-const char *host = "192.168.54.92";
+const char *host = "192.168.128.92";
 
 const int IR1 = 5; // IR sensors pins
 const int IR2 = 18;
@@ -21,8 +21,8 @@ const int led_red = 2; // misc
 const int led_green = 15;
 const int buzzer = 23;
 
-int speed1 = 200; // motor speeds
-int speed2 = 200;
+int speed1 = 255; // motor speeds
+int speed2 = 255;
 
 int turntime = 750; // in milliseconds
 
@@ -59,13 +59,13 @@ int moveforwardtillreachnode()
         {
             if (input1 == 1 && input5 == 0) // left line detected by left sensor
             {
-                analogWrite(motor1f, 150);
+                analogWrite(motor1f, 255);
                 analogWrite(motor2f, 0);
             }
             else if (input5 == 1 && input1 == 0) // right line detected by  right sensor
             {
                 analogWrite(motor1f, 0);
-                analogWrite(motor2f, 150);
+                analogWrite(motor2f, 255);
             }
             else
             {
@@ -81,11 +81,11 @@ int moveforwardtillreachnode()
         else if (input2 == 1 && input4 == 0) // middle line detected by middle left sensor
         {
             analogWrite(motor1f, 0);
-            analogWrite(motor2f, 150);
+            analogWrite(motor2f, 255);
         }
         else if (input4 == 1 && input2 == 0) // middle line detected by middle right sensor
         {
-            analogWrite(motor1f, 150);
+            analogWrite(motor1f, 255);
             analogWrite(motor2f, 0);
         }
         return 0;
@@ -97,101 +97,111 @@ int moveforwardtillreachnode()
     }
 }
 
-// int turn(int mode)
-// {
-//   stop();
-//   if (mode == 1)
-//   {
-//     analogWrite(motor1r, speed1);
-//     analogWrite(motor2f, speed2);
-//     analogWrite(motor2r, 0);
-//     analogWrite(motor1f, 0);
-//   }
-//   else
-//   {
-//     analogWrite(motor1r, 0);
-//     analogWrite(motor2f, 0);
-//     analogWrite(motor1f, speed1);
-//     analogWrite(motor2r, speed2);
-//   }
-//   delay(turntime);
-//   stop();
-//   return 1;
-// }
-
 int turn(int mode)
 {
+  stop();
     if (node)
-    { // at a node
-        analogWrite(motor1f, speed1);
-        analogWrite(motor2f, speed2);
-        delay(600);
-        node = false;
-    } // Now we have left the node for sure!
-    else
-    {
-        if (rotflag == 0) // rotate a little bit to leave the middle black line
+        { // at a node
+            analogWrite(motor1f, speed1);
+            analogWrite(motor2f, speed2);
+            delay(600);
+            node = false;
+        } 
+    else{
+        if (mode == 1)
         {
-            if (mode == 1) // rotate right
-            {
-                analogWrite(motor1r, speed1 - 80);
-                analogWrite(motor2f, speed2 - 80);
-                analogWrite(motor2r, 0);
-                analogWrite(motor1f, 0);
-            }
-            else // rotate left
-            {
-                analogWrite(motor1r, 0);
-                analogWrite(motor2f, 0);
-                analogWrite(motor1f, speed1 - 80);
-                analogWrite(motor2r, speed2 - 80);
-            }
-            delay(150);
-            rotflag = 1;
-            Serial.println("Rotated for 200ms to leave the middle black line!");
+            analogWrite(motor1r, speed1);
+            analogWrite(motor2f, speed2);
+            analogWrite(motor2r, 0);
+            analogWrite(motor1f, 0);
         }
-
-        else if (mode == 1) // rotate right
+        else
         {
-            if (input3 == 1) // reached the middle line again, we completed rotation
-            {
-                Serial.println("Rotation Completed");
-                rotflag = 0;
-                stop();
-                delay(100);
-                node = true;
-                return 1;
-            }
-            else
-            {
-                analogWrite(motor1r, speed1 - 80);
-                analogWrite(motor2f, speed2 - 80);
-                analogWrite(motor2r, 0);
-                analogWrite(motor1f, 0);
-            }
+            analogWrite(motor1r, 0);
+            analogWrite(motor2f, 0);
+            analogWrite(motor1f, speed1);
+            analogWrite(motor2r, speed2);
         }
-        else // rotate left
-        {
-            if (input3 == 1 && (input2 == 0 && input4 == 0) && (input1 == 0 && input5 == 0)) // reached the middle line again, we completed rotation
-            {
-                Serial.println("Rotation Completed");
-                rotflag = 0;
-                stop();
-                delay(100);
-                node = true;
-                return 1;
-            }
-            else
-            {
-                analogWrite(motor1r, 0);
-                analogWrite(motor2f, 0);
-                analogWrite(motor1f, speed1 - 80);
-                analogWrite(motor2r, speed2 - 80);
-            }
-        }
+    delay(turntime);
+    stop();
+    node=true;
+    return 1;
     }
-    return 0;
 }
+
+// int turn(int mode)
+// {
+//     if (node)
+//     { // at a node
+//         analogWrite(motor1f, speed1);
+//         analogWrite(motor2f, speed2);
+//         delay(600);
+//         node = false;
+//     } // Now we have left the node for sure!
+//     else
+//     {
+//         if (rotflag == 0) // rotate a little bit to leave the middle black line
+//         {
+//             if (mode == 1) // rotate right
+//             {
+//                 analogWrite(motor1r, speed1 - 80);
+//                 analogWrite(motor2f, speed2 - 80);
+//                 analogWrite(motor2r, 0);
+//                 analogWrite(motor1f, 0);
+//             }
+//             else // rotate left
+//             {
+//                 analogWrite(motor1r, 0);
+//                 analogWrite(motor2f, 0);
+//                 analogWrite(motor1f, speed1 - 80);
+//                 analogWrite(motor2r, speed2 - 80);
+//             }
+//             delay(150);
+//             rotflag = 1;
+//             Serial.println("Rotated for 200ms to leave the middle black line!");
+//         }
+
+//         else if (mode == 1) // rotate right
+//         {
+//             if (input3 == 1) // reached the middle line again, we completed rotation
+//             {
+//                 Serial.println("Rotation Completed");
+//                 rotflag = 0;
+//                 stop();
+//                 delay(100);
+//                 node = true;
+//                 return 1;
+//             }
+//             else
+//             {
+//                 analogWrite(motor1r, speed1 - 80);
+//                 analogWrite(motor2f, speed2 - 80);
+//                 analogWrite(motor2r, 0);
+//                 analogWrite(motor1f, 0);
+//             }
+//         }
+//         else // rotate left
+//         {
+//             if (input3 == 1 && (input2 == 0 && input4 == 0) && (input1 == 0 && input5 == 0)) // reached the middle line again, we completed rotation
+//             {
+//                 Serial.println("Rotation Completed");
+//                 rotflag = 0;
+//                 stop();
+//                 delay(100);
+//                 node = true;
+//                 return 1;
+//             }
+//             else
+//             {
+//                 analogWrite(motor1r, 0);
+//                 analogWrite(motor2f, 0);
+//                 analogWrite(motor1f, speed1 - 80);
+//                 analogWrite(motor2r, speed2 - 80);
+//             }
+//         }
+//     }
+//     return 0;
+// }
 
 void setup()
 {
