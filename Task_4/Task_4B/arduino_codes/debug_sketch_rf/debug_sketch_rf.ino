@@ -20,7 +20,9 @@ THIS IS THE SKETCH WITH DEBUG COMMANDS AND STUFF FOR EFFICIENT PERFORMANCE
 
 #define BLACKLINE_INITIAL_SKIP 300
 
-#define ERROR_COUNTER_MAX 4
+#define ERROR_COUNTER_MAX 6
+
+#define END_SKIP 800
 
 // #define BLACKLINE_MAXIMUM 650
 
@@ -68,12 +70,15 @@ bool node = true;
 WiFiClient client;
 
 String msg = "";
+String buzzermessage = "";
 
 int command_counter = 0; // flags
 int operation = -1;       // 0 for forward, 1 for check next command, 2 for rotating left, 3 for rotating right, 4 for leaving the node, 5 terminating, 6 found node now what we do
 int rotflag = 0;
 
 unsigned long node_left_time;
+
+int node_count = 0;
 
 // stops all motors
 void stop()
@@ -172,6 +177,7 @@ int moveForwardTillReachedNode()
             printIRs();
             stop();
             client.print("AFTER STOP\n");
+            node_count += 1;
             printIRs();
             return 1;
         }
@@ -345,6 +351,7 @@ String connectToWifiAndGetMessage()
     client.print("ACK_REQ_FROM_ROBOT"); // Send an acknowledgement to host(laptop)
 
     String pathmsg = client.readStringUntil('\n'); // Read the message through the socket until new line char(\n)
+    buzzermessage = client.readStringUntil('\n');
 
     client.print(String("RECV: ") + pathmsg + String("\n"));
 
@@ -405,6 +412,7 @@ int playByPlay()
 }
 
 int error_counter = 0;
+unsigned long start_of_end_detect = 0;
 void loop()
 {
     input1 = digitalRead(IR1);
@@ -426,9 +434,12 @@ void loop()
     // printMetaSerial();
     if (operation == -1) {
         if (moveForwardTillReachedNode()) {
-            digitalWrite(buzzer, LOW);
-            delay(EVERY_NODE_DELAY);
-            digitalWrite(buzzer, HIGH);
+
+            if (buzzermessage[node_count]) {
+                digitalWrite(buzzer, LOW);
+                delay(EVERY_NODE_DELAY);
+                digitalWrite(buzzer, HIGH);
+            }
             // beginning
             analogWrite(motor1f, SPEED_LEFT);
             analogWrite(motor2f, SPEED_RIGHT);
@@ -438,6 +449,7 @@ void loop()
             turn_left();
             delay(DELAY_BEGINNING);
             stop();
+            node_count += 1;
             operation = 1;
         }
     }
@@ -539,48 +551,46 @@ void loop()
     else if (operation == 5) // terminate
     {
         Serial.println("Going to the ending node!");
-        if (!printed)
+        if (!printed) {
             client.print("END OF JOURNEY MOVEMENT STARTS NOW\n");
+            start_of_end_detect = millis();
+        }
         printed = true;
         printIRs();
 
         moveForwardLogic();
 
-        // TODO: implement history logic
-        if (input3 == 0 && input2 == 0 && input4 == 0) // stop sign reached
-        {
-            if (error_counter < ERROR_COUNTER_MAX) {
-                // ASSUMING THAT WE HAVE STOPPED BEFORE BECAUSE OF IRS 
-                analogWrite(motor1r, 0);
-                analogWrite(motor2r, 0);
-                analogWrite(motor1f, SPEED_LEFT);
-                analogWrite(motor2f, SPEED_RIGHT);
-                delay(100);
-                error_counter += 1;
-                return;
-            }
+        if (millis() - start_of_end_detect >= END_SKIP) {
 
-            client.print("REACHED NO LINE AREA\n");
-            printIRs();
-            Serial.println("Reached the ending node!");
-            stop();
-            // second print after stopping
-            printIRs();
-            digitalWrite(led_green, LOW);
-            digitalWrite(led_red, HIGH);
-            digitalWrite(buzzer, LOW);
-            delay(END_DELAY);
-            digitalWrite(led_red, LOW);
-            digitalWrite(buzzer, HIGH);
-            operation = 99;
-            client.print("ALL ENGINE STOP -> RUN COMPLETE!\n");
+            if (input3 == 0 && input2 == 0 && input4 == 0) // stop sign reached
+            {
+                client.print("REACHED NO LINE AREA\n");
+                printIRs();
+                Serial.println("Reached the ending node!");
+                stop();
+                // second print after stopping
+                printIRs();
+                digitalWrite(led_green, LOW);
+                digitalWrite(led_red, HIGH);
+                digitalWrite(buzzer, LOW);
+                delay(END_DELAY);
+                digitalWrite(led_red, LOW);
+                digitalWrite(buzzer, HIGH);
+                operation = 99;
+                client.print("ALL ENGINE STOP -> RUN COMPLETE!\n");
+            }
         }
     }
     else if (operation == 6) // Node Found now what to do
     {
-        digitalWrite(buzzer, LOW);
-        delay(EVERY_NODE_DELAY);
-        digitalWrite(buzzer, HIGH);
+        if (buzzermessage[node_count]) {
+            digitalWrite(buzzer, LOW);
+            delay(EVERY_NODE_DELAY);
+            digitalWrite(buzzer, HIGH);
+        }
+        // digitalWrite(buzzer, LOW);
+        // delay(EVERY_NODE_DELAY);
+        // digitalWrite(buzzer, HIGH);
         if (playByPlay())
         {
             operation = 1;

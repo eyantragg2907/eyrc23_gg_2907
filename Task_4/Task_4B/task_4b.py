@@ -36,7 +36,7 @@ IDEAL_FRAME_SIZE = 1080 # camera frame
 
 IP_ADDRESS = "192.168.128.92"  # IP of the Laptop on Hotspot
 COMMAND = "nnrnlnrnrnnrnnlnn\n"  # the path
-BuzzerCommand= "111111111011" # buzzer command
+BUZZER_COMMAND = "111111111011\n" # buzzer command
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
@@ -127,7 +127,7 @@ def send_to_robot(s: socket.socket, conn: socket.socket): # sends command to rob
         sys.exit(1)
     
     conn.sendall(str.encode(COMMAND))
-    conn.sendall(str.encode(BuzzerCommand))
+    conn.sendall(str.encode(BUZZER_COMMAND))
 
     print(f"Sent command to robot: {COMMAND}")
 
