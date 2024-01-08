@@ -19,31 +19,57 @@ import pandas as pd
 import socket
 
 ##############################################################
-OUT_FILE_LOC = "live_location.csv"
+OUT_FILE_LOC = "live_location.csv" # outputs live locations
 if not os.path.exists(OUT_FILE_LOC):
     with open(OUT_FILE_LOC, "w") as f:
         writer = csv.writer(f)
         writer.writerow(["lat", "lon"])
 
-CAMERA_ID = 1
+CAMERA_ID = 1 # camera ID for external camera
 
 
-ARUCO_REQD_IDS = {4, 5, 6, 7}
+ARUCO_REQD_IDS = {4, 5, 6, 7} # corners
 
-ARUCO_ROBOT_ID = 97
-IDEAL_FRAME_SIZE = 1080
+ARUCO_ROBOT_ID = 97 # we chose this ID as it wasn't in the csv
+IDEAL_FRAME_SIZE = 1080 # camera frame
 
 IP_ADDRESS = "192.168.128.92"  # IP of the Laptop on Hotspot
-COMMAND = "nnrnlnrnrnnrnnlnn"  # the full cycle command
+COMMAND = "nnrnlnrnrnnrnnlnn"  # the path
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
 
-def get_aruco_locs():
+def get_aruco_locs(): 
+    """
+    Purpose:
+    ---
+    This function reads the csv file containing the ArUco IDs and their corresponding latitudes and longitudes
+
+    Arguments:
+    ---
+    None
+
+    Returns:
+    ---
+    dataframe
+    """
     return pd.read_csv("lat_long.csv", index_col="id")
 
 
-def get_aruco_detector():
+def get_aruco_detector(): 
+    """
+    Purpose:
+    ---
+    This function returns the aruco detector object
+
+    Arguments:
+    ---
+    None
+
+    Returns:
+    ---
+    detector : aruco detector object
+    """
     dictionary = aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
     parameters = aruco.DetectorParameters()
     detector = aruco.ArucoDetector(dictionary, parameters)
@@ -51,13 +77,45 @@ def get_aruco_detector():
     return detector
 
 
-def cleanup(s):
+def cleanup(s): # closes socket
+    """
+    Purpose:
+
+    This function closes the socket connection.
+
+    Input Arguments:
+
+    s :   [ socket object ]
+
+        socket object which needs to be closed.
+    
+    Returns:
+
+    None
+    """
     s.close()
 
 
-def send_to_robot(s: socket.socket, conn: socket.socket):
+def send_to_robot(s: socket.socket, conn: socket.socket): # sends command to robot
+    """
+    Purpose:
+    
+    This function sends the command to the robot.
+
+    Input Arguments:
+
+    s :   [ socket object ]
+
+
+    conn :   [ socket object ]
+
+    Returns:
+
+    None
+
+    """        
     data = conn.recv(1024)
-    data = data.decode("utf-8")
+    data = data.decode("utf-8") # decode the data from bytes to string
 
     if data == "ACK_REQ_FROM_ROBOT":
         pass
@@ -71,7 +129,28 @@ def send_to_robot(s: socket.socket, conn: socket.socket):
     print(f"Sent command to robot: {COMMAND}")
 
 
-def init_connection():
+def init_connection(): # initializes connection with robot
+    """
+    Purpose:
+
+    This function initializes the connection with the robot.
+
+    Input Arguments:
+
+    None
+
+    Returns:
+
+    s :   [ socket object ]
+
+        socket object 
+    
+    conn :   [ socket object ]
+
+        socket object
+    
+    """
+
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((IP_ADDRESS, 8002))
@@ -81,7 +160,25 @@ def init_connection():
         return s, conn
 
 
-def get_frame(video):
+def get_frame(video): # gets frame from camera
+    """
+    Purpose:
+
+    This function gets the frame from the camera.
+
+    Input Arguments:
+
+    video :   [ cv2.VideoCapture object ]
+    
+            cv2.VideoCapture object
+
+    Returns:
+
+    frame :   [ numpy array ]
+    
+                numpy array of the frame
+
+    """
     ret, frame = video.read()
     if ret:
         return frame
@@ -89,14 +186,50 @@ def get_frame(video):
         raise Exception("Fatal camera error")
 
 
-def update_qgis_position(capture):
+def update_qgis_position(capture): # updates the position of the robot
+    """
+    
+    Purpose:
+
+    This function updates the position of the robot.
+
+    Input Arguments:
+
+    capture :   [ cv2.VideoCapture object ]
+        
+                    cv2.VideoCapture object
+
+    Returns:
+
+    frame :   [ numpy array ]
+        
+                    numpy array of the frame
+
+    """
     frame = get_frame(capture)
     frame, side_len = transform_frame(frame)
     get_robot_coords(frame)
     return frame
 
 
-def transform_frame(frame):
+def transform_frame(frame): # transforms the frame to get 
+        """
+    Purpose:
+    ---
+    Transforms the frame based on the markers
+
+    Arguments:
+    ---
+    `frame` : { numpy.ndarray }
+        the frame to transform
+
+    Returns:
+    ---
+    `out` : { numpy.ndarray }
+        the transformed frame
+    `IDEAL_FRAME_SIZE` : { int }
+        the length of the frame
+    """
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
 
     if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
@@ -126,10 +259,32 @@ def transform_frame(frame):
     return out, IDEAL_FRAME_SIZE
 
 
-prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D = None, None, None, None
+prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D = None, None, None,  # corners
 
 
 def get_points_from_aruco(frame):
+    """
+
+    Purpose:
+    ---
+    This function returns the corners of the aruco markers
+
+    Input Arguments:
+
+    frame :   [ numpy array ]
+
+
+    Returns:
+    
+    pt_A :   [ tuple ]
+
+    pt_B :   [ tuple ]
+
+    pt_C :   [ tuple ]
+
+    pt_D :   [ tuple ]
+
+    """
     global prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D
 
     corners, ids, _ = get_aruco_data(frame)
@@ -170,6 +325,26 @@ def get_points_from_aruco(frame):
 
 
 def get_aruco_data(frame, flatten=True):
+    """
+    Purpose:
+    ---
+    This function returns the aruco data
+
+    Input Arguments:
+
+    frame :   [ numpy array ]
+
+    flatten :   [ boolean ]
+
+    Returns:
+
+    corners :   [ list ]
+
+    ids :   [ list ]
+
+    rrejected :   [ list ]
+
+    """
     detector = get_aruco_detector()
 
     c, i, r = detector.detectMarkers(frame)
@@ -183,6 +358,25 @@ def get_aruco_data(frame, flatten=True):
 
 
 def get_pxcoords(robot_id, ids, corners):
+
+    """
+    Purpose:
+
+    This function returns the pixel coordinates of the robot
+
+    Input Arguments:
+
+    robot_id :   [ int ]
+
+    ids :   [ list ]
+
+    corners :   [ list ]
+
+    Returns:
+
+    coords :   [ numpy array ]
+
+    """
     try:
         index = np.where(ids == robot_id)[0][0]
         coords = np.mean(corners[index].reshape((4, 2)), axis=0)
@@ -195,6 +389,8 @@ prev_closest_marker = None
 
 
 def get_nearestmarker(robot_id, ids, corners):
+    """
+    """
     global prev_closest_marker
 
     mindist = float("inf")
