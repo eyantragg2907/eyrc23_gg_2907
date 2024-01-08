@@ -14,6 +14,7 @@ THIS IS THE SKETCH WITH DEBUG COMMANDS AND STUFF FOR EFFICIENT PERFORMANCE
 
 #define ROT_COMPLETE_DELAY 100
 #define LEAVE_BLACK_DELAY 150
+#define NODE_LEAVE_DELAY 500
 
 #define CENTER_CORRECT_DELAY 600
 
@@ -44,8 +45,8 @@ const int led_red = 2; // misc
 const int led_green = 15;
 const int buzzer = 23;
 
-int speed1 = 200; // default motor LEFT speed
-int speed2 = 200; // default motor RIGHT speed
+int speed1 = 255; // default motor LEFT speed
+int speed2 = 255; // default motor RIGHT speed
 
 /* Status Variables */
 
@@ -64,7 +65,7 @@ int rotflag = 0;
 // stops all motors
 void stop()
 {
-    client.print("ALL STOP");
+    client.print(" \n ALL STOP \n");
 
     analogWrite(motor1f, 0);
     analogWrite(motor2f, 0);
@@ -74,8 +75,8 @@ void stop()
 
 void printIRs()
 {
-    char s[10];
-    snprintf(s, 10, "%d %d %d %d %d", input1, input2, input3, input4, input5);
+    char s[12];
+    snprintf(s, 12, "%d %d %d %d %d\n", input1, input2, input3, input4, input5);
 
     client.print(s);
 }
@@ -97,6 +98,7 @@ void printMetaSerial()
 // just moving forward (two controllers)
 void moveForwardLogic()
 {
+    printIRs();
     if (input2 == 0 && input3 == 0 && input4 == 0) // bang bang controller
     {
         if (input1 == 1 && input5 == 0) // left line detected by left sensor
@@ -122,12 +124,12 @@ void moveForwardLogic()
             analogWrite(motor1f, speed1);
             analogWrite(motor2f, speed2);
         }
-        else if (input2 == 1 && input4 == 0) // middle line detected by middle left sensor
+        else if (input2 == 1) // middle line detected by middle left sensor
         {
             analogWrite(motor1f, 0);
             analogWrite(motor2f, MIDDLE_RIGHTTURN);
         }
-        else if (input4 == 1 && input2 == 0) // middle line detected by middle right sensor
+        else if (input4 == 1) // middle line detected by middle right sensor
         {
             analogWrite(motor1f, MIDDLE_LEFTTURN);
             analogWrite(motor2f, 0);
@@ -316,6 +318,7 @@ void loop()
     else if (operation == 1) // Next Command
     {
         char command = msg[i++];
+
         if (command == 'l')
         {
             client.print("NEXT: left");
@@ -355,7 +358,7 @@ void loop()
         { // at a node
             analogWrite(motor1f, speed1);
             analogWrite(motor2f, speed2);
-            // delay(500);
+            delay(NODE_LEAVE_DELAY);  
         }
         else if (i == msg.length())
         {
