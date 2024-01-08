@@ -272,7 +272,7 @@ if __name__ == "__main__":
         frame = update_qgis_position(capture)
 
         corners, ids, rejected = get_aruco_data(frame, flatten=False)
-        aruco.drawDetectedMarkers(frame, corners, ids)
+        # aruco.drawDetectedMarkers(frame, corners, ids)
 
         cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("Arena Feed", (750, 750))
