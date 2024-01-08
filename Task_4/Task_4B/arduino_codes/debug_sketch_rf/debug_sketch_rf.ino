@@ -10,25 +10,31 @@ THIS IS THE SKETCH WITH DEBUG COMMANDS AND STUFF FOR EFFICIENT PERFORMANCE
 #define SPEED_RIGHT 255 // default motor RIGHT speed
 
 #define BANGBANG_TURNSPEED 180
-#define MIDDLE_TURNSPEED 180
+#define MIDDLE_TURNSPEED 220
 
-#define ROTATE_SPEED 180
+#define ROTATE_SPEED 255
 
 #define ROT_COMPLETE_DELAY 200
 #define LEAVE_BLACK_DELAY 300
-#define NODE_LEAVE_DELAY 500
+#define NODE_LEAVE_DELAY 300
+
+#define BLACKLINE_INITIAL_SKIP 300
+
+// #define BLACKLINE_MAXIMUM 650
 
 #define CENTER_CORRECT_DELAY 600
 
 #define CONNECTION_PING_DELAY 200
 #define WIFI_TRY_DELAY 500
 
-#define IGNORE_FALSE_NODE_TIME 1000
+#define IGNORE_FALSE_NODE_TIME 400
+#define DELAY_BEGINNING 150
+#define CENTER_CORRECTING_BEGINNING 200
 
 #define EVERY_NODE_DELAY 1000
 #define END_DELAY 5000
 
-#define D90_TURNTIME 1600
+#define D90_TURNTIME 580
 
 const char *ssid = "pjrWifi";
 const char *password = "SimplePass01";
@@ -62,7 +68,7 @@ WiFiClient client;
 String msg = "";
 
 int command_counter = 0; // flags
-int operation = 0;       // 0 for forward, 1 for check next command, 2 for rotating left, 3 for rotating right, 4 for leaving the node, 5 terminating, 6 found node now what we do
+int operation = -1;       // 0 for forward, 1 for check next command, 2 for rotating left, 3 for rotating right, 4 for leaving the node, 5 terminating, 6 found node now what we do
 int rotflag = 0;
 
 unsigned long node_left_time;
@@ -104,7 +110,7 @@ void printMetaSerial()
 void moveForwardLogic()
 {
     // printIRs();
-    Serial.println("xyz");  // Without this the code doesn't execute.
+    Serial.println("xyz");                         // Without this the code doesn't execute.
     if (input2 == 0 && input3 == 0 && input4 == 0) // bang bang controller
     {
         if (input1 == 1 && input5 == 0) // left line detected by left sensor
@@ -152,15 +158,19 @@ int moveForwardTillReachedNode()
     }
     else
     { // reached a node
-        if (millis() - node_left_time < IGNORE_FALSE_NODE_TIME) {
+        if (millis() - node_left_time < IGNORE_FALSE_NODE_TIME)
+        {
             client.print("Evading false detection of Node\n");
             moveForwardLogic();
             return 0;
         }
-        else {
+        else
+        {
             client.print("REACHED A NODE\n");
             printIRs();
             stop();
+            client.print("AFTER STOP\n");
+            printIRs();
             return 1;
         }
     }
@@ -206,15 +216,17 @@ int timedTurn(int dirn)
         {
             turn_left();
         }
+        node = true;
+        delay(D90_TURNTIME);
+        return 1;
     }
-    delay(D90_TURNTIME);
-    stop();
-    delay(ROT_COMPLETE_DELAY);
-    node = true;
-    return 1;
+    return 0;
 }
 
 // dirn == 1 for RIGHT turns; else 0
+
+unsigned long blackline_detect_start = 0;
+bool printed_detection = false;
 int turn(int dirn)
 {
     Serial.println("t");
@@ -242,47 +254,64 @@ int turn(int dirn)
             }
             delay(LEAVE_BLACK_DELAY);
             rotflag = 1;
-            client.print("DETECT BLACK_LINE START\n");
+            blackline_detect_start = millis();
+            client.print("SKIP BLACK_LINE BUT TURN START\n");
             Serial.println("Rotated to leave the middle black line!");
         }
         else
         {
-            if (dirn == 1) // rotate right
+            if (millis() - blackline_detect_start >= BLACKLINE_INITIAL_SKIP)
             {
-                printIRs();
-                if (input3 == 1) // reached the middle line again, we completed rotation
+                if (!printed_detection)
+                    client.print("DETECT BLACK_LINE START\n");
+                printed_detection = true;
+
+                if (dirn == 1) // rotate right
                 {
-                    client.print("BLACK_LINE DETECTED\n");
-                    Serial.println("Rotation Completed");
-                    rotflag = 0;
-                    node = true;
-                    stop();
-                    delay(ROT_COMPLETE_DELAY);
-                    return 1;
+                    printIRs();
+                    if (input3 == 1 && (input2 == 0 && input4 == 0)) // reached the middle line again, we completed rotation
+                    {
+                        client.print("BLACK_LINE DETECTED\n");
+                        Serial.println("Rotation Completed");
+                        rotflag = 0;
+                        node = true;
+                        stop();
+                        delay(ROT_COMPLETE_DELAY);
+                        return 1;
+                    }
+                    else
+                    {
+                        turn_right();
+                    }
                 }
-                else
+                else // rotate left
+                {
+                    printIRs();
+                    if (input3 == 1 && (input2 == 0 && input4 == 0))
+                    {
+                        client.print("BLACK_LINE DETECTED\n");
+                        Serial.println("Rotation Completed");
+                        rotflag = 0;
+                        node = true;
+                        stop();
+                        delay(ROT_COMPLETE_DELAY);
+                        return 1;
+                    }
+                    else
+                    {
+                        turn_left();
+                    }
+                }
+            }
+
+            if (dirn == 1) // rotate right
                 {
                     turn_right();
                 }
-            }
-            else // rotate left
-            {
-                printIRs();
-                if (input3 == 1)
-                {
-                    client.print("BLACK_LINE DETECTED\n");
-                    Serial.println("Rotation Completed");
-                    rotflag = 0;
-                    node = true;
-                    stop();
-                    delay(ROT_COMPLETE_DELAY);
-                    return 1;
-                }
-                else
+                else // rotate left
                 {
                     turn_left();
                 }
-            }
         }
         return 0;
     }
@@ -354,22 +383,26 @@ void setup()
     digitalWrite(led_green, HIGH);
 }
 
-
 bool printed = false;
 // String remote_abort = "0";
 
-int playByPlay() {
+int playByPlay()
+{
 
     return 1;
     stop();
     String input = client.readStringUntil('\n');
-    if (input[0] == 'C') {
+    if (input[0] == 'C')
+    {
         return 1;
-    } else {
+    }
+    else
+    {
         return 0;
     }
 }
 
+int error_counter = 0;
 void loop()
 {
     input1 = digitalRead(IR1);
@@ -389,12 +422,29 @@ void loop()
     // }
 
     // printMetaSerial();
-
-    if (operation == 0) // move forward
+    if (operation == -1) {
+        if (moveForwardTillReachedNode()) {
+            digitalWrite(buzzer, LOW);
+            delay(EVERY_NODE_DELAY);
+            digitalWrite(buzzer, HIGH);
+            // beginning
+            analogWrite(motor1f, SPEED_LEFT);
+            analogWrite(motor2f, SPEED_RIGHT);
+            client.print("ALIGNING CENTER OF ROTATION\n");
+            delay(CENTER_CORRECTING_BEGINNING);
+            stop();
+            turn_left();
+            delay(DELAY_BEGINNING);
+            stop();
+            operation = 1;
+        }
+    }
+    else if (operation == 0) // move forward
     {
         if (moveForwardTillReachedNode())
         {
-            if (playByPlay()) {
+            if (playByPlay())
+            {
                 operation = 6;
             }
         }
@@ -407,7 +457,8 @@ void loop()
         {
             client.print("-----> NEXT: left\n");
             Serial.println("Command to rotate left");
-            if (playByPlay()) {
+            if (playByPlay())
+            {
                 operation = 2;
             }
         }
@@ -415,33 +466,45 @@ void loop()
         {
             client.print("-----> NEXT: right\n");
             Serial.println("Command to rotate right");
-            if (playByPlay()) { 
+            if (playByPlay())
+            {
                 operation = 3;
             }
         }
         else
         {
             client.print("-----> NEXT: forward\n");
+
+            analogWrite(motor1r, 0);
+            analogWrite(motor2r, 0);
+            analogWrite(motor1f, SPEED_LEFT);
+            analogWrite(motor2f, SPEED_RIGHT);
+            client.print("LEAVING NODE\n");
+            delay(NODE_LEAVE_DELAY);
+
             Serial.println("Command to move normally");
-            if (playByPlay()) { 
+            if (playByPlay())
+            {
                 operation = 4;
             }
         }
     }
     else if (operation == 2) // rotate left
     {
-        if (timedTurn(0))
+        if (turn(0))
         {
-            if (playByPlay()) {
+            if (playByPlay())
+            {
                 operation = 1;
             }
         }
     }
     else if (operation == 3) // rotate right
     {
-        if (timedTurn(1))
+        if (turn(1))
         {
-            if (playByPlay()) {
+            if (playByPlay())
+            {
                 operation = 1;
             }
         }
@@ -450,16 +513,13 @@ void loop()
     {
         if (input2 == 1 && input3 == 1 && input4 == 1)
         { // at a node
-            analogWrite(motor1f, SPEED_LEFT);
-            analogWrite(motor2f, SPEED_RIGHT);
-            client.print("LEAVING NODE");
-            delay(NODE_LEAVE_DELAY);
         }
         else if (command_counter == msg.length())
         {
             stop();
             Serial.println("path complete, starting the terminating sequence");
-            if (playByPlay()) {
+            if (playByPlay())
+            {
                 operation = 5;
             }
         }
@@ -468,7 +528,8 @@ void loop()
             stop();
             client.print("The node has been LEFT\n");
             node_left_time = millis();
-            if (playByPlay()) {
+            if (playByPlay())
+            {
                 operation = 0;
             }
         }
@@ -476,7 +537,8 @@ void loop()
     else if (operation == 5) // terminate
     {
         Serial.println("Going to the ending node!");
-        if (!printed) client.print("END OF JOURNEY MOVEMENT STARTS NOW\n");
+        if (!printed)
+            client.print("END OF JOURNEY MOVEMENT STARTS NOW\n");
         printed = true;
         printIRs();
 
@@ -485,6 +547,17 @@ void loop()
         // TODO: implement history logic
         if (input3 == 0 && input2 == 0 && input4 == 0) // stop sign reached
         {
+            if (error_counter < 3) {
+                // ASSUMING THAT WE HAVE STOPPED BEFORE BECAUSE OF IRS 
+                analogWrite(motor1r, 0);
+                analogWrite(motor2r, 0);
+                analogWrite(motor1f, SPEED_LEFT);
+                analogWrite(motor2f, SPEED_RIGHT);
+                delay(100);
+                error_counter += 1;
+                return;
+            }
+
             client.print("REACHED NO LINE AREA\n");
             printIRs();
             Serial.println("Reached the ending node!");
@@ -497,7 +570,7 @@ void loop()
             delay(END_DELAY);
             digitalWrite(led_red, LOW);
             digitalWrite(buzzer, HIGH);
-            operation = -1;
+            operation = 99;
             client.print("ALL ENGINE STOP -> RUN COMPLETE!\n");
         }
     }
@@ -506,7 +579,8 @@ void loop()
         digitalWrite(buzzer, LOW);
         delay(EVERY_NODE_DELAY);
         digitalWrite(buzzer, HIGH);
-        if (playByPlay()) {
+        if (playByPlay())
+        {
             operation = 1;
         }
     }

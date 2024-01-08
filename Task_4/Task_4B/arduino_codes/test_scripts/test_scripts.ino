@@ -1,6 +1,7 @@
 /* A set of quick-fire tests */
 #define WIFI 1
 #define MOVE_SPEED 180
+#define MOTORTEST_SPEED 180
 
 const char *ssid = "pjrWifi";
 const char *password = "SimplePass01";
@@ -99,20 +100,20 @@ void motorTest() {
     if (!test_ran) {
         client.print("STARTING test\n");
         client.print("M1F\n");
-        analogWrite(motor1f, 255);
+        analogWrite(motor1f, MOTORTEST_SPEED);
         delay(1000);
         analogWrite(motor1f, 0);
         client.print("M1R\n");
-        analogWrite(motor1r, 255);
+        analogWrite(motor1r, MOTORTEST_SPEED);
         delay(1000);
         analogWrite(motor1r, 0);
 
         client.print("M2F\n");
-        analogWrite(motor2f, 255);
+        analogWrite(motor2f, MOTORTEST_SPEED);
         delay(1000);
         analogWrite(motor2f, 0);
         client.print("M2R\n");
-        analogWrite(motor2r, 255);
+        analogWrite(motor2r, MOTORTEST_SPEED);
         delay(1000);
         analogWrite(motor2r, 0);
         client.print("DONE test\n");
@@ -183,7 +184,7 @@ void loop() {
     // buzzerTest();
     // ledsTest();
     // readIRs();
-    teleop();
-    readIRs();
-    // motorTest();
+    // teleop();
+    // readIRs();
+    motorTest();
 }
