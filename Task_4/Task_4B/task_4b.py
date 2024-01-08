@@ -36,7 +36,7 @@ IDEAL_FRAME_SIZE = 1080 # camera frame
 
 IP_ADDRESS = "192.168.128.92"  # IP of the Laptop on Hotspot
 COMMAND = "nnrnlnrnrnnrnnlnn\n"  # the path
-BuzzerCommand= "111111111011" # buzzer command
+BuzzerCommand= "11111111101" # buzzer command
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
