@@ -20,6 +20,8 @@ THIS IS THE SKETCH WITH DEBUG COMMANDS AND STUFF FOR EFFICIENT PERFORMANCE
 
 #define BLACKLINE_INITIAL_SKIP 300
 
+#define ERROR_COUNTER_MAX 4
+
 // #define BLACKLINE_MAXIMUM 650
 
 #define CENTER_CORRECT_DELAY 600
@@ -547,7 +549,7 @@ void loop()
         // TODO: implement history logic
         if (input3 == 0 && input2 == 0 && input4 == 0) // stop sign reached
         {
-            if (error_counter < 3) {
+            if (error_counter < ERROR_COUNTER_MAX) {
                 // ASSUMING THAT WE HAVE STOPPED BEFORE BECAUSE OF IRS 
                 analogWrite(motor1r, 0);
                 analogWrite(motor2r, 0);
