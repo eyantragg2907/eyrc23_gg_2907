@@ -4,7 +4,7 @@
 """IMPORTANT"""
 
 # Team ID:			[ 2907 ]
-# Author List:		[ Arnav Rustagi, Abhinav Lodha, Pranjal Rastogi]
+# Author List:		[ Arnav Rustagi, Abhinav Lodha]
 # Filename:			task_4b.py
 
 ####################### IMPORT MODULES #######################
@@ -52,7 +52,8 @@ def get_aruco_detector():
 
 
 def cleanup(s):
-    s.close()
+    if s is not None:   
+        s.close()
 
 
 def send_to_robot(s: socket.socket, conn: socket.socket):
@@ -83,6 +84,7 @@ def init_connection():
 
 def get_frame(video):
     ret, frame = video.read()
+
     if ret:
         return frame
     else:
@@ -161,6 +163,7 @@ def get_points_from_aruco(frame):
 
     if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
         # use the previous frame's points
+        print(f"Using previous frame's points, as {pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
         return prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D
     else:
         # update the previous frame's points
@@ -262,30 +265,39 @@ def initialize_capture(frames_to_skip=100) -> cv2.VideoCapture:
 
     return capture
 
+def listen_and_print(s, conn: socket.socket):
+    if conn is None:
+        return None
+    data = conn.recv(1024)
+    data = data.decode("utf-8")
+    print(f"recv: {data}")
+
 ###############	Main Function	#################
 if __name__ == "__main__":
     capture = initialize_capture()
 
-    counter = 0   
+    counter = 0
+    soc, conn = None, None
     while True:
         # get a new frame, transform it and get the robots coordinates
         frame = update_qgis_position(capture)
 
-        corners, ids, rejected = get_aruco_data(frame, flatten=False)
-        aruco.drawDetectedMarkers(frame, corners, ids)
-
-        cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
-        cv2.resizeWindow("Arena Feed", (750, 750))
-        cv2.imshow("Arena Feed", cv2.resize(frame, (750, 750)))
-        if cv2.waitKey(1) == ord("q"):
-            cv2.destroyAllWindows()
-            break
-
+        # corners, ids, rejected = get_aruco_data(frame, flatten=False)
+        # aruco.drawDetectedMarkers(frame, corners, ids)
+        # cv2.namedWindow("Arena Feed", cv2.WINDOW_NORMAL)
+        # cv2.resizeWindow("Arena Feed", (750, 750))
+        # cv2.imshow("Arena Feed", cv2.resize(frame, (750, 750)))
+        # if cv2.waitKey(1) == ord("q"):
+        #     cv2.destroyAllWindows()
+        #     break
+        
         if counter == 0:
             soc, conn = init_connection()
             send_to_robot(soc, conn)
-            cleanup(soc)
+        
+        listen_and_print(soc, conn)
 
         counter += 1
 
     capture.release()
+    cleanup(soc)

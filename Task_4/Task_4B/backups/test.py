@@ -1,4 +1,10 @@
+
+"""IMPORTANT"""
 ## OUTDATED ##
+## STANDARD FILE WITHOUT QGIS ##
+"""IMPORTANT"""
+
+
 """
 *****************************************************************************************
 *
@@ -31,11 +37,14 @@ import signal
 
 ##############################################################
 
-ip = "192.168.54.144"     # Enter IP address of laptop after connecting it to WIFI hotspot
+ip = "192.168.54.92"     # Enter IP address of laptop after connecting it to WIFI hotspot
 commandsent = 0
+# command = "nrnn"
+command = "nnrnlnrnrnrnln"
 command = "nrnn"
-# command = "nnrnlnrnrnrln"
+# command = "nnrnlnrnrnnrnnlnn"
 # command = "nn"
+command = "nnrnlnrnrnnrnnlnn"
 ################# ADD UTILITY FUNCTIONS HERE #################
 
 
