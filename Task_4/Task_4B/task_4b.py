@@ -28,7 +28,7 @@ if not os.path.exists(OUT_FILE_LOC):
 CAMERA_ID = 1
 
 
-ARUCO_REQD_IDS = {"4", "5", "6", "7"}
+ARUCO_REQD_IDS = {4, 5, 6, 7}
 
 ARUCO_ROBOT_ID = 97
 IDEAL_FRAME_SIZE = 1080
