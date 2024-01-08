@@ -16,6 +16,7 @@ IP_ADDRESS = "192.168.128.92"  # IP of the Laptop on Hotspot
 COMMAND = "nnrnlnrnrnnrnnlnn"  # the full cycle command
 
 COMMAND = "nrn"
+
 ################# ADD UTILITY FUNCTIONS HERE #################
 
 
@@ -50,13 +51,15 @@ def init_connection():
 
         return soc, conn
 
-def listen_and_print(s, conn):
+def listen_and_print(s, conn: socket.socket):
+    print("="*80)
     while True:
         try:
-            data = conn.recv(1024)
+            data = conn.recv(4096)
             data = data.decode("utf-8")
-            print(f"recv: {data}")
+            print(f"{data}")
         except KeyboardInterrupt:
+    
             cleanup(s)
             sys.exit(0)
 
