@@ -1,10 +1,11 @@
 /* A set of quick-fire tests */
 #define WIFI 1
+#define MOVE_SPEED 150
 
 const char *ssid = "pjrWifi";
 const char *password = "SimplePass01";
 const uint16_t port = 8002;
-const char *host = "192.168.128.92";
+const char *host = "192.168.128.144";
 
 const int IR1 = 5; // IR sensors pins
 const int IR2 = 18;
@@ -32,7 +33,7 @@ void connectToWifi()
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED)
     {
-        delay(WIFI_TRY_DELAY);
+        delay(500);
         Serial.println("...");
     }
 
@@ -40,13 +41,13 @@ void connectToWifi()
     Serial.println(WiFi.localIP());
 
     digitalWrite(led_red, HIGH); // rest condition
-    digitalWrite(led_green, LOW);
+    digitalWrite(led_green, 0);
 
     do
     {
         Serial.println("Connection to host failed");
         digitalWrite(led_red, HIGH);
-        delay(CONNECTION_PING_DELAY);
+        delay(200);
     } while (!client.connect(host, port));
 
     client.print("ACK_REQ_FROM_ROBOT"); // Send an acknowledgement to host(laptop)
@@ -93,20 +94,34 @@ void readIRs() {
     client.print(s);
 }
 
+bool test_ran = false;
 void motorTest() {
-    analogWrite(motor1f, 255);
-    digitalWrite(motor1f, LOW);
-    analogWrite(motor1r, 255);
-    digitalWrite(motor1r, LOW);
+    if (!test_ran) {
+        client.print("STARTING test\n");
+        client.print("M1F\n");
+        analogWrite(motor1f, 255);
+        delay(1000);
+        analogWrite(motor1f, 0);
+        client.print("M1R\n");
+        analogWrite(motor1r, 255);
+        delay(1000);
+        analogWrite(motor1r, 0);
 
-    analogWrite(motor2f, 255);
-    digitalWrite(motor2f, LOW);
-    analogWrite(motor2r, 255);
-    digitalWrite(motor2r, LOW);
+        client.print("M2F\n");
+        analogWrite(motor2f, 255);
+        delay(1000);
+        analogWrite(motor2f, 0);
+        client.print("M2R\n");
+        analogWrite(motor2r, 255);
+        delay(1000);
+        analogWrite(motor2r, 0);
+        client.print("DONE test\n");
+    }
+    test_ran = true;
 }
 
 void buzzerTest() {
-    digitalWrite(buzzer, LOW);
+    digitalWrite(buzzer, 0);
     delay(1000);
     digitalWrite(buzzer, HIGH);
 }
@@ -115,30 +130,52 @@ void ledsTest() {
     digitalWrite(led_red, HIGH);
     digitalWrite(led_green, HIGH);
     delay(1000);
-    digitalWrite(led_red, LOW);
-    digitalWrite(led_green, LOW);
+    digitalWrite(led_red, 0);
+    digitalWrite(led_green, 0);
 }
 
-void teleop() {
-    String move = client.readStringUntil("\n");
-    char to_move = move[0];
+char to_move = '0';
 
+void teleop() {
+    if (!WIFI) {
+        Serial.println("Cannot teleop without WiFi");
+        return;
+    }
+    String move = client.readStringUntil('\n');
+    if (move.length() != 0) {
+        to_move = move[0];
+    }
+
+    // analogWrite(motor1r, 0);
+    // analogWrite(motor2r, 0);
+    // analogWrite(motor2f, 0);
+    // analogWrite(motor1f, 0);
+    
     if (to_move == 'F') {
-        analogWrite(motor1f, 150);
-        analogWrite(motor2f, 150);
+        analogWrite(motor1r, 0);
+        analogWrite(motor2r, 0);
+        analogWrite(motor1f, MOVE_SPEED);
+        analogWrite(motor2f, MOVE_SPEED);
     } else if (to_move == 'L') {
-        analogWrite(motor1f, 150);
-        digitalWrite(motor1r, LOW);
-        digitalWrite(motor2f, LOW);
-        analogWrite(motor2r, 150);
+        analogWrite(motor1r, 0);
+        analogWrite(motor2f, 0);
+        analogWrite(motor1f, MOVE_SPEED);
+        analogWrite(motor2r, MOVE_SPEED);
     } else if (to_move == 'R') {
-        digitalWrite(motor1f, LOW);
-        analogWrite(motor1r, 150);
-        analogWrite(motor2f, 150);
-        digitalWrite(motor2r, LOW);
+        analogWrite(motor1f, 0);
+        analogWrite(motor2r, 0);
+        analogWrite(motor1r, MOVE_SPEED);
+        analogWrite(motor2f, MOVE_SPEED);
     } else if (to_move == 'B') {
-        analogWrite(motor1r, 150);
-        analogWrite(motor2r, 150);
+        analogWrite(motor1f, 0);
+        analogWrite(motor2f, 0);
+        analogWrite(motor1r, MOVE_SPEED);
+        analogWrite(motor2r, MOVE_SPEED);
+    } else if (to_move == 'S') {
+        analogWrite(motor1r, 0);
+        analogWrite(motor1f, 0);
+        analogWrite(motor2r, 0);
+        analogWrite(motor2f, 0);
     }
 }
 
@@ -148,4 +185,5 @@ void loop() {
     // readIRs();
     teleop();
     readIRs();
+    // motorTest();
 }

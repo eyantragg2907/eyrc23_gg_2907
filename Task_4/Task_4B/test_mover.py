@@ -19,7 +19,7 @@ def isData():
 
 ##############################################################
 
-IP_ADDRESS = "192.168.128.92"  # IP of the Laptop on Hotspot
+IP_ADDRESS = "192.168.128.144"  # IP of the Laptop on Hotspot
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
@@ -44,16 +44,27 @@ def listen_and_teleop(s: socket.socket, conn: socket.socket):
 
         while 1:
             recv = conn.recv(1024)
-            print(f"Received: {recv}")
+            print(f"Received: {recv.decode('utf-8')}", end="")
 
             if isData():
                 c = sys.stdin.read(1)
                 if c == 'q':
                     break
-
-                conn.sendall(str.encode(c))
+                if c == "w":
+                    conn.sendall(str.encode("F\n"))
+                elif c == "a":
+                    conn.sendall(str.encode("L\n"))
+                elif c == "d":
+                    conn.sendall(str.encode("R\n"))
+                elif c == "s":
+                    conn.sendall(str.encode("B\n"))
+                elif c == " ":
+                    conn.sendall(str.encode("S\n"))
+                else:
+                    pass
                 print(f"Sent command to robot: {c}")
     finally:
+        conn.sendall(str.encode("S\n"))
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
 
     cleanup(s)
