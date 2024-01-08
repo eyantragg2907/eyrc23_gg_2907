@@ -213,7 +213,7 @@ def update_qgis_position(capture): # updates the position of the robot
 
 
 def transform_frame(frame): # transforms the frame to get 
-        """
+    """
     Purpose:
     ---
     Transforms the frame based on the markers
@@ -230,6 +230,7 @@ def transform_frame(frame): # transforms the frame to get
     `IDEAL_FRAME_SIZE` : { int }
         the length of the frame
     """
+
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
 
     if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
@@ -259,7 +260,7 @@ def transform_frame(frame): # transforms the frame to get
     return out, IDEAL_FRAME_SIZE
 
 
-prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D = None, None, None,  # corners
+prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D = None, None, None, None  # corners
 
 
 def get_points_from_aruco(frame):
