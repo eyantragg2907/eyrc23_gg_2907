@@ -58,7 +58,7 @@ String msg = "";
 WiFiClient client;
 
 int i = 0;         // flags
-int operation = 0; // 0 for forward, 1 for "on node now check command", 2 for rotating left, 3 for rotating right, 4 for leaving the node, 5 terminating
+int operation = 0; // 0 for forward, 1 for check next command, 2 for rotating left, 3 for rotating right, 4 for leaving the node, 5 terminating, 6 found node now what we do
 int rotflag = 0;
 
 // stops all motors
@@ -234,7 +234,7 @@ int turn(char dirn)
     return 0;
 }
 
-void connectToWifiAndGetMessage(char *msg)
+void connectToWifiAndGetMessage(String msg)
 {
     // setting up wifi
     WiFi.begin(ssid, password);
@@ -357,7 +357,7 @@ void loop()
             analogWrite(motor2f, speed2);
             // delay(500);
         }
-        else if (i == path.length())
+        else if (i == msg.length())
         {
             stop();
             Serial.println("path complete, starting the terminating sequence");
