@@ -1,0 +1,10 @@
+# node_1 node_2 pose distance
+START A FRONT 1
+A B FRONT 1
+A C RIGHT 2
+C D FRONT 0.5
+B E RIGHT 2
+E D BACK 0.5
+
+D *
+C *
