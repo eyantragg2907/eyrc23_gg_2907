@@ -17,7 +17,7 @@ class Graph:
                 continue
             if N == 5:
                 node_1, node_2, direction, distance, pose = words
-                self.add_edge(node_1, node_2, eval(direction), float(distance), pose)
+                self.add_edge(node_1, node_2, eval(direction), float(distance), eval(pose))
             if N == 4:  # initialising an edge
                 node_1, node_2, direction, distance = words
                 self.add_edge(node_1, node_2, eval(direction), float(distance))
