@@ -1,4 +1,7 @@
-# node_1 node_2 pose distance
+# node_1 node_2 direction distance (for biderctional node 2 node connections)
+# node_1 node_2 direction distance pose (for uniderctional node 2 node connections, pose defining the ending pose)
+# node * (defines special exit nodes)
+
 START A FRONT 1
 A B FRONT 1
 A C RIGHT 2

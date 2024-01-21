@@ -2,34 +2,59 @@ from constants import *
 from graph import Graph
 
 
-def get_shortest_path(graph, node_1, node_2, current_path=("", 0), visited=set(), current_pose=INITIAL_POSE):
+class Path(object):
+    def __init__(self, nodes=[], cost=0):
+        self.nodes = nodes
+        self.cost = cost
+
+    def __add__(self, data):
+        (node, cost) = data
+        path = Path(self.nodes[:], self.cost)
+        path.nodes.append(node)
+        path.cost += cost
+
+        return path
+
+    def __len__(self):
+        return len(self.nodes)
+    
+    def __str__(self):
+        return f"{self.nodes=}, {self.cost=}"
+
+def get_shortest_path(
+    graph,
+    node_1,
+    node_2,
+    path=Path(),
+    visited=set(),
+    robot_pose=INITIAL_POSE,
+):
+    if len(path) == 0: path.nodes.append(node_1)
     visited = visited.copy()
     visited.add(node_1)
     children = graph.nodes[node_1]
     paths = []
 
-    for (node, pose, distance) in children:
+    for node, direction, distance, end_pose in children:
         if node in visited: continue
 
-        print(f"FROM {node_1}")
-        print(current_path)
-        print(node, pose, distance)
-        print(visited)
-        print(f"old_cost : {current_path[1]}")
-        print(f"distance {node_1} {node} : {distance}")
-        print(f"pose_cost {current_pose} {pose} : {get_pose_cost(current_pose, pose)}")
-        print("\n\n")
-        updated_current_path = (
-            current_path[0] + node,
-            current_path[1]
-            + distance
-            + get_pose_cost(current_pose, pose)
+        print("",path)
+        cum_cost = distance + get_pose_cost(robot_pose, direction)
+        updated_path = path + (node, cum_cost)
+
+        if node == node_2:  return [updated_path]
+
+        paths += get_shortest_path(
+            graph,
+            node,
+            node_2,
+            path=updated_path,
+            visited=visited,
+            robot_pose=end_pose,
         )
 
-        if node == node_2: return [updated_current_path]
-        paths += get_shortest_path(graph, node, node_2, updated_current_path, visited, pose)
-
     return paths
+
 
 def get_pose_cost(initial_pose, reqd_pose):
     diff = abs(initial_pose - reqd_pose)
@@ -43,4 +68,4 @@ def get_pose_cost(initial_pose, reqd_pose):
 
 if __name__ == "__main__":
     graph = Graph()
-    print(get_shortest_path(graph, 'D','B', current_pose=RIGHT))
+    print([str(a) for a in get_shortest_path(graph, "A", "D")])
