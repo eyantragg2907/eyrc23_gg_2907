@@ -78,6 +78,7 @@ def run_for_events(events_detected):
             eventslist.append([PRIORITY[i[1]],'E_'+i[0]])
     eventpriority = [event[1] for event in eventslist]
     seq_of_events = ["A", *eventpriority,"A"] 
+    # arnav do your magic here
     for i in range(len(seq_of_events)-1):
         print(f"Shortest path from {seq_of_events[i]} to {seq_of_events[i+1]}" )
         paths = get_shortest_path(graph, seq_of_events[i], seq_of_events[i+1])

@@ -1,12 +1,17 @@
 /* A set of quick-fire tests */
-#define WIFI 1
+#define WIFI 0
 #define MOVE_SPEED 180
 #define MOTORTEST_SPEED 255
 
-const char *ssid = "pjrWifi";
-const char *password = "SimplePass01";
+// const char *ssid = "pjrWifi";
+// const char *password = "SimplePass01";
+// const uint16_t port = 8002;
+// const char *host = "192.168.187.144";
+
+const char *ssid = "brainerd";
+const char *password = "internetaccess";
 const uint16_t port = 8002;
-const char *host = "192.168.187.144";
+const char *host = "192.168.56.1";
 
 const int IR1 = 5; // IR sensors pins
 const int IR2 = 18;
@@ -77,10 +82,10 @@ void setup()
     Serial.begin(115200);
 
     // wifi connection
-    if (WIFI)
-    {
-        connectToWifi();
-    }
+    // if (WIFI)
+    // {
+    //     connectToWifi();
+    // }
 }
 
 void readIRs()
@@ -203,10 +208,10 @@ void teleop()
 
 void loop()
 {
-    buzzerTest();
+    // buzzerTest();
     ledsTest();
     // readIRs();
-    teleop();
-    readIRs();
+    // teleop();
+    // readIRs();
     // motorTest();
 }

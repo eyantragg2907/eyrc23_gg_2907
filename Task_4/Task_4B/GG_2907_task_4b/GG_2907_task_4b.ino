@@ -41,10 +41,15 @@ THIS IS THE SKETCH WITH DEBUG COMMANDS AND STUFF FOR EFFICIENT PERFORMANCE
 
 #define D90_TURNTIME 580
 
-const char *ssid = "pjrWifi";
-const char *password = "SimplePass01";
+// const char *ssid = "pjrWifi";
+// const char *password = "SimplePass01";
+// const uint16_t port = 8002;
+// const char *host = "192.168.128.92";
+
+const char *ssid = "brainerd";
+const char *password = "internetaccess";
 const uint16_t port = 8002;
-const char *host = "192.168.128.92";
+const char *host = "192.168.56.1";
 
 const int IR1 = 5; // IR sensors pins
 const int IR2 = 18;
@@ -52,11 +57,11 @@ const int IR3 = 32;
 const int IR4 = 33;
 const int IR5 = 25;
 
-const int motor1f = 12; // motor LEFT forward
-const int motor1r = 14; // motor LEFT reverse
+const int motor1f = 27; // motor LEFT forward
+const int motor1r = 13; // motor LEFT reverse
 
-const int motor2f = 13; // motor RIGHT forward
-const int motor2r = 27; // motor RIGHT reverse
+const int motor2f = 12; // motor RIGHT forward
+const int motor2r = 14; // motor RIGHT reverse
 
 const int led_red = 2; // misc
 const int led_green = 15;
@@ -74,7 +79,7 @@ String msg = "";
 String buzzermessage = "";
 
 int command_counter = 0; // flags
-int operation = -1;       // 0 for forward, 1 for check next command, 2 for rotating left, 3 for rotating right, 4 for leaving the node, 5 terminating, 6 found node now what we do
+int operation = -1;      // 0 for forward, 1 for check next command, 2 for rotating left, 3 for rotating right, 4 for leaving the node, 5 terminating, 6 found node now what we do
 int rotflag = 0;
 
 unsigned long node_left_time;
@@ -314,13 +319,13 @@ int turn(int dirn)
             }
 
             if (dirn == 1) // rotate right
-                {
-                    turn_right();
-                }
-                else // rotate left
-                {
-                    turn_left();
-                }
+            {
+                turn_right();
+            }
+            else // rotate left
+            {
+                turn_left();
+            }
         }
         return 0;
     }
@@ -433,10 +438,13 @@ void loop()
     // }
 
     // printMetaSerial();
-    if (operation == -1) {
-        if (moveForwardTillReachedNode()) {
+    if (operation == -1)
+    {
+        if (moveForwardTillReachedNode())
+        {
 
-            if (buzzermessage[node_count] == '1') {
+            if (buzzermessage[node_count] == '1')
+            {
                 digitalWrite(buzzer, LOW);
                 delay(EVERY_NODE_DELAY);
                 digitalWrite(buzzer, HIGH);
@@ -552,7 +560,8 @@ void loop()
     else if (operation == 5) // terminate
     {
         Serial.println("Going to the ending node!");
-        if (!printed) {
+        if (!printed)
+        {
             client.print("END OF JOURNEY MOVEMENT STARTS NOW\n");
             start_of_end_detect = millis();
         }
@@ -561,7 +570,8 @@ void loop()
 
         moveForwardLogic();
 
-        if (millis() - start_of_end_detect >= END_SKIP) {
+        if (millis() - start_of_end_detect >= END_SKIP)
+        {
 
             if (input3 == 0 && input2 == 0 && input4 == 0) // stop sign reached
             {
@@ -571,7 +581,7 @@ void loop()
                 stop();
                 // second print after stopping
                 printIRs();
-                
+
                 analogWrite(motor1r, 0);
                 analogWrite(motor2r, 0);
                 analogWrite(motor1f, SPEED_LEFT);
@@ -592,7 +602,8 @@ void loop()
     }
     else if (operation == 6) // Node Found now what to do
     {
-        if (buzzermessage[node_count] == '1') {
+        if (buzzermessage[node_count] == '1')
+        {
             digitalWrite(buzzer, LOW);
             delay(EVERY_NODE_DELAY);
             digitalWrite(buzzer, HIGH);
