@@ -54,7 +54,8 @@ void connectToWifi()
     client.print("ACK_REQ_FROM_ROBOT"); // Send an acknowledgement to host(laptop)
 }
 
-void setup() {
+void setup()
+{
     pinMode(IR1, INPUT);
     pinMode(IR2, INPUT);
     pinMode(IR3, INPUT);
@@ -73,13 +74,15 @@ void setup() {
 
     Serial.begin(115200);
 
-    // wifi connection 
-    if (WIFI) {
+    // wifi connection
+    if (WIFI)
+    {
         connectToWifi();
     }
 }
 
-void readIRs() {
+void readIRs()
+{
     int in1, in2, in3, in4, in5;
 
     in1 = digitalRead(IR1);
@@ -87,7 +90,7 @@ void readIRs() {
     in3 = digitalRead(IR3);
     in4 = digitalRead(IR4);
     in5 = digitalRead(IR5);
-    
+
     char s[12];
     snprintf(s, 12, "%d %d %d %d %d\n", in1, in2, in3, in4, in5);
 
@@ -96,8 +99,10 @@ void readIRs() {
 }
 
 bool test_ran = false;
-void motorTest() {
-    if (!test_ran) {
+void motorTest()
+{
+    if (!test_ran)
+    {
         client.print("STARTING test\n");
         client.print("M1F\n");
         analogWrite(motor1f, MOTORTEST_SPEED);
@@ -121,13 +126,15 @@ void motorTest() {
     test_ran = true;
 }
 
-void buzzerTest() {
+void buzzerTest()
+{
     digitalWrite(buzzer, 0);
     delay(1000);
     digitalWrite(buzzer, HIGH);
 }
 
-void ledsTest() {
+void ledsTest()
+{
     digitalWrite(led_red, HIGH);
     digitalWrite(led_green, HIGH);
     delay(1000);
@@ -137,13 +144,16 @@ void ledsTest() {
 
 char to_move = '0';
 
-void teleop() {
-    if (!WIFI) {
+void teleop()
+{
+    if (!WIFI)
+    {
         Serial.println("Cannot teleop without WiFi");
         return;
     }
     String move = client.readStringUntil('\n');
-    if (move.length() != 0) {
+    if (move.length() != 0)
+    {
         to_move = move[0];
     }
 
@@ -151,28 +161,37 @@ void teleop() {
     // analogWrite(motor2r, 0);
     // analogWrite(motor2f, 0);
     // analogWrite(motor1f, 0);
-    
-    if (to_move == 'F') {
+
+    if (to_move == 'F')
+    {
         analogWrite(motor1r, 0);
         analogWrite(motor2r, 0);
         analogWrite(motor1f, MOVE_SPEED);
         analogWrite(motor2f, MOVE_SPEED);
-    } else if (to_move == 'L') {
+    }
+    else if (to_move == 'L')
+    {
         analogWrite(motor1r, 0);
         analogWrite(motor2f, 0);
         analogWrite(motor1f, MOVE_SPEED);
         analogWrite(motor2r, MOVE_SPEED);
-    } else if (to_move == 'R') {
+    }
+    else if (to_move == 'R')
+    {
         analogWrite(motor1f, 0);
         analogWrite(motor2r, 0);
         analogWrite(motor1r, MOVE_SPEED);
         analogWrite(motor2f, MOVE_SPEED);
-    } else if (to_move == 'B') {
+    }
+    else if (to_move == 'B')
+    {
         analogWrite(motor1f, 0);
         analogWrite(motor2f, 0);
         analogWrite(motor1r, MOVE_SPEED);
         analogWrite(motor2r, MOVE_SPEED);
-    } else if (to_move == 'S') {
+    }
+    else if (to_move == 'S')
+    {
         analogWrite(motor1r, 0);
         analogWrite(motor1f, 0);
         analogWrite(motor2r, 0);
@@ -180,11 +199,12 @@ void teleop() {
     }
 }
 
-void loop() {
+void loop()
+{
     // buzzerTest();
     // ledsTest();
-    // readIRs();
+    readIRs();
     // teleop();
     // readIRs();
-    motorTest();
+    // motorTest();
 }
