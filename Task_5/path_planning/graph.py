@@ -15,7 +15,7 @@ class Graph:
             N = len(words)
             if N not in (2, 4, 5):
                 continue
-            if N == 5:
+            if N == 5: # single way link
                 node_1, node_2, direction, distance, pose = words
                 self.add_edge(node_1, node_2, eval(direction), float(distance), eval(pose))
             if N == 4:  # initialising an edge
