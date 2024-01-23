@@ -82,10 +82,10 @@ void setup()
     Serial.begin(115200);
 
     // wifi connection
-    // if (WIFI)
-    // {
-    //     connectToWifi();
-    // }
+    if (WIFI)
+    {
+        connectToWifi();
+    }
 }
 
 void readIRs()
