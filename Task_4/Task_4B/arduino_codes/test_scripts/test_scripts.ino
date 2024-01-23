@@ -1,23 +1,30 @@
 /* A set of quick-fire tests */
-#define WIFI 0
+#define WIFI 1
 #define MOVE_SPEED 180
 #define MOTORTEST_SPEED 255
 
-// const char *ssid = "pjrWifi";
-// const char *password = "SimplePass01";
-// const uint16_t port = 8002;
-// const char *host = "192.168.187.144";
-
-const char *ssid = "brainerd";
-const char *password = "internetaccess";
+const char *ssid = "pjrWifi";
+const char *password = "SimplePass01";
 const uint16_t port = 8002;
-const char *host = "192.168.56.1";
+const char *host = "192.168.187.144";
+
+// const char *ssid = "brainerd";
+// const char *password = "internetaccess";
+// const uint16_t port = 8002;
+// const char *host = "192.168.56.1";
+
+// const int IR1 = 18; // IR sensors pins ACTUALLY IR2
+// const int IR2 = 25; // ACTUALLY IR5
+// const int IR3 = 32;
+// const int IR4 = 5; // ACTUALLY IR2
+// const int IR5 = 33; // ACTUALLY IR4
+
 
 const int IR1 = 5; // IR sensors pins
-const int IR2 = 18;
+const int IR2 = 25;
 const int IR3 = 32;
-const int IR4 = 33;
-const int IR5 = 25;
+const int IR4 = 33; 
+const int IR5 = 18;
 
 // looking from the back
 
@@ -209,8 +216,8 @@ void teleop()
 void loop()
 {
     // buzzerTest();
-    ledsTest();
-    // readIRs();
+    // ledsTest();
+    readIRs();
     // teleop();
     // readIRs();
     // motorTest();

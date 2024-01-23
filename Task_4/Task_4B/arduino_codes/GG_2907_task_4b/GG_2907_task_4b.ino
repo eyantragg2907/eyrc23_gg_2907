@@ -44,7 +44,7 @@ THIS IS THE SKETCH WITH DEBUG COMMANDS AND STUFF FOR EFFICIENT PERFORMANCE
 const char *ssid = "pjrWifi";
 const char *password = "SimplePass01";
 const uint16_t port = 8002;
-const char *host = "192.168.128.92";
+const char *host = "192.168.187.62";
 
 const int IR1 = 5; // IR sensors pins
 const int IR2 = 18;
@@ -52,11 +52,11 @@ const int IR3 = 32;
 const int IR4 = 33;
 const int IR5 = 25;
 
-const int motor1f = 12; // motor LEFT forward
-const int motor1r = 14; // motor LEFT reverse
+const int motor1f = 12; // 27 motor LEFT forward
+const int motor1r = 14; // 13 motor LEFT reverse
 
-const int motor2f = 13; // motor RIGHT forward
-const int motor2r = 27; // motor RIGHT reverse
+const int motor2f = 27; // 12  motor RIGHT forward
+const int motor2r = 13; // 14 motor RIGHT reverse
 
 const int led_red = 2; // misc
 const int led_green = 15;
