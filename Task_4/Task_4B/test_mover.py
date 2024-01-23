@@ -17,9 +17,9 @@ old_settings = termios.tcgetattr(sys.stdin)
 def isData():
     return select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], [])
 
-##############################################################
+########################################################w######
 
-IP_ADDRESS = "192.168.128.144"  # IP of the Laptop on Hotspot
+IP_ADDRESS = "192.168.187.144"  # IP of the Laptop on Hotspot
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
