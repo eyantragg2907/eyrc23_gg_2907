@@ -96,6 +96,7 @@ def get_event_images(frame, pts, filenames):
     events = []
     for p, f in zip(pts, filenames):
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
+        print(f)
         cv2.imwrite(f, event)
         events.append(event)
     return events
@@ -113,8 +114,8 @@ def main():
     num_of_frames_skip = 100
     # Initialize the camera
     cap = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1080)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1920)
     # take a photo
     for i in range(num_of_frames_skip):
         ret, frame = cap.read()
@@ -128,33 +129,36 @@ def main():
     # D = "military_vehicles"
     # E = "combat"
 
-    A = 4
-    B = 2
-    C = 1
-    D = 3
-    E = 0
+    classmap = [
+        "combat",
+        "destroyed_buildings",
+        "fire",
+        "human_aid_rehabilitation",
+        "military_vehicles",
+    ]
 
-    SET = "DAY_03_SET1.0_"
+    A = 1
+    B = 4
+    C = 2
+    D = 0
+    E = 3
 
-    FOLDER = "temp_pjrtrain"
+    SET = "NOISY_DATASET"
 
-    c = 0
-    while c < 5:
-        ret, frame = cap.read()
-        # save the photo
-        if ret is True:
-            print(f"Photo {c} taken")
-            cv2.imwrite(f"temp_save.jpg", frame)
-            filenames = f"{FOLDER}/{A}/{c}{SET}.png {FOLDER}/{B}/{c}{SET}.png {FOLDER}/{C}/{c}{SET}.png {FOLDER}/{D}/{c}{SET}.png {FOLDER}/{E}/{c}{SET}.png".split()
-            frame, pts, events = get_events(frame, filenames)
-            print(f"Photo {c} saved")
-        c += 1
-        print("Now we wait")
-        if c == 5:
-            break
-        time.sleep(420)  # 7 minutes
-        print("Next frame")
-    print("Done")
+    FOLDER = "empty_train"
+    c = datetime.now().strftime("%Y%m%d%H%M%S")
+
+    ret, frame = cap.read()
+    # save the photo
+    if ret is True:
+        print(f"Photo {c} taken")
+        cv2.imwrite(f"temp_save.jpg", frame)
+        #filenames = f"{FOLDER}/{A}/{c}{SET}.png {FOLDER}/{B}/{c}{SET}.png {FOLDER}/{C}/{c}{SET}.png {FOLDER}/{D}/{c}{SET}.png {FOLDER}/{E}/{c}{SET}.png".split()
+        filenames = f"{FOLDER}/{c}_A.png {FOLDER}/{c}_B.png {FOLDER}/{c}_C.png {FOLDER}/{c}_D.png {FOLDER}/{c}_E.png".split()
+        #filenames = [f"{a}.png" for a in [A, B, C, D, E]]
+        frame, pts, events = get_events(frame, filenames)
+        print(f"Photo {c} saved")
+    print("Now we wait")
 
     cap.release()
 

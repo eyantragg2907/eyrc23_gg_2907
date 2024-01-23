@@ -49,7 +49,7 @@ CLASS_MAP = [
 ]
 FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
-MODEL_PATH = "model.tf"  # model.tf should be a folder containing the model
+MODEL_PATH = "lr_net_arnav_1000.tf"  # model.tf should be a folder containing the model
 
 CAMERA_ID = 1
 
