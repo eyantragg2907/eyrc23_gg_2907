@@ -1,6 +1,6 @@
 {
     "configuration": "FlashFreq=80,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
     "board": "esp32:esp32:esp32doit-devkit-v1",
-    "sketch": "Task_4/Task_4B/arduino_codes/debug_sketch_rf/debug_sketch_rf.ino",
+    "sketch": "Task_4/Task_4B/arduino_codes/test_scripts/test_scripts.ino",
     "port": "/dev/tty.usbserial-0001"
 }

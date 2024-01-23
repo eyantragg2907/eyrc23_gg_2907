@@ -1,12 +1,12 @@
 /* A set of quick-fire tests */
 #define WIFI 1
 #define MOVE_SPEED 180
-#define MOTORTEST_SPEED 180
+#define MOTORTEST_SPEED 255
 
 const char *ssid = "pjrWifi";
 const char *password = "SimplePass01";
 const uint16_t port = 8002;
-const char *host = "192.168.128.144";
+const char *host = "192.168.187.144";
 
 const int IR1 = 5; // IR sensors pins
 const int IR2 = 18;
@@ -14,11 +14,13 @@ const int IR3 = 32;
 const int IR4 = 33;
 const int IR5 = 25;
 
-const int motor1f = 12; // motor LEFT forward
-const int motor1r = 14; // motor LEFT reverse
+// looking from the back
 
-const int motor2f = 13; // motor RIGHT forward
-const int motor2r = 27; // motor RIGHT reverse
+const int motor1f = 27; // motor LEFT forward
+const int motor1r = 13; // motor LEFT reverse
+
+const int motor2f = 12; // motor RIGHT forward
+const int motor2r = 14; // motor RIGHT reverse
 
 const int led_red = 2; // misc
 const int led_green = 15;
@@ -106,20 +108,20 @@ void motorTest()
         client.print("STARTING test\n");
         client.print("M1F\n");
         analogWrite(motor1f, MOTORTEST_SPEED);
-        delay(1000);
+        delay(5000);
         analogWrite(motor1f, 0);
         client.print("M1R\n");
         analogWrite(motor1r, MOTORTEST_SPEED);
-        delay(1000);
+        delay(5000);
         analogWrite(motor1r, 0);
 
         client.print("M2F\n");
         analogWrite(motor2f, MOTORTEST_SPEED);
-        delay(1000);
+        delay(5000);
         analogWrite(motor2f, 0);
         client.print("M2R\n");
         analogWrite(motor2r, MOTORTEST_SPEED);
-        delay(1000);
+        delay(5000);
         analogWrite(motor2r, 0);
         client.print("DONE test\n");
     }
@@ -201,10 +203,10 @@ void teleop()
 
 void loop()
 {
-    // buzzerTest();
-    // ledsTest();
-    readIRs();
-    // teleop();
+    buzzerTest();
+    ledsTest();
     // readIRs();
+    teleop();
+    readIRs();
     // motorTest();
 }
