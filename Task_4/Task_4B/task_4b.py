@@ -26,16 +26,16 @@ if not os.path.exists(OUT_FILE_LOC):
         writer = csv.writer(f)
         writer.writerow(["lat", "lon"])
 
-CAMERA_ID = 1 # camera ID for external camera
+CAMERA_ID = 0 # camera ID for external camera
 
 
 ARUCO_REQD_IDS = {4, 5, 6, 7} # corners
 
-ARUCO_ROBOT_ID = 97 # we chose this ID as it wasn't in the csv
+ARUCO_ROBOT_ID = 100 # we chose this ID as it wasn't in the csv
 IDEAL_FRAME_SIZE = 1080 # camera frame
 
 # IP_ADDRESS = "192.168.128.92"  # IP of the Laptop on Hotspot
-IP_ADDRESS = "192.168.56.1"  # IP of the Laptop on Hotspot
+IP_ADDRESS = "192.168.187.62"  # IP of the Laptop on Hotspot
 COMMAND = "nnrnlnrnrnnrnnlnn\n"  # the path
 BUZZER_COMMAND = "1111111111101\n" # buzzer command
 

@@ -11,7 +11,7 @@ LEFT_INSTRUCTION = "L"
 RIGHT_INSTRUCTION = "R"
 FORWARD_INSTRUCTION = "N"
 
-PRIORITY = {"Fire":1,"Destroyed Buildings":2,"Humanitarian Aid and rehabilitation":3,"Military Vehicles":4,"Combat":5}
+label2priority = {"fire":1,"destroyed_buildings":2,"humanitarian_aid_and_rehabilitation":3,"military_vehicles":4,"combat":5}
 
 def reverse_pose(pose):
     if pose == FRONT:
