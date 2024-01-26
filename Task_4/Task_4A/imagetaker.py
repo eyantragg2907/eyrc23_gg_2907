@@ -79,14 +79,17 @@ def transform_frame(frame):
     M = cv2.getPerspectiveTransform(input_pts, output_pts)
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
-    out = cv2.resize(out, (1024, 1024), interpolation = cv2.INTER_AREA)
+    out = cv2.resize(out, (1080, 1080), interpolation = cv2.INTER_AREA)
     
     cv2.imwrite("temp_perspective.jpg", out)
 
-    return out, s
+    return out, 1080
 
+def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
+    gaussian_3 = cv2.GaussianBlur(image, (0, 0), 2.0)
+    return cv2.addWeighted(image, 2.0, gaussian_3, -1.0, 0)
 
-def get_pts_from_frame(frame, s):
+def get_pts_from_frame(s):
     S = 1080
     Apts = (np.array([[940 / S, 1026 / S], [222 / S, 308 / S]]) * s).astype(int)
     Bpts = (np.array([[729 / S, 816 / S], [717 / S, 802 / S]]) * s).astype(int)
@@ -102,6 +105,7 @@ def save_event_images(frame, pts, filenames):
         print(p)
         print(frame)
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
+        # event = unsharp_mask(event)
         print(event)
         print("saving to", f)
         cv2.imwrite(f, event)
@@ -139,13 +143,22 @@ def main():
     # D = "military_vehicles"
     # E = "combat"
 
-    A = "empty0"
-    B = "empty1"
-    C = "empty2"
-    D = "empty3"
-    E = "empty4"
 
-    SET = "NEWANDPRETTY_"
+    classmap = [
+        "combat",
+        "building",
+        "fire",
+        "human",
+        "vehicle",
+    ]
+
+    A = classmap.index("combat")
+    B = classmap.index("building")
+    C = classmap.index("vehicle")
+    D = classmap.index("human")
+    E = classmap.index("fire")
+
+    SET = "DIABLO4_"
 
     FOLDER = "temp_pjrtrain"
 
@@ -159,22 +172,18 @@ def main():
     # cv2.destroyAllWindows()
 
     c = 0
-    while c < 5:
+    while c < 3:
         ret, frame = cap.read()
         
         # save the photo
+        cx = datetime.now().timestamp()
         if ret is True:
-            print(f"Photo {c} taken")
             cv2.imwrite(f"temp_save.jpg", frame)
-            filenames = f"{FOLDER}/{A}/{c}{SET}.png {FOLDER}/{B}/{c}{SET}.png {FOLDER}/{C}/{c}{SET}.png {FOLDER}/{D}/{c}{SET}.png {FOLDER}/{E}/{c}{SET}.png".split()
+            filenames = f"{FOLDER}/{A}/{cx}{SET}.png {FOLDER}/{B}/{cx}{SET}.png {FOLDER}/{C}/{cx}{SET}.png {FOLDER}/{D}/{cx}{SET}.png {FOLDER}/{E}/{cx}{SET}.png".split()
             frame, pts, events = get_events(frame, filenames)
-            print(f"Photo {c} saved")
-        c += 1
+            c += 1
+        
         print("Now we wait")
-        if c == 5:
-            break
-        print("Next frame")
-        time.sleep(5)
 
     print("Done")
 
