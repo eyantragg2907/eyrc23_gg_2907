@@ -13,11 +13,12 @@ import socket
 ##############################################################
 
 IP_ADDRESS = "192.168.187.144"  # IP of the Laptop on Hotspot
-COMMAND = "nnrnlnrnrnnrnnlnn"  # the full cycle command
+COMMAND = "nnrnlnrnrnnrnnlnn\n"  # the full cycle command
 
 # COMMAND = "nnrnlnrnrnn"
 
-# COMMAND = "nnn"
+COMMAND = "nn\n"
+BUZZER_COMMAND = "111111\n"
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
@@ -38,6 +39,7 @@ def send_to_robot(s: socket.socket, conn: socket.socket):
         sys.exit(1)
     
     conn.sendall(str.encode(COMMAND))
+    conn.sendall(str.encode(BUZZER_COMMAND))
 
     print(f"Sent command to robot: {COMMAND}")
 

@@ -32,36 +32,41 @@ THIS IS THE SKETCH WITH DEBUG COMMANDS AND STUFF FOR EFFICIENT PERFORMANCE
 #define WIFI_TRY_DELAY 500
 
 #define IGNORE_FALSE_NODE_TIME 400
-#define DELAY_BEGINNING 150
-#define CENTER_CORRECTING_BEGINNING 200
 
-#define EVERY_NODE_DELAY 1000
+// #define DELAY_BEGINNING 150
+// #define CENTER_CORRECTING_BEGINNING 200
+#define DELAY_BEGINNING 0
+#define CENTER_CORRECTING_BEGINNING 0
+
+#define EVERY_NODE_DELAY 0
+
 #define END_SKIP_FORWARD_DELAY 700
 #define END_DELAY 5000
 
 #define D90_TURNTIME 580
 
-// const char *ssid = "pjrWifi";
-// const char *password = "SimplePass01";
-// const uint16_t port = 8002;
-// const char *host = "192.168.128.92";
-
-const char *ssid = "brainerd";
-const char *password = "internetaccess";
+const char *ssid = "pjrWifi";
+const char *password = "SimplePass01";
 const uint16_t port = 8002;
-const char *host = "192.168.56.1";
+const char *host = "192.168.187.144";
+
+// const char *ssid = "brainerd";
+// const char *password = "internetaccess";
+// const uint16_t port = 8002;
+// const char *host = "192.168.56.1";
 
 const int IR1 = 5; // IR sensors pins
-const int IR2 = 18;
+const int IR2 = 25;
 const int IR3 = 32;
-const int IR4 = 33;
-const int IR5 = 25;
+const int IR4 = 33; 
+const int IR5 = 18;
 
 const int motor1f = 27; // motor LEFT forward
 const int motor1r = 13; // motor LEFT reverse
 
 const int motor2f = 12; // motor RIGHT forward
 const int motor2r = 14; // motor RIGHT reverse
+
 
 const int led_red = 2; // misc
 const int led_green = 15;
@@ -190,18 +195,18 @@ int moveForwardTillReachedNode()
     }
 }
 
-void turn_left()
+void turn_right()
 {
-    Serial.println("lt");
+    Serial.println("rt");
     analogWrite(motor1r, 0);
     analogWrite(motor2f, 0);
     analogWrite(motor1f, ROTATE_SPEED);
     analogWrite(motor2r, ROTATE_SPEED);
 }
 
-void turn_right()
+void turn_left()
 {
-    Serial.println("rt");
+    Serial.println("lt");
     analogWrite(motor2r, 0);
     analogWrite(motor1f, 0);
     analogWrite(motor1r, ROTATE_SPEED);

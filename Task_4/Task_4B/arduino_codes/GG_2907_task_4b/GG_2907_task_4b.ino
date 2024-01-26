@@ -44,7 +44,7 @@ THIS IS THE SKETCH WITH DEBUG COMMANDS AND STUFF FOR EFFICIENT PERFORMANCE
 const char *ssid = "pjrWifi";
 const char *password = "SimplePass01";
 const uint16_t port = 8002;
-const char *host = "192.168.187.62";
+const char *host = "192.168.187.144";
 
 const int IR1 = 5; // IR sensors pins
 const int IR2 = 18;
@@ -329,6 +329,7 @@ int turn(int dirn)
 String connectToWifiAndGetMessage()
 {
     // setting up wifi
+    Serial.println(ssid);
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED)
     {
