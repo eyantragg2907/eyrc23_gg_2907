@@ -98,13 +98,7 @@ def get_pts_from_frame(s):
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
 
-<<<<<<< HEAD
-
-def get_event_images(frame, pts, filenames):
-    events = []
-=======
 def save_event_images(frame, pts, filenames):
->>>>>>> 15eaedddd40380a5cd72964684aaf719a25ba03a
     for p, f in zip(pts, filenames):
         print(p)
         print(frame)
