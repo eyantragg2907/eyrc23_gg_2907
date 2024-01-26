@@ -86,14 +86,13 @@ def transform_frame(frame):
     return out, s
 
 
-def get_pts_from_frame(s):
-
-    S = 1024
-    Apts = (np.array([[980 / S, 896 / S], [294 / S, 212 / S]]) * s).astype(int)
-    Bpts = (np.array([[696 / S, 766 / S], [780 / S, 695 / S]]) * s).astype(int)
-    Cpts = (np.array([[489 / S, 574 / S], [693 / S, 776 / S]]) * s).astype(int)
-    Dpts = (np.array([[485 / S, 570 / S], [196 / S, 280 / S]]) * s).astype(int)
-    Epts = (np.array([[151 / S, 233 / S], [218 / S, 297 / S]]) * s).astype(int)
+def get_pts_from_frame(frame, s):
+    S = 1080
+    Apts = (np.array([[940 / S, 1026 / S], [222 / S, 308 / S]]) * s).astype(int)
+    Bpts = (np.array([[729 / S, 816 / S], [717 / S, 802 / S]]) * s).astype(int)
+    Cpts = (np.array([[513 / S, 601 / S], [725 / S, 811 / S]]) * s).astype(int)
+    Dpts = (np.array([[509 / S, 597 / S], [206 / S, 293 / S]]) * s).astype(int)
+    Epts = (np.array([[157 / S, 245 / S], [227 / S, 313 / S]]) * s).astype(int)
 
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
