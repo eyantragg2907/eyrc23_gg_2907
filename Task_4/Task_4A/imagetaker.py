@@ -102,7 +102,7 @@ def save_event_images(frame, pts, filenames):
     for p, f in zip(pts, filenames):
         print(p)
         print(frame)
-        event = frame[p[0, 1] : p[0, 0], p[1, 1] : p[1, 0]]
+        event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
         print(event)
         print("saving to", f)
         cv2.imwrite(f, event)
