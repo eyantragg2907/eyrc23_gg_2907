@@ -1,10 +1,11 @@
-CAMERA_ID = 1  # 0 for internal, 1 for external as a basis
+CAMERA_ID = 0  # 0 for internal, 1 for external as a basis
 
 import cv2
 from datetime import datetime
 import time
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 parameters = cv2.aruco.DetectorParameters()
@@ -17,6 +18,8 @@ def get_aruco_data(frame):
     # plt.show()
     global detector
     c, i, r = detector.detectMarkers(frame)
+
+    print(c)
 
     if len(c) == 0:
         raise Exception("No Aruco Markers Found")
@@ -77,6 +80,8 @@ def transform_frame(frame):
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
     # out = cv2.resize(out, (1024,1024), interpolation = cv2.INTER_AREA)
+    
+    cv2.imwrite("temp_perspective.jpg", out)
 
     return out, s
 
@@ -96,6 +101,7 @@ def get_event_images(frame, pts, filenames):
     events = []
     for p, f in zip(pts, filenames):
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
+        print("saving to", f)
         cv2.imwrite(f, event)
         events.append(event)
     return events
@@ -106,18 +112,22 @@ def get_events(frame, filenames):
     pts = get_pts_from_frame(frame, side)
     events = get_event_images(frame, pts, filenames)
 
-    return frame, pts, events
+    return frame, None, None
 
 
 def main():
     num_of_frames_skip = 100
     # Initialize the camera
-    cap = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
+    if sys.platform == "win32":
+        cap = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
+    else:
+        cap = cv2.VideoCapture(CAMERA_ID)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
     # take a photo
     for i in range(num_of_frames_skip):
         ret, frame = cap.read()
+
 
     # frame = increase_brightness(frame, value=30)
 
@@ -128,19 +138,27 @@ def main():
     # D = "military_vehicles"
     # E = "combat"
 
-    A = 4
-    B = 2
-    C = 1
-    D = 3
-    E = 0
+    A = "empty0"
+    B = "empty1"
+    C = "empty2"
+    D = "empty3"
+    E = "empty4"
 
-    SET = "DAY_03_SET1.0_"
+    SET = "EMPTY_SET_ARNAVKELIYE_"
 
     FOLDER = "temp_pjrtrain"
 
+    # while True:
+    # # if ret:
+    #     ret, frame = cap.read()
+    #     cv2.imshow("frame", frame)
+    #     if cv2.waitKey(1) == ord("q"):
+    #         break
+        
     c = 0
     while c < 5:
         ret, frame = cap.read()
+        
         # save the photo
         if ret is True:
             print(f"Photo {c} taken")
@@ -153,6 +171,8 @@ def main():
         if c == 5:
             break
         print("Next frame")
+        time.sleep(5)
+        
     print("Done")
 
     cap.release()
