@@ -112,7 +112,7 @@ def get_events(frame, filenames):
 def main():
     num_of_frames_skip = 100
     # Initialize the camera
-    cap = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
+    cap = cv2.VideoCapture(1)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
     # take a photo
@@ -139,19 +139,17 @@ def main():
     FOLDER = "temp_pjrtrain"
 
     c = 0
-    while c < 5:
+    while c < 25:
         ret, frame = cap.read()
+        print(ret, frame)
         # save the photo
-        if ret is True:
+        if ret:
             print(f"Photo {c} taken")
             cv2.imwrite(f"temp_save.jpg", frame)
-            filenames = f"{FOLDER}/{A}/{c}{SET}.png {FOLDER}/{B}/{c}{SET}.png {FOLDER}/{C}/{c}{SET}.png {FOLDER}/{D}/{c}{SET}.png {FOLDER}/{E}/{c}{SET}.png".split()
+            filenames = f"{FOLDER}/{c}{SET}.png {FOLDER}/{c}{SET}.png {FOLDER}/{c}{SET}.png {FOLDER}/{c}{SET}.png {FOLDER}/{c}{SET}.png".split()
             frame, pts, events = get_events(frame, filenames)
             print(f"Photo {c} saved")
-        c += 1
-        print("Now we wait")
-        if c == 5:
-            break
+            c += 1
         print("Next frame")
     print("Done")
 

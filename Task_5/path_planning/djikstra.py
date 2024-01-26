@@ -29,6 +29,9 @@ class Path(object):
     def __hash__(self):
         return hash(self.end_pose)
 
+    def has_goals(self,goal_nodes):
+        return any(i in goal_nodes for i in self.nodes[:-1])
+
 
 def get_shortest_path(
     graph,
@@ -46,8 +49,7 @@ def get_shortest_path(
     paths = []
 
     for node, direction, distance, end_pose in children:
-        if node in visited:
-            continue
+        if node in visited: continue
 
         # print("",path)
         cum_cost = distance + get_pose_cost(robot_pose, direction)
@@ -76,7 +78,7 @@ def get_shortest_path(
             robot_pose=end_pose,
         )
 
-    return sorted(paths, key=lambda x: x.cost)[::]
+    return [i for i in sorted(paths, key=lambda x: x.cost)[::] if not i.has_goals(graph.goal_nodes)]
 
 
 def get_pose_cost(initial_pose, reqd_pose):
