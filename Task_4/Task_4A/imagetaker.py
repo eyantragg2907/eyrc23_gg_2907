@@ -79,14 +79,15 @@ def transform_frame(frame):
     M = cv2.getPerspectiveTransform(input_pts, output_pts)
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
-    # out = cv2.resize(out, (1024,1024), interpolation = cv2.INTER_AREA)
+    out = cv2.resize(out, (1024, 1024), interpolation = cv2.INTER_AREA)
     
     cv2.imwrite("temp_perspective.jpg", out)
 
     return out, s
 
 
-def get_pts_from_frame(frame, s):
+def get_pts_from_frame(s):
+
     S = 1024
     Apts = (np.array([[980 / S, 896 / S], [294 / S, 212 / S]]) * s).astype(int)
     Bpts = (np.array([[696 / S, 766 / S], [780 / S, 695 / S]]) * s).astype(int)
@@ -97,20 +98,21 @@ def get_pts_from_frame(frame, s):
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
 
-def get_event_images(frame, pts, filenames):
-    events = []
+def save_event_images(frame, pts, filenames):
     for p, f in zip(pts, filenames):
-        event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
+        print(p)
+        print(frame)
+        event = frame[p[0, 1] : p[0, 0], p[1, 1] : p[1, 0]]
+        print(event)
         print("saving to", f)
         cv2.imwrite(f, event)
-        events.append(event)
-    return events
 
 
 def get_events(frame, filenames):
     frame, side = transform_frame(frame)
-    pts = get_pts_from_frame(frame, side)
-    events = get_event_images(frame, pts, filenames)
+    pts = get_pts_from_frame(side)
+    
+    save_event_images(frame, pts, filenames)
 
     return frame, None, None
 
@@ -144,7 +146,7 @@ def main():
     D = "empty3"
     E = "empty4"
 
-    SET = "EMPTY_SET_ARNAVKELIYE_"
+    SET = "NEWANDPRETTY_"
 
     FOLDER = "temp_pjrtrain"
 
@@ -154,7 +156,9 @@ def main():
     #     cv2.imshow("frame", frame)
     #     if cv2.waitKey(1) == ord("q"):
     #         break
-        
+    
+    # cv2.destroyAllWindows()
+
     c = 0
     while c < 5:
         ret, frame = cap.read()
@@ -172,7 +176,7 @@ def main():
             break
         print("Next frame")
         time.sleep(5)
-        
+
     print("Done")
 
     cap.release()
