@@ -481,10 +481,7 @@ void loop()
     {
         if (moveForwardTillReachedNode())
         {
-            if (playByPlay())
-            {
-                operation = 6;
-            }
+            operation = 6;
         }
     }
     else if (operation == 1) // Next Command
@@ -497,10 +494,8 @@ void loop()
             client.print(millis());
             client.print("\n");
             Serial.println("Command to rotate left");
-            if (playByPlay())
-            {
-                operation = 2;
-            }
+            operation = 2;
+
         }
         else if (command == 'r')
         {
@@ -508,10 +503,9 @@ void loop()
             client.print(millis());
             client.print("\n");
             Serial.println("Command to rotate right");
-            if (playByPlay())
-            {
-                operation = 3;
-            }
+
+            operation = 3;
+
         }
         else if (command == 'f')
         {
@@ -527,10 +521,9 @@ void loop()
             delay(NODE_LEAVE_DELAY);
 
             Serial.println("Command to move normally");
-            if (playByPlay())
-            {
-                operation = 4;
-            }
+
+            operation = 4;
+
         } else if (command == 'x') {
             
             client.print("-----> NEXT: forward SPECIAL\n");
@@ -574,30 +567,21 @@ void loop()
             delay(NODE_LEAVE_DELAY);
 
             Serial.println("Command to move normally");
-            if (playByPlay())
-            {
-                operation = 4;
-            }
+            operation = 4;
         }
     }
     else if (operation == 2) // rotate left
     {
         if (turn(0))
         {
-            if (playByPlay())
-            {
-                operation = 1;
-            }
+            operation = 1;
         }
     }
     else if (operation == 3) // rotate right
     {
         if (turn(1))
         {
-            if (playByPlay())
-            {
-                operation = 1;
-            }
+            operation = 1;
         }
     }
     else if (operation == 4) // leave the current node
@@ -609,20 +593,14 @@ void loop()
         {
             stop();
             Serial.println("path complete, starting the terminating sequence");
-            if (playByPlay())
-            {
-                operation = 5;
-            }
+            operation = 5;
         }
         else
         {
             stop();
             client.print("The node has been LEFT\n");
             node_left_time = millis();
-            if (playByPlay())
-            {
-                operation = 0;
-            }
+            operation = 0;
         }
     }
     else if (operation == 5) // terminate
@@ -679,17 +657,13 @@ void loop()
         // digitalWrite(buzzer, LOW);
         // delay(EVERY_NODE_DELAY);
         // digitalWrite(buzzer, HIGH);
-        if (playByPlay())
-        {
-            operation = 1;
-        }
+
+        operation = 1;
+
     }
     else
     {
-        // client.print("PATH COMPLETE\n");
+        client.print("PATH COMPLETE\n");
         // Serial.println("Path completed");
     }
 }
-
-// TODO: remote abort and proper pickup with correct variables set (required for 3 corrections)
-// TODO: play-by-play (done kind of)
