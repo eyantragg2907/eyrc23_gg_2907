@@ -422,12 +422,14 @@ void moveForwardTillStopped() {
         input3 = digitalRead(IR3);
         input4 = digitalRead(IR4);
         input5 = digitalRead(IR5);
+
         client.print("moving\n");
         moveForwardLogic();
+        stop();
         splmoveinput = client.readStringUntil('\n');
-        client.print("RECEV ");
-        client.print(splmoveinput);
-        client.print("\n");
+        // client.print("RECEV ");
+        // client.print(splmoveinput);
+        // client.print("\n");
 
         if (splmoveinput.length() == 0) {
             continue;

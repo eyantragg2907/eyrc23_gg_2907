@@ -1,6 +1,6 @@
 {
     "configuration": "FlashFreq=80,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
     "board": "esp32:esp32:esp32doit-devkit-v1",
-    "sketch": "Task_5/measure_time/measure_time.ino",
+    "sketch": "Task_5/multithread/anothertest/anothertest.ino",
     "port": "/dev/tty.usbserial-0001"
 }
