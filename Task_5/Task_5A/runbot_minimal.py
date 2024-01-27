@@ -17,8 +17,8 @@ COMMAND = "nnrnlnrnrnnrnnlnn\n"  # the full cycle command
 
 # COMMAND = "nnrnlnrnrnn"
 
-COMMAND = "nn\n"
-BUZZER_COMMAND = "111111\n"
+COMMAND = "nnrrnrrnrrnrrnrrnrr\n"
+BUZZER_COMMAND = "11111111111111\n"
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 

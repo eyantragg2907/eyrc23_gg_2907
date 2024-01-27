@@ -217,7 +217,7 @@ void loop()
 {
     // buzzerTest();
     ledsTest();
-    // readIRs();
+    readIRs();
     // teleop();
     // readIRs();
     motorTest();

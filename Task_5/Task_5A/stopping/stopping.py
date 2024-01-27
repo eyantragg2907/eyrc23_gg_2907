@@ -97,26 +97,13 @@ def get_frame(video):  # gets frame from camera
         raise Exception("Fatal camera error")
 
 def get_image_pts_from_frame(side_len):
-    Apts = (
-        np.array([[940 / side_len, 1026 / side_len], [222 / side_len, 308 / side_len]])
-        * side_len
-    ).astype(int)
-    Bpts = (
-        np.array([[729 / side_len, 816 / side_len], [717 / side_len, 802 / side_len]])
-        * side_len
-    ).astype(int)
-    Cpts = (
-        np.array([[513 / side_len, 601 / side_len], [725 / side_len, 811 / side_len]])
-        * side_len
-    ).astype(int)
-    Dpts = (
-        np.array([[509 / side_len, 597 / side_len], [206 / side_len, 293 / side_len]])
-        * side_len
-    ).astype(int)
-    Epts = (
-        np.array([[157 / side_len, 245 / side_len], [227 / side_len, 313 / side_len]])
-        * side_len
-    ).astype(int)
+    s = side_len
+    S = 1080
+    Apts = (np.array([[940 / S, 1026 / S], [222 / S, 308 / S]]) * s).astype(int)
+    Bpts = (np.array([[729 / S, 816 / S], [717 / S, 802 / S]]) * s).astype(int)
+    Cpts = (np.array([[513 / S, 601 / S], [725 / S, 811 / S]]) * s).astype(int)
+    Dpts = (np.array([[509 / S, 597 / S], [206 / S, 293 / S]]) * s).astype(int)
+    Epts = (np.array([[157 / S, 245 / S], [227 / S, 313 / S]]) * s).astype(int)
 
     return (Apts, Bpts, Cpts, Dpts, Epts)
 

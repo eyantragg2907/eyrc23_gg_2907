@@ -9,7 +9,7 @@ THIS IS THE SKETCH WITH DEBUG COMMANDS AND STUFF FOR EFFICIENT PERFORMANCE
 #define SPEED_LEFT 255  // default motor LEFT speed
 #define SPEED_RIGHT 255 // default motor RIGHT speed
 
-#define BANGBANG_TURNSPEED 180
+#define BANGBANG_TURNSPEED 220
 #define MIDDLE_TURNSPEED 220
 
 #define ROTATE_SPEED 255
@@ -38,7 +38,7 @@ THIS IS THE SKETCH WITH DEBUG COMMANDS AND STUFF FOR EFFICIENT PERFORMANCE
 #define DELAY_BEGINNING 0
 #define CENTER_CORRECTING_BEGINNING 0
 
-#define EVERY_NODE_DELAY 500
+#define EVERY_NODE_DELAY 1000
 
 #define END_SKIP_FORWARD_DELAY 700
 #define END_DELAY 5000
@@ -149,18 +149,22 @@ void moveForwardLogic()
     }
     else
     {
+        // client.print("controller extreme");
         if (input3 == 1 && (input2 == 0 && input4 == 0)) // move forward if middle line detected only by middle sensor
         {
+            // client.print("m0");
             analogWrite(motor1f, SPEED_LEFT);
             analogWrite(motor2f, SPEED_RIGHT);
         }
         else if (input2 == 1) // middle line detected by middle left sensor
         {
+            // client.print("ml");
             analogWrite(motor1f, 0);
             analogWrite(motor2f, MIDDLE_TURNSPEED);
         }
         else if (input4 == 1) // middle line detected by middle right sensor
         {
+            // client.print("mr");
             analogWrite(motor1f, MIDDLE_TURNSPEED);
             analogWrite(motor2f, 0);
         }
@@ -178,7 +182,7 @@ int moveForwardTillReachedNode()
     { // reached a node
         if (millis() - node_left_time < IGNORE_FALSE_NODE_TIME)
         {
-            client.print("Evading false detection of Node\n");
+            // client.print("Evading false detection of Node\n");
             moveForwardLogic();
             return 0;
         }
@@ -346,6 +350,7 @@ String connectToWifiAndGetMessage()
     {
         delay(WIFI_TRY_DELAY);
         Serial.println("...");
+        Serial.println(ssid);
     }
 
     Serial.print("WiFi connected with IP: ");
@@ -412,6 +417,11 @@ String splmoveinput = "E";
 
 void moveForwardTillStopped() {
     while (true) {
+        input1 = digitalRead(IR1);
+        input2 = digitalRead(IR2);
+        input3 = digitalRead(IR3);
+        input4 = digitalRead(IR4);
+        input5 = digitalRead(IR5);
         client.print("moving\n");
         moveForwardLogic();
         splmoveinput = client.readStringUntil('\n');
@@ -536,24 +546,20 @@ void loop()
             analogWrite(motor2f, SPEED_RIGHT);
             client.print("LEAVING NODE\n");
             delay(NODE_LEAVE_DELAY);
-
-
+            delay(NODE_LEAVE_DELAY);
             // move forward till STOP command is received
             moveForwardTillStopped();
 
             client.print("MOVE FORWARD STOPPED");
             client.print(millis());
 
-            uint8_t c = 0;
-            while (c < 5) {
-                digitalWrite(buzzer, LOW);
-                delay(NODE_LEAVE_DELAY);
-                digitalWrite(buzzer, HIGH);
-                c++;
-            }
-            
-            operation = 6;
+            digitalWrite(buzzer, LOW);
+            delay(NODE_LEAVE_DELAY);
+            digitalWrite(buzzer, HIGH);
 
+            operation = 6;
+        } else if (false) {
+            // about turn
         } else {
             client.print("-----> NEXT: forward\n");
             client.print(millis());
@@ -622,11 +628,11 @@ void loop()
             if (input3 == 0 && input2 == 0 && input4 == 0) // stop sign reached
             {
                 client.print("REACHED NO LINE AREA\n");
-                printIRs();
+                // printIRs();
                 Serial.println("Reached the ending node!");
                 stop();
                 // second print after stopping
-                printIRs();
+                // printIRs();
 
                 analogWrite(motor1r, 0);
                 analogWrite(motor2r, 0);
