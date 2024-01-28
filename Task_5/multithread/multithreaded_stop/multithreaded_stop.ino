@@ -4,7 +4,7 @@ Multithreaded code to enable stopping at EVENT NODES.
 Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earlier code written by Abhinav Lodha.
 */
 
-// TODO: refactor and minimize, maybe split into files? 
+// TODO: refactor and minimize, maybe split into files?
 // TODO: robot repeat code, its ready for the motors, but the wifi host doesnt reconnect - that code needs to be handled.
 
 #include <WiFi.h>
@@ -20,10 +20,11 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 #define ROT_COMPLETE_DELAY 200 // STOP delay after a D90 TURN
 
-#define LEAVE_BLACK_DELAY 200 // delay before black line detection begins
-#define NODE_LEAVE_DELAY 300  // delay to move in front of a NODE w/o stopping logic
+#define NODE_LEAVE_DELAY 300 // delay to move in front of a NODE w/o stopping logic
 
-#define BLACKLINE_INITIAL_SKIP 200 // delay to SKIP black line detection after LEAVE_BLACK_DELAY in D90 turns
+#define LEAVE_BLACK_DELAY 200        // delay before black line detection begins
+#define BLACKLINE_INITIAL_SKIP 200   // delay to SKIP black line detection after LEAVE_BLACK_DELAY in D90 turns
+#define ABOUTTURN_SKIP_REDUCTION 50 // reduction to the SECOND LEAVE_BLACK_DELAY and BLACKLINE_INITIAL_SKIP for D180 turn
 
 #define ERROR_COUNTER_MAX 6 // delay of the number of times false detection of ALL OFF can happen at the end.
 
@@ -38,10 +39,10 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 #define IGNORE_FALSE_NODE_TIME 400 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY.
 
-#define ALIGN_CENTER_BEGINNING 200 // make 0 to disable start node // delay for aligning center of rotation in the beginning, when the situation is different.
-#define TURN_DELAY_BEGINNING 150  // make 0 to disable start node // delay for a small left turn in the beginning, for correction purposes.
+#define ALIGN_CENTER_BEGINNING 0 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
+#define TURN_DELAY_BEGINNING 0   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
 
-#define EVENT_NODE_REACHED_DELAY 1000 // delay for BUZZER every EVENT NODE
+#define EVENT_NODE_REACHED_DELAY 1000  // delay for BUZZER every EVENT NODE
 #define NORMAL_NODE_REACHED_DELAY 1000 // delay for BUZZER every NORMAL node, set to 0 to disable
 
 #define END_SKIP_FORWARD_DELAY 700 // delay for which simple forward movement is present in END detection
@@ -85,6 +86,8 @@ QueueHandle_t message_queue;
 /* enum constants */
 #define START_ACTIONCODE 101
 #define INTERRUPTSTOP_ACTIONCODE 103
+#define LEFT 'L'  // Left.
+#define RIGHT 'R' // Right
 
 /* state variables */
 int input1, input2, input3, input4, input5;
@@ -164,9 +167,10 @@ void controlLoop(void *pvParameters)
                 }
 
                 conductMovement(path);
-
-                delay(BEFORE_READY_FOR_NEXTCOMMAND);
-                digitalWrite(led_red, HIGH);
+                
+                /* dont give the false idea that restart-able is ready, due to the connection issue explained above. */
+                // delay(BEFORE_READY_FOR_NEXTCOMMAND);
+                // digitalWrite(led_red, HIGH);
             }
             default:
             {
@@ -227,7 +231,7 @@ void conductMovement(char *path)
             do
             {
                 readIRs();
-            } while (!turn('L'));
+            } while (!turn(LEFT, LEAVE_BLACK_DELAY, BLACKLINE_INITIAL_SKIP));
         }
         else if (next_movement == 'r')
         {
@@ -235,7 +239,7 @@ void conductMovement(char *path)
             do
             {
                 readIRs();
-            } while (!turn('R'));
+            } while (!turn(RIGHT, LEAVE_BLACK_DELAY, BLACKLINE_INITIAL_SKIP));
         }
         else if (next_movement == 'n')
         {
@@ -282,12 +286,28 @@ void conductMovement(char *path)
         else if (next_movement == 'R')
         {
             Serial.println("===> right about turn.");
-            // ABOUT TURN
+            do
+            {
+                readIRs();
+            } while (!turn(RIGHT, LEAVE_BLACK_DELAY, BLACKLINE_INITIAL_SKIP));
+            node = false;
+            do
+            {
+                readIRs();
+            } while (!turn(RIGHT, LEAVE_BLACK_DELAY - ABOUTTURN_SKIP_REDUCTION, BLACKLINE_INITIAL_SKIP - ABOUTTURN_SKIP_REDUCTION));
         }
         else if (next_movement == 'L')
         {
             Serial.println("===> left about turn.");
-            // ABOUT TURN
+            do
+            {
+                readIRs();
+            } while (!turn(LEFT, LEAVE_BLACK_DELAY, BLACKLINE_INITIAL_SKIP));
+            node = false;
+            do
+            {
+                readIRs();
+            } while (!turn(LEFT, LEAVE_BLACK_DELAY - ABOUTTURN_SKIP_REDUCTION, BLACKLINE_INITIAL_SKIP - ABOUTTURN_SKIP_REDUCTION));
         }
         else
         {
@@ -357,7 +377,7 @@ int moveForwardTillStopped()
     return 0;
 }
 
-int turn(char dirn)
+int turn(char dirn, int leave_black_delay, int blackline_initial_skip)
 {
     stop();
     if (node)
@@ -372,15 +392,15 @@ int turn(char dirn)
     {
         if (rotflag == 0) // rotate a little bit to leave the middle black line
         {
-            if (dirn == 'R')
+            if (dirn == RIGHT)
             {
                 turn_right();
             }
-            else // left
+            else if (dirn == LEFT) // left
             {
                 turn_left();
             }
-            delay(LEAVE_BLACK_DELAY);
+            delay(leave_black_delay);
             rotflag = 1;
             blackline_detect_start = millis();
             // client.print("SKIP BLACK_LINE BUT TURN START\n");
@@ -388,10 +408,10 @@ int turn(char dirn)
         }
         else
         {
-            if (millis() - blackline_detect_start >= BLACKLINE_INITIAL_SKIP)
+            if (millis() - blackline_detect_start >= blackline_initial_skip)
             {
 
-                if (dirn == 'R') // rotate right
+                if (dirn == RIGHT) // rotate right
                 {
                     if (input3 == 1 && (input2 == 0 && input4 == 0)) // reached the middle line again, we completed rotation
                     {
@@ -408,7 +428,7 @@ int turn(char dirn)
                         turn_right();
                     }
                 }
-                else // rotate left
+                else if (dirn == LEFT) // rotate left
                 {
                     if (input3 == 1 && (input2 == 0 && input4 == 0))
                     {
@@ -426,11 +446,11 @@ int turn(char dirn)
                 }
             }
 
-            if (dirn == 'R') // rotate right
+            if (dirn == RIGHT) // rotate right
             {
                 turn_right();
             }
-            else // rotate left
+            else if (dirn == LEFT) // rotate left
             {
                 turn_left();
             }

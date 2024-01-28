@@ -35,6 +35,7 @@ IP_ADDRESS = "192.168.187.144"  # IP of the Laptop on Hotspot
 COMMAND = "nnnrnlnrnrnnrnnln\n"
 # COMMAND = "nnrxn\n"
 
+COMMAND = "nRn\n"
 # COMMAND = "nnrxn\n"  # the path
 
 CHECK_FOR_ROBOT_AT_EVENT = True
