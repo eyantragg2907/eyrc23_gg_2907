@@ -18,6 +18,7 @@ import csv
 import pandas as pd
 import socket
 import time
+import threading
 
 ##############################################################
 
@@ -35,7 +36,8 @@ IP_ADDRESS = "192.168.187.144"  # IP of the Laptop on Hotspot
 COMMAND = "nnnrnlnrnrnnrnnln\n"
 # COMMAND = "nnrxn\n"
 
-COMMAND = "nRn\n"
+COMMAND = "nnRnRnRn\n";
+# COMMAND = "nRn\n"
 # COMMAND = "nnrxn\n"  # the path
 
 CHECK_FOR_ROBOT_AT_EVENT = True
@@ -346,17 +348,12 @@ def initialize_capture(frames_to_skip=100) -> cv2.VideoCapture:
     return capture
 
 
-# def listen_and_print(s, conn: socket.socket):
-#     print("="*80)
-#     while True:
-#         try:
-#             data = conn.recv(4096)
-#             data = data.decode("utf-8")
-#             print(f"{data}")
-#         except KeyboardInterrupt:
-    
-#             cleanup(s)
-#             sys.exit(0)
+def listen_and_print(s, conn: socket.socket):
+    print("="*80)
+    while True:
+        data = conn.recv(4096)
+        data = data.decode("utf-8")
+        print(f"{data}")
 
 
 ###############	Main Function	#################
@@ -374,17 +371,17 @@ if __name__ == "__main__":
 
     # TODO: modify so that aruco detection starts before the connection, and only then the START command is sent...
 
+    lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
+
+    lpt.start()
+
     try:
         while True:
 
             # get a new frame, transform it and get the robots coordinates
             frame, stopcoords, pxcoords = get_robot_coords_and_frame(capture)
 
-            print(pxcoords)
-
-            # data = conn.recv(4096)
-            # data = data.decode("utf-8")
-            # print(f"{data}")
+            # print(pxcoords)
 
             if len(pxcoords) != 0:
                 # robot is in frame
@@ -405,5 +402,6 @@ if __name__ == "__main__":
                     pass
 
     except KeyboardInterrupt:
+        lpt.join()
         cleanup(soc)
         capture.release()

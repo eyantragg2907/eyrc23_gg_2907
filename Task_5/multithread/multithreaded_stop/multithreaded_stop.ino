@@ -13,10 +13,10 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 #define SPEED_LEFTMOTOR 255  // motor LEFT speed, FORWARD
 #define SPEED_RIGHTMOTOR 255 // motor RIGHT speed, FORWARD
-#define ROTATE_SPEED 255     // motor BOTH speed, D90 TURNS
+#define ROTATE_SPEED 230     // motor BOTH speed, D90 TURNS
 
 #define BANGBANG_TURNSPEED 230 // correction motor speed when in WALL mode
-#define MIDDLE_TURNSPEED 230   // correction motor speed when in MIDDLE_LINE mode
+#define MIDDLE_TURNSPEED 200   // correction motor speed when in MIDDLE_LINE mode
 
 #define ROT_COMPLETE_DELAY 200 // STOP delay after a D90 TURN
 
@@ -24,7 +24,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 #define LEAVE_BLACK_DELAY 200        // delay before black line detection begins
 #define BLACKLINE_INITIAL_SKIP 200   // delay to SKIP black line detection after LEAVE_BLACK_DELAY in D90 turns
-#define ABOUTTURN_SKIP_REDUCTION 50 // reduction to the SECOND LEAVE_BLACK_DELAY and BLACKLINE_INITIAL_SKIP for D180 turn
+#define ABOUTTURN_SKIP_REDUCTION 150 // reduction to the SECOND LEAVE_BLACK_DELAY and BLACKLINE_INITIAL_SKIP for D180 turn
 
 #define ERROR_COUNTER_MAX 6 // delay of the number of times false detection of ALL OFF can happen at the end.
 
@@ -81,6 +81,8 @@ const int buzzer = 23;
 QueueHandle_t action_queue;
 QueueHandle_t reverse_action_queue;
 QueueHandle_t message_queue;
+QueueHandle_t send_to_wifi_queue;
+
 #define MESSAGE_QUEUE_SIZE 40
 
 /* enum constants */
@@ -136,6 +138,11 @@ void setup()
     if (reverse_action_queue == NULL)
     {
         Serial.println("Error creating reverse_action_queue");
+    }
+
+    send_to_wifi_queue = xQueueCreate(20, sizeof(char)*MESSAGE_QUEUE_SIZE);
+    if (send_to_wifi_queue == NULL) {
+        Serial.println("Error creating send_to_wifi_queue");
     }
 
     digitalWrite(led_red, HIGH);
@@ -223,6 +230,10 @@ void conductMovement(char *path)
             delay(NORMAL_NODE_REACHED_DELAY);
             digitalWrite(buzzer, HIGH);
 
+            char msg[MESSAGE_QUEUE_SIZE];
+            snprintf(msg,MESSAGE_QUEUE_SIZE,"left first node: %lu\n", millis());
+            xQueueSend(send_to_wifi_queue, msg, 0);
+
             node_left_time = millis();
         }
         else if (next_movement == 'l')
@@ -258,6 +269,11 @@ void conductMovement(char *path)
             digitalWrite(buzzer, LOW);
             delay(NORMAL_NODE_REACHED_DELAY);
             digitalWrite(buzzer, HIGH);
+
+            char msg[MESSAGE_QUEUE_SIZE];
+            snprintf(msg,MESSAGE_QUEUE_SIZE,"normal node left: %lu\n", millis());
+            xQueueSend(send_to_wifi_queue, msg, 0);
+
             node_left_time = millis();
         }
         else if (next_movement == 'x')
@@ -280,6 +296,11 @@ void conductMovement(char *path)
                 digitalWrite(buzzer, LOW);
                 delay(EVENT_NODE_REACHED_DELAY);
                 digitalWrite(buzzer, HIGH);
+
+                char msg[MESSAGE_QUEUE_SIZE];
+                snprintf(msg,MESSAGE_QUEUE_SIZE,"special node left: %lu\n", millis());
+                xQueueSend(send_to_wifi_queue, msg, 0);
+
                 node_left_time = millis();
             }
         }
@@ -589,6 +610,11 @@ void listenAndDirectActions()
                     }
                 }
             }
+        }
+
+        char msg_send[MESSAGE_QUEUE_SIZE];
+        if (xQueueReceive(send_to_wifi_queue, msg_send, 0)) {
+            client.print(msg_send);
         }
         delay(1);
     }
