@@ -15,7 +15,8 @@ import socket
 IP_ADDRESS = "192.168.187.144"  # IP of the Laptop on Hotspot
 COMMAND = "nn\n"  # the full cycle command
 
-COMMAND = "nnrnlnrnrnnrnnlnn\n"
+COMMAND = "nnnrnlnrnrnnrnnln\n"
+# COMMAND = "nnrnn\n"
 # COMMAND = "nnrnlnrnrnn"
 
 # COMMAND = "nnrrnrrnrrnrrnrrnrr\n"

@@ -18,13 +18,12 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define BANGBANG_TURNSPEED 230 // correction motor speed when in WALL mode
 #define MIDDLE_TURNSPEED 200   // correction motor speed when in MIDDLE_LINE mode
 
-#define ROT_COMPLETE_DELAY 200 // STOP delay after a D90 TURN
+#define ROT_COMPLETE_DELAY 100 // STOP delay after a D90 TURN
 
 #define NODE_LEAVE_DELAY 300 // delay to move in front of a NODE w/o stopping logic
 
 #define LEAVE_BLACK_DELAY 200        // delay before black line detection begins
-#define BLACKLINE_INITIAL_SKIP 200   // delay to SKIP black line detection after LEAVE_BLACK_DELAY in D90 turns
-#define ABOUTTURN_SKIP_REDUCTION 150 // reduction to the SECOND LEAVE_BLACK_DELAY and BLACKLINE_INITIAL_SKIP for D180 turn
+#define ABOUTTURN_SKIP_REDUCTION 100 // reduction to the SECOND LEAVE_BLACK_DELAY and BLACKLINE_INITIAL_SKIP for D180 turn
 
 #define ERROR_COUNTER_MAX 6 // delay of the number of times false detection of ALL OFF can happen at the end.
 
@@ -39,8 +38,8 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 #define IGNORE_FALSE_NODE_TIME 400 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY.
 
-#define ALIGN_CENTER_BEGINNING 0 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
-#define TURN_DELAY_BEGINNING 0   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
+#define ALIGN_CENTER_BEGINNING 200 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
+#define TURN_DELAY_BEGINNING 150   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
 
 #define EVENT_NODE_REACHED_DELAY 1000  // delay for BUZZER every EVENT NODE
 #define NORMAL_NODE_REACHED_DELAY 1000 // delay for BUZZER every NORMAL node, set to 0 to disable
@@ -68,7 +67,7 @@ const int IR5 = 18;
 
 /* motors */
 const int motor1f = 27; // motor LEFT forward
-const int motor1r = 13; // motor LEFT reverse
+const int motor1r = 13; // moto r LEFT reverse
 const int motor2f = 12; // motor RIGHT forward
 const int motor2r = 22; // motor RIGHT reverse, used to be 14
 
@@ -242,7 +241,7 @@ void conductMovement(char *path)
             do
             {
                 readIRs();
-            } while (!turn(LEFT, LEAVE_BLACK_DELAY, BLACKLINE_INITIAL_SKIP));
+            } while (!turn(LEFT, LEAVE_BLACK_DELAY));
         }
         else if (next_movement == 'r')
         {
@@ -250,7 +249,7 @@ void conductMovement(char *path)
             do
             {
                 readIRs();
-            } while (!turn(RIGHT, LEAVE_BLACK_DELAY, BLACKLINE_INITIAL_SKIP));
+            } while (!turn(RIGHT, LEAVE_BLACK_DELAY));
         }
         else if (next_movement == 'n')
         {
@@ -310,12 +309,13 @@ void conductMovement(char *path)
             do
             {
                 readIRs();
-            } while (!turn(RIGHT, LEAVE_BLACK_DELAY, BLACKLINE_INITIAL_SKIP));
+            } while (!turn(RIGHT, LEAVE_BLACK_DELAY));
             node = false;
             do
             {
                 readIRs();
-            } while (!turn(RIGHT, LEAVE_BLACK_DELAY - ABOUTTURN_SKIP_REDUCTION, BLACKLINE_INITIAL_SKIP - ABOUTTURN_SKIP_REDUCTION));
+            //} while (!turn(RIGHT, LEAVE_BLACK_DELAY - ABOUTTURN_SKIP_REDUCTION, BLACKLINE_INITIAL_SKIP - ABOUTTURN_SKIP_REDUCTION));
+            } while (!turn(RIGHT, 50));
         }
         else if (next_movement == 'L')
         {
@@ -323,12 +323,12 @@ void conductMovement(char *path)
             do
             {
                 readIRs();
-            } while (!turn(LEFT, LEAVE_BLACK_DELAY, BLACKLINE_INITIAL_SKIP));
+            } while (!turn(LEFT, LEAVE_BLACK_DELAY));
             node = false;
             do
             {
                 readIRs();
-            } while (!turn(LEFT, LEAVE_BLACK_DELAY - ABOUTTURN_SKIP_REDUCTION, BLACKLINE_INITIAL_SKIP - ABOUTTURN_SKIP_REDUCTION));
+            } while (!turn(LEFT, LEAVE_BLACK_DELAY - ABOUTTURN_SKIP_REDUCTION));
         }
         else
         {
@@ -398,9 +398,8 @@ int moveForwardTillStopped()
     return 0;
 }
 
-int turn(char dirn, int leave_black_delay, int blackline_initial_skip)
+int turn(char dirn, int leave_black_delay)
 {
-    stop();
     if (node)
     { // at a node
         // moved forward to align center of rotation
@@ -408,76 +407,60 @@ int turn(char dirn, int leave_black_delay, int blackline_initial_skip)
         analogWrite(motor2f, SPEED_RIGHTMOTOR);
         delay(CENTER_CORRECT_DELAY);
         node = false;
+        return 0;
     } // Now we have left the node for sure!
-    else
-    {
-        if (rotflag == 0) // rotate a little bit to leave the middle black line
+    
+    // leave black line w/o active detection
+    if (rotflag == 0) {
+        if (dirn == RIGHT)
         {
-            if (dirn == RIGHT)
-            {
-                turn_right();
-            }
-            else if (dirn == LEFT) // left
-            {
-                turn_left();
-            }
-            delay(leave_black_delay);
-            rotflag = 1;
-            blackline_detect_start = millis();
-            // client.print("SKIP BLACK_LINE BUT TURN START\n");
-            Serial.println("Rotated to leave the middle black line!");
+            turn_right();
+        }
+        else if (dirn == LEFT) // left
+        {
+            turn_left();
+        }
+        delay(leave_black_delay);
+        Serial.println("Rotated to leave the middle black line!");
+        rotflag = 1;
+        return 0;
+    }
+    
+    if (dirn == RIGHT) // rotate right
+    {
+        if (input3 == 1 && (input2 == 0 && input4 == 0)) // reached the middle line again, we completed rotation
+        {
+            // client.print("BLACK_LINE DETECTED\n");
+            Serial.println("Rotation Completed");
+            rotflag = 0;
+            node = true;
+            stop();
+            delay(ROT_COMPLETE_DELAY);
+            return 1;
         }
         else
         {
-            if (millis() - blackline_detect_start >= blackline_initial_skip)
-            {
-
-                if (dirn == RIGHT) // rotate right
-                {
-                    if (input3 == 1 && (input2 == 0 && input4 == 0)) // reached the middle line again, we completed rotation
-                    {
-                        // client.print("BLACK_LINE DETECTED\n");
-                        Serial.println("Rotation Completed");
-                        rotflag = 0;
-                        node = true;
-                        stop();
-                        delay(ROT_COMPLETE_DELAY);
-                        return 1;
-                    }
-                    else
-                    {
-                        turn_right();
-                    }
-                }
-                else if (dirn == LEFT) // rotate left
-                {
-                    if (input3 == 1 && (input2 == 0 && input4 == 0))
-                    {
-                        Serial.println("Rotation Completed");
-                        rotflag = 0;
-                        node = true;
-                        stop();
-                        delay(ROT_COMPLETE_DELAY);
-                        return 1;
-                    }
-                    else
-                    {
-                        turn_left();
-                    }
-                }
-            }
-
-            if (dirn == RIGHT) // rotate right
-            {
-                turn_right();
-            }
-            else if (dirn == LEFT) // rotate left
-            {
-                turn_left();
-            }
+            turn_right();
         }
-        return 0;
     }
+    else if (dirn == LEFT) // rotate left
+    {
+        if (input3 == 1 && (input2 == 0 && input4 == 0))
+        {
+            Serial.println("Rotation Completed");
+            rotflag = 0;
+            node = true;
+            stop();
+            delay(ROT_COMPLETE_DELAY);
+            return 1;
+        }
+        else
+        {
+            turn_left();
+        }
+    }
+
+    return 0;
 }
 
 int moveForwardTillReachedNode()

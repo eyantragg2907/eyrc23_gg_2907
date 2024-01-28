@@ -83,7 +83,7 @@ def send_to_robot(
     
     conn.sendall(str.encode(message))
 
-    print(f"Sent message to robot: {message}")
+    # print(f"Sent message to robot: {message}")
 
 
 def init_connection():  # initializes connection with robot
@@ -391,7 +391,7 @@ if __name__ == "__main__":
                     if (i[0][0] < pxcoords[0] and i[1][0] > pxcoords[0]) and (
                         i[0][1] < pxcoords[1] and i[1][1] > pxcoords[1]
                     ):  # robot is at the event
-                        print("Robot at SPECIAL event")
+                        # print("Robot at SPECIAL event")
                         send_to_robot(soc, conn, "ISTOP\n")
                     else:
                         cnt += 1

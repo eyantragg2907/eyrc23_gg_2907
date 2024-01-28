@@ -1,5 +1,5 @@
 /* A set of quick-fire tests */
-#define WIFI 1
+#define WIFI 0
 #define MOVE_SPEED 180
 #define MOTORTEST_SPEED 255
 
@@ -29,19 +29,20 @@ const int IR5 = 18;
 // looking from the back
 
 const int motor1f = 27; // motor LEFT forward
-const int motor1r = 13; // motor LEFT reverse
-
+const int motor1r = 13; // moto r LEFT reverse
 const int motor2f = 12; // motor RIGHT forward
-const int motor2r = 14; // motor RIGHT reverse
+const int motor2r = 22; // motor RIGHT reverse, used to be 14
+
 
 const int led_red = 2; // misc
 const int led_green = 15;
 const int buzzer = 23;
 
-#include <WiFi.h>
+// #include <WiFi.h>
 
-WiFiClient client;
+// WiFiClient client;
 
+/*
 void connectToWifi()
 {
     // setting up wifi
@@ -67,9 +68,12 @@ void connectToWifi()
 
     client.print("ACK_REQ_FROM_ROBOT"); // Send an acknowledgement to host(laptop)
 }
+*/
 
 void setup()
 {
+    Serial.begin(115200);
+
     pinMode(IR1, INPUT);
     pinMode(IR2, INPUT);
     pinMode(IR3, INPUT);
@@ -85,14 +89,6 @@ void setup()
     pinMode(buzzer, OUTPUT);
 
     digitalWrite(buzzer, HIGH); // buzzer OFF is on HIGH
-
-    Serial.begin(115200);
-
-    // wifi connection
-    if (WIFI)
-    {
-        connectToWifi();
-    }
 }
 
 void readIRs()
@@ -106,10 +102,10 @@ void readIRs()
     in5 = digitalRead(IR5);
 
     char s[12];
-    snprintf(s, 12, "%d %d %d %d %d\n", in1, in2, in3, in4, in5);
+    snprintf(s, 12, "%d %d %d %d %d", in1, in2, in3, in4, in5);
 
     Serial.println(s);
-    client.print(s);
+    // client.print(s);
 }
 
 bool test_ran = false;
@@ -117,25 +113,25 @@ void motorTest()
 {
     if (!test_ran)
     {
-        client.print("STARTING test\n");
-        client.print("M1F\n");
+        Serial.println("STARTING test");
+        Serial.println("M1F");
         analogWrite(motor1f, MOTORTEST_SPEED);
         delay(5000);
         analogWrite(motor1f, 0);
-        client.print("M1R\n");
+        Serial.println("M1R");
         analogWrite(motor1r, MOTORTEST_SPEED);
         delay(5000);
         analogWrite(motor1r, 0);
 
-        client.print("M2F\n");
+        Serial.println("M2F");
         analogWrite(motor2f, MOTORTEST_SPEED);
         delay(5000);
         analogWrite(motor2f, 0);
-        client.print("M2R\n");
+        Serial.println("M2R");
         analogWrite(motor2r, MOTORTEST_SPEED);
         delay(5000);
         analogWrite(motor2r, 0);
-        client.print("DONE test\n");
+        Serial.println("DONE test");
     }
     test_ran = true;
 }
@@ -150,14 +146,15 @@ void buzzerTest()
 void ledsTest()
 {
     digitalWrite(led_red, HIGH);
-    digitalWrite(led_green, HIGH);
+    // digitalWrite(led_green, HIGH);
     delay(1000);
     digitalWrite(led_red, 0);
-    digitalWrite(led_green, 0);
+    // digitalWrite(led_green, 0);
 }
 
 char to_move = '0';
 
+/*
 void teleop()
 {
     if (!WIFI)
@@ -212,13 +209,21 @@ void teleop()
         analogWrite(motor2f, 0);
     }
 }
+*/
 
 void loop()
 {
     // buzzerTest();
-    ledsTest();
-    readIRs();
+    // ledsTest();
+
+    // delay(5000);
+    // readIRs();
     // teleop();
     // readIRs();
-    motorTest();
+
+    // delay(200);
+    // motorTest();
+
+    int in3 = digitalRead(IR3);
+    digitalWrite(led_red, in3);
 }
