@@ -366,6 +366,8 @@ String connectToWifiAndGetMessage()
         delay(CONNECTION_PING_DELAY);
     } while (!client.connect(host, port));
 
+
+    Serial.println("Connection to host successful");
     client.print("ACK_REQ_FROM_ROBOT"); // Send an acknowledgement to host(laptop)
 
     String pathmsg = client.readStringUntil('\n'); // Read the message through the socket until new line char(\n)

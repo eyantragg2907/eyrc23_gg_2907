@@ -13,12 +13,13 @@ import socket
 ##############################################################
 
 IP_ADDRESS = "192.168.187.144"  # IP of the Laptop on Hotspot
-COMMAND = "nnrnlnrnrnnrnnlnn\n"  # the full cycle command
+COMMAND = "nn\n"  # the full cycle command
 
+COMMAND = "nnrnlnrnrnnrnnlnn\n"
 # COMMAND = "nnrnlnrnrnn"
 
-COMMAND = "nnrrnrrnrrnrrnrrnrr\n"
-BUZZER_COMMAND = "11111111111111\n"
+# COMMAND = "nnrrnrrnrrnrrnrrnrr\n"
+# BUZZER_COMMAND = "11111111111111\n"
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
@@ -61,15 +62,24 @@ def listen_and_print(s, conn: socket.socket):
     while True:
 
         try:
+            if c % 100 == 0:
+                print(f"{c=}")
             # data = conn.recv(4096)
             # data = data.decode("utf-8")
             # print(f"{data}")
-            if c == 100000:
-                print("SENT STOP")
-                conn.sendall(str.encode("STOPALLLL\n"))
-                c = 0
+            if c == 10000:
+                # for i in range(10000):
+                conn.sendall(str.encode("START\n"))
+                print("SENT START")
+                conn.sendall(str.encode(f"{COMMAND}\n"))
+                break
+            # elif c == 20000:
+            #     print("SENT STOP")
+            #     # for i in range(10000):
+            #     conn.sendall(str.encode("STOP\n"))
+            #     break
             # print("SENT LOL")
-            conn.sendall(str.encode("lol lol lol\n"))
+            # conn.sendall(str.encode("empty\n"))
 
             c += 1
         except KeyboardInterrupt:

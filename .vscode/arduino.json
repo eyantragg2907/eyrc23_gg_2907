@@ -1,6 +1,6 @@
 {
     "configuration": "FlashFreq=80,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
     "board": "esp32:esp32:esp32doit-devkit-v1",
-    "sketch": "Task_5/multithread/anothertest/anothertest.ino",
+    "sketch": "Task_5/multithread/multithreaded_stop/multithreaded_stop.ino",
     "port": "/dev/tty.usbserial-0001"
 }

@@ -29,11 +29,13 @@ ARUCO_ROBOT_ID = 100  # we chose this ID as it wasn't in the csv
 IDEAL_MAP_SIZE = 1080  # map frame size
 
 IP_ADDRESS = "192.168.187.144"  # IP of the Laptop on Hotspot
-COMMAND = "nnrnlnrnrnnrnnlnn\n"  # the path
-BUZZER_COMMAND = "1111111111101\n"  # buzzer command
+# COMMAND = "x\n"  # the path
+# BUZZER_COMMAND = "1111111111101\n"  # buzzer command
 
 
-COMMAND = "nnrxn\n"
+# COMMAND = "nnrxn\n"
+
+COMMAND = "nnrxn\n"  # the path
 
 CHECK_FOR_ROBOT_AT_EVENT = True
 
@@ -64,10 +66,12 @@ def send_setup_robot(
         cleanup(s)
         sys.exit(1)
 
+    # conn.sendall(str.encode(COMMAND))
+    conn.sendall(str.encode("START\n"))
+    print("SENT START")
     conn.sendall(str.encode(COMMAND))
-    conn.sendall(str.encode(BUZZER_COMMAND))
 
-    print(f"Sent command to robot: {COMMAND}")
+    # print(f"Sent command to robot: {COMMAND}")
 
 
 def send_to_robot(
@@ -367,6 +371,8 @@ if __name__ == "__main__":
 
     counter = 0
 
+    # TODO: modify so that aruco detection starts before the connection, and only then the START command is sent...
+
     try:
         while True:
 
@@ -375,9 +381,9 @@ if __name__ == "__main__":
 
             print(pxcoords)
 
-            data = conn.recv(4096)
-            data = data.decode("utf-8")
-            print(f"{data}")
+            # data = conn.recv(4096)
+            # data = data.decode("utf-8")
+            # print(f"{data}")
 
             if len(pxcoords) != 0:
                 # robot is in frame
@@ -388,13 +394,14 @@ if __name__ == "__main__":
                         i[0][1] < pxcoords[1] and i[1][1] > pxcoords[1]
                     ):  # robot is at the event
                         print("Robot at SPECIAL event")
-                        send_to_robot(soc, conn, "STOPALLMOTORSBABE\n")
+                        send_to_robot(soc, conn, "ISTOP\n")
                     else:
                         cnt += 1
                 
                 if cnt == 5:
                     # robot is not at any of the stopcoords
-                    send_to_robot(soc, conn, "EEE\n")
+                    # send_to_robot(soc, conn, "EEE\n")
+                    pass
 
     except KeyboardInterrupt:
         cleanup(soc)
