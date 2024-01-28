@@ -5,6 +5,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 */
 
 // TODO: refactor and minimize, maybe split into files? 
+// TODO: robot repeat code, its ready for the motors, but the wifi host doesnt reconnect - that code needs to be handled.
 
 #include <WiFi.h>
 
@@ -37,10 +38,11 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 #define IGNORE_FALSE_NODE_TIME 400 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY.
 
-#define ALIGN_CENTER_BEGINNING 0 // 200 // delay for aligning center of rotation in the beginning, when the situation is different.
-#define TURN_DELAY_BEGINNING 0   // 150 // delay for a small left turn in the beginning, for correction purposes.
+#define ALIGN_CENTER_BEGINNING 200 // make 0 to disable start node // delay for aligning center of rotation in the beginning, when the situation is different.
+#define TURN_DELAY_BEGINNING 150  // make 0 to disable start node // delay for a small left turn in the beginning, for correction purposes.
 
-#define EVERY_NODE_DELAY 1000 // delay at every NODE (only used at EVENT NODES now)
+#define EVENT_NODE_REACHED_DELAY 1000 // delay for BUZZER every EVENT NODE
+#define NORMAL_NODE_REACHED_DELAY 1000 // delay for BUZZER every NORMAL node, set to 0 to disable
 
 #define END_SKIP_FORWARD_DELAY 700 // delay for which simple forward movement is present in END detection
 #define END_DELAY 5000             // delay for buzzer ring at the END.
@@ -78,6 +80,7 @@ const int buzzer = 23;
 QueueHandle_t action_queue;
 QueueHandle_t reverse_action_queue;
 QueueHandle_t message_queue;
+#define MESSAGE_QUEUE_SIZE 40
 
 /* enum constants */
 #define START_ACTIONCODE 101
@@ -119,7 +122,7 @@ void setup()
         Serial.println("Error creating action_queue");
     }
 
-    message_queue = xQueueCreate(10, sizeof(char) * 30);
+    message_queue = xQueueCreate(10, sizeof(char) * MESSAGE_QUEUE_SIZE);
 
     if (message_queue == NULL)
     {
@@ -154,7 +157,7 @@ void controlLoop(void *pvParameters)
                 digitalWrite(led_red, LOW);
 
                 // read path
-                char path[30] = "";
+                char path[MESSAGE_QUEUE_SIZE] = "";
                 if (xQueueReceive(message_queue, path, 0))
                 {
                     Serial.print("Path message received succesfully.");
@@ -211,6 +214,11 @@ void conductMovement(char *path)
             turn_left();
             delay(TURN_DELAY_BEGINNING);
             stop();
+
+            digitalWrite(buzzer, LOW);
+            delay(NORMAL_NODE_REACHED_DELAY);
+            digitalWrite(buzzer, HIGH);
+
             node_left_time = millis();
         }
         else if (next_movement == 'l')
@@ -242,6 +250,10 @@ void conductMovement(char *path)
             {
                 readIRs();
             } while (!moveForwardTillReachedNode());
+
+            digitalWrite(buzzer, LOW);
+            delay(NORMAL_NODE_REACHED_DELAY);
+            digitalWrite(buzzer, HIGH);
             node_left_time = millis();
         }
         else if (next_movement == 'x')
@@ -262,7 +274,7 @@ void conductMovement(char *path)
                 } while (!moveForwardTillStopped());
 
                 digitalWrite(buzzer, LOW);
-                delay(EVERY_NODE_DELAY);
+                delay(EVENT_NODE_REACHED_DELAY);
                 digitalWrite(buzzer, HIGH);
                 node_left_time = millis();
             }
@@ -525,10 +537,10 @@ void listenAndDirectActions()
             if (clientMessage == "START")
             {
                 // The two messages after the "START" message
-                char message[30];
+                char message[MESSAGE_QUEUE_SIZE];
                 String path = client.readStringUntil('\n');
 
-                path.toCharArray(message, 30);
+                path.toCharArray(message, MESSAGE_QUEUE_SIZE);
 
                 if (xQueueSend(message_queue, message, portMAX_DELAY))
                 {

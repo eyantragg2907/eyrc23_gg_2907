@@ -32,10 +32,10 @@ IP_ADDRESS = "192.168.187.144"  # IP of the Laptop on Hotspot
 # COMMAND = "x\n"  # the path
 # BUZZER_COMMAND = "1111111111101\n"  # buzzer command
 
-
+COMMAND = "nnnrnlnrnrnnrnnlnn\n"
 # COMMAND = "nnrxn\n"
 
-COMMAND = "nnrxn\n"  # the path
+# COMMAND = "nnrxn\n"  # the path
 
 CHECK_FOR_ROBOT_AT_EVENT = True
 
