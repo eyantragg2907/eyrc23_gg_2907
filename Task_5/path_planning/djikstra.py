@@ -59,10 +59,24 @@ def get_shortest_path(
             if turns > 0
             else RIGHT_INSTRUCTION * abs(turns)
         )
+
+        if abs(turns) == 2: instructions = U_TURN_INSTRUCTION
+        if abs(turns) == 3: 
+            instructions = (
+                LEFT_INSTRUCTION 
+                if turns < 0
+                else RIGHT_INSTRUCTION 
+                )
+        forward_instruction = FORWARD_INSTRUCTION
+        if node.startswith("E_"):
+            if node == node_2:
+                forward_instruction = SPECIAL_FORWARD_INSTRUCTION
+            else:
+                forward_instruction = ""
         updated_path = path + (
             node,
             cum_cost,
-            instructions + FORWARD_INSTRUCTION,
+            instructions + forward_instruction,
             end_pose,
         )
 
@@ -97,14 +111,14 @@ def path_plan_all_nodes(nodes, end_pose=INITIAL_POSE, cum_path=Path()):
     for node_1, node_2 in zip(nodes[:-1], nodes[1:]):
         temp_cum_paths = []
         for cum_path in cum_paths:
-            print(node_1, node_2, str(cum_path))
+            # print(node_1, node_2, str(cum_path))
             paths = get_shortest_path(
                 graph, node_1, node_2, path=cum_path, robot_pose=cum_path.end_pose
             )
             unique_end_poses = set()
             [unique_end_poses.add(i) for i in paths]
             temp_cum_paths += list(unique_end_poses)
-        print(temp_cum_paths)
+        # print(temp_cum_paths)
         cum_paths = temp_cum_paths
 
     return sorted(cum_paths, key=lambda x: x.cost)[::]
@@ -116,7 +130,7 @@ def path_plan_based_on_events_detected(events):
     nodes_to_visit = sorted(priorities, key=lambda x: -x[1])[::]
     nodes_to_visit = [f"E_{x[0]}" for x in nodes_to_visit]
 
-    return path_plan_all_nodes(["A"] + nodes_to_visit)
+    return path_plan_all_nodes(["A"] + nodes_to_visit + ["A"])
 
 
 if __name__ == "__main__":
@@ -129,5 +143,4 @@ if __name__ == "__main__":
     }  # our model detected this events
 
     paths = path_plan_based_on_events_detected(events_detected)
-    for path in paths[::-1]:
-        print(str(path))
+    print(str(paths[0]))
