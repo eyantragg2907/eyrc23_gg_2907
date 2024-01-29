@@ -51,7 +51,7 @@ FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
 MODEL_PATH = "model.tf"  # model.tf should be a folder containing the model
 
-CAMERA_ID = 1
+CAMERA_ID = 0
 
 ARUCO_REQD_IDS = {4, 5, 6, 7}  # the ids of the corners!
 
@@ -109,7 +109,7 @@ def classify_event(imagepath: str) -> str:
         raise Exception("Model is not loaded")
 
     # the model is trained on 75x75 images
-    img = tf.keras.preprocessing.image.load_img(imagepath, target_size=(75, 75))  # type: ignore
+    img = tf.keras.preprocessing.image.load_img(imagepath, target_size=(64, 64))  # type: ignore
     img = np.array(img, dtype=np.float32)
     img = tf.expand_dims(img, axis=0)
 

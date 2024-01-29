@@ -172,7 +172,7 @@ def main():
     # cv2.destroyAllWindows()
 
     c = 0
-    while c < 3:
+    while c < 12:
         ret, frame = cap.read()
         
         # save the photo
