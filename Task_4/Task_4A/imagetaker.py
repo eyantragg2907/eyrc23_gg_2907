@@ -152,13 +152,13 @@ def main():
         "vehicle",
     ]
 
-    A = classmap.index("combat")
-    B = classmap.index("building")
-    C = classmap.index("vehicle")
+    A = classmap.index("building")
+    B = classmap.index("fire")
+    C = classmap.index("combat")
     D = classmap.index("human")
-    E = classmap.index("fire")
+    E = classmap.index("vehicle")
 
-    SET = "DIABLO4_"
+    SET = "NEWSET_"
 
     FOLDER = "temp_pjrtrain"
 
