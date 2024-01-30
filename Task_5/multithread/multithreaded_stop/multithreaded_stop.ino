@@ -22,9 +22,8 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 #define NODE_LEAVE_DELAY 300 // delay to move in front of a NODE w/o stopping logic
 
-#define LEAVE_BLACK_DELAY 200        // delay before black line detection begins
-#define ABOUTTURN_SKIP_REDUCTION 100 // reduction to the SECOND LEAVE_BLACK_DELAY and BLACKLINE_INITIAL_SKIP for D180 turn
-#define LEAVE_BLACK_DELAY_UTURN 400  // delay before black line detection begins for D180 turn (uturn)
+#define LEAVE_BLACK_DELAY 250        // delay before black line detection begins
+#define LEAVE_BLACK_DELAY_UTURN 450  // delay before black line detection begins for D180 turn (uturn)
 
 #define ERROR_COUNTER_MAX 6 // delay of the number of times false detection of ALL OFF can happen at the end.
 
@@ -43,7 +42,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define TURN_DELAY_BEGINNING 175   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
 
 #define EVENT_NODE_REACHED_DELAY 1000  // delay for BUZZER every EVENT NODE
-#define NORMAL_NODE_REACHED_DELAY 1000 // delay for BUZZER every NORMAL node, set to 0 to disable
+#define NORMAL_NODE_REACHED_DELAY 0 // delay for BUZZER every NORMAL node, set to 0 to disable
 
 #define END_SKIP_FORWARD_DELAY 700 // delay for which simple forward movement is present in END detection
 #define END_DELAY 5000             // delay for buzzer ring at the END.
@@ -53,14 +52,14 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define BEFORE_READY_FOR_NEXTCOMMAND 1000 // delay after a run after the END_DELAY. this is required so that the LED actually turns off after its on at the end of each run.
 
 /* wireless */
-const char *ssid = "brainerd";
-const char *password = "internetaccess";
-const uint16_t port = 8002;
-const char *host = "192.168.216.62"; // laptops IP Address
-// const char *ssid = "pjrWifi";
-// const char *password = "SimplePass01";
+// const char *ssid = "brainerd";
+// const char *password = "internetaccess";
 // const uint16_t port = 8002;
-// const char *host = "192.168.187.144"; // laptops IP Address
+// const char *host = "192.168.216.62"; // laptops IP Address
+const char *ssid = "pjrWifi";
+const char *password = "SimplePass01";
+const uint16_t port = 8002;
+const char *host = "192.168.187.144"; // laptops IP Address
 WiFiClient client;
 
 /* IR sensor pins */
@@ -248,6 +247,9 @@ void conductMovement(char *path)
             {
                 readIRs();
             } while (!turn(LEFT, LEAVE_BLACK_DELAY));
+            char msg[MESSAGE_QUEUE_SIZE];
+            snprintf(msg, MESSAGE_QUEUE_SIZE, "90d left turn complete: %lu\n", millis());
+            xQueueSend(send_to_wifi_queue, msg, 0);
         }
         else if (next_movement == 'r')
         {
@@ -256,6 +258,9 @@ void conductMovement(char *path)
             {
                 readIRs();
             } while (!turn(RIGHT, LEAVE_BLACK_DELAY));
+            char msg[MESSAGE_QUEUE_SIZE];
+            snprintf(msg, MESSAGE_QUEUE_SIZE, "90d right turn complete: %lu\n", millis());
+            xQueueSend(send_to_wifi_queue, msg, 0);
         }
         else if (next_movement == 'n')
         {
@@ -327,19 +332,22 @@ void conductMovement(char *path)
             //     readIRs();
             //     //} while (!turn(RIGHT, LEAVE_BLACK_DELAY - ABOUTTURN_SKIP_REDUCTION, BLACKLINE_INITIAL_SKIP - ABOUTTURN_SKIP_REDUCTION));
             // } while (!turn(RIGHT, 50));
+
+            char msg[MESSAGE_QUEUE_SIZE];
+            snprintf(msg, MESSAGE_QUEUE_SIZE, "180d right turn complete: %lu\n", millis());
+            xQueueSend(send_to_wifi_queue, msg, 0);
         }
         else if (next_movement == 'L')
         {
-            Serial.println("===> left about turn.");
+            Serial.println("===> 180D TURN!");
             do
             {
                 readIRs();
-            } while (!turn(LEFT, LEAVE_BLACK_DELAY));
-            node = false;
-            do
-            {
-                readIRs();
-            } while (!turn(LEFT, LEAVE_BLACK_DELAY - ABOUTTURN_SKIP_REDUCTION));
+            } while (!turn(LEFT, LEAVE_BLACK_DELAY_UTURN));
+
+            char msg[MESSAGE_QUEUE_SIZE];
+            snprintf(msg, MESSAGE_QUEUE_SIZE, "180d left turn complete: %lu\n", millis());
+            xQueueSend(send_to_wifi_queue, msg, 0);
         }
         else
         {
