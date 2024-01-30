@@ -314,3 +314,9 @@ Task_5/Task_5A/temp_**
 Task_5/model_test/*.png
 Task_5/model_test/model.tf
 Task_5/multithread/temp_myscratchpad.ino
+Task_5/Task_5A/merge/A.png
+Task_5/Task_5A/merge/B.png
+Task_5/Task_5A/merge/C.png
+Task_5/Task_5A/merge/E.png
+Task_5/Task_5A/merge/D.png
+Task_5/Task_5A/merge/live_location.csv
