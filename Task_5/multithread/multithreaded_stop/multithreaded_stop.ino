@@ -44,7 +44,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define EVENT_NODE_REACHED_DELAY 1000  // delay for BUZZER every EVENT NODE
 #define NORMAL_NODE_REACHED_DELAY 0 // delay for BUZZER every NORMAL node, set to 0 to disable
 
-#define END_SKIP_FORWARD_DELAY 700 // delay for which simple forward movement is present in END detection
+#define END_SKIP_FORWARD_DELAY 500 // delay for which simple forward movement is present in END detection
 #define END_DELAY 5000             // delay for buzzer ring at the END.
 
 // #define D90_TURNTIME 580
