@@ -17,7 +17,6 @@ import sys
 import csv
 import pandas as pd
 import socket
-import time
 import threading
 # from 
 import djikstra
@@ -45,6 +44,17 @@ COMMAND = "nnnrxnrnrnln\n"
 CHECK_FOR_ROBOT_AT_EVENT = True
 
 ################# ADD UTILITY FUNCTIONS HERE #################
+
+OUT_FILE_LOC = "live_location.csv"
+if not os.path.exists(OUT_FILE_LOC):
+    with open(OUT_FILE_LOC, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(["lat", "lon"])
+
+
+def get_aruco_locs():
+    return pd.read_csv("lat_long.csv", index_col="id")
+
 
 def set_command():
     global COMMAND
@@ -315,13 +325,59 @@ def get_pxcoords(robot_id, ids, corners):
     except:
         return []
 
+def get_nearestmarker(robotcoords, corners, ids):
+    global prev_closest_marker
+
+    mindist = float("inf")
+    closestmarker = None
+
+    if len(robotcoords) == 0:
+        return prev_closest_marker
+
+    for markerCorner, markerID in zip(corners, ids):
+        if markerID != ARUCO_ROBOT_ID:
+            corners = markerCorner.reshape((4, 2))
+            marker_center = np.mean(corners, axis=0)
+            dist = np.linalg.norm(robotcoords - marker_center)
+            if dist < mindist:  # type: ignore
+                closestmarker = markerID
+                mindist = dist
+
+    prev_closest_marker = closestmarker
+
+    return closestmarker
 
 prev_closest_marker = None
+
+
+def write_csv(loc, csv_name):
+
+    with open(csv_name, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(["lat", "lon"])
+        writer.writerow(loc)
+
+def update_qgis_position(robotcoords, corners, ids):
+    arucolat_long = get_aruco_locs()
+    nearest_marker = get_nearestmarker(robotcoords, corners, ids)
+    if nearest_marker is None:
+        return None
+    try:
+        coordinate = arucolat_long.loc[nearest_marker]
+       
+        write_csv(coordinate, OUT_FILE_LOC)
+
+        return coordinate
+    
+    except:
+        print("No lat long from this marker!!")
+        return None
 
 
 def get_robot_coords(frame):
     corners, ids, _ = get_aruco_data(frame)
     robot_pxcoords = get_pxcoords(ARUCO_ROBOT_ID, ids, corners)
+    update_qgis_position(robot_pxcoords, corners, ids)
 
     return robot_pxcoords
 
