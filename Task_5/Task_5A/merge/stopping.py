@@ -49,8 +49,9 @@ CHECK_FOR_ROBOT_AT_EVENT = True
 def set_command():
     global COMMAND
     events = predict.return_events()
-    path = djikstra.path_plan_based_on_events_detected(events)
-    COMMAND =  "n" + str(path[0])
+    print(events)
+    path = djikstra.final_path(events)
+    COMMAND =  "n" + path
     print(COMMAND)
 
 def get_aruco_detector():
@@ -80,8 +81,8 @@ def send_setup_robot(
 
     # conn.sendall(str.encode(COMMAND))
     conn.sendall(str.encode("START\n"))
-    print("SENT START")
     conn.sendall(str.encode(COMMAND))
+    print(f"SENT START w/ {COMMAND}")
 
     # print(f"Sent command to robot: {COMMAND}")
 
@@ -369,7 +370,9 @@ def listen_and_print(s, conn: socket.socket):
 if __name__ == "__main__":
 
     set_command()
+    print("Initializing Connection")
     soc, conn = init_connection()
+    print("Sending command..")
     send_setup_robot(soc, conn)
 
     # listen_and_print(soc, conn)

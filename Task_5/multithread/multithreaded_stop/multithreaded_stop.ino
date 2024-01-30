@@ -13,7 +13,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 #define SPEED_LEFTMOTOR 255  // motor LEFT speed, FORWARD
 #define SPEED_RIGHTMOTOR 255 // motor RIGHT speed, FORWARD
-#define ROTATE_SPEED 230     // motor BOTH speed, D90 TURNS
+#define ROTATE_SPEED 255     // motor BOTH speed, D90 TURNS
 
 #define BANGBANG_TURNSPEED 230 // correction motor speed when in WALL mode
 #define MIDDLE_TURNSPEED 200   // correction motor speed when in MIDDLE_LINE mode
@@ -22,8 +22,8 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 #define NODE_LEAVE_DELAY 300 // delay to move in front of a NODE w/o stopping logic
 
-#define LEAVE_BLACK_DELAY 250        // delay before black line detection begins
-#define LEAVE_BLACK_DELAY_UTURN 450  // delay before black line detection begins for D180 turn (uturn)
+#define LEAVE_BLACK_DELAY 400        // delay before black line detection begins
+#define LEAVE_BLACK_DELAY_UTURN 800  // delay before black line detection begins for D180 turn (uturn)
 
 #define ERROR_COUNTER_MAX 6 // delay of the number of times false detection of ALL OFF can happen at the end.
 
@@ -39,7 +39,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define IGNORE_FALSE_NODE_TIME 400 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY.
 
 #define ALIGN_CENTER_BEGINNING 200 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
-#define TURN_DELAY_BEGINNING 175   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
+#define TURN_DELAY_BEGINNING 130   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
 
 #define EVENT_NODE_REACHED_DELAY 1000  // delay for BUZZER every EVENT NODE
 #define NORMAL_NODE_REACHED_DELAY 0 // delay for BUZZER every NORMAL node, set to 0 to disable
@@ -356,6 +356,12 @@ void conductMovement(char *path)
     }
 
     Serial.println("Terminating movement begins...");
+
+    analogWrite(motor1r, 0);
+    analogWrite(motor2r, 0);
+    analogWrite(motor1f, SPEED_LEFTMOTOR);
+    analogWrite(motor2f, SPEED_RIGHTMOTOR);
+    delay(NODE_LEAVE_DELAY);
 
     start_of_end_detect = millis();
     while (1)

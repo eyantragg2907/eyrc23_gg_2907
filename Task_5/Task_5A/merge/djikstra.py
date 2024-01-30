@@ -4,8 +4,8 @@ from graph import Graph
 graph = Graph()
 
 
-class Path(object):
-    def __init__(self, nodes=[], cost=0, instructions="", end_pose=FRONT):
+class Path():
+    def __init__(self, nodes=[], cost=0, instructions="", end_pose=INITIAL_POSE):
         self.nodes = nodes
         self.cost = cost
         self.instructions = instructions
@@ -132,21 +132,34 @@ def path_plan_all_nodes(nodes, end_pose=INITIAL_POSE, cum_path=Path()):
 
 def path_plan_based_on_events_detected(events):
     global label2priority
+    # print(events)
+    # print(bool("str"))
+
     priorities = ((k, label2priority[v]) for (k, v) in events.items() if bool(v))
-    nodes_to_visit = sorted(priorities, key=lambda x: -x[1])[::]
+
+    nodes_to_visit = sorted(priorities, key=lambda x: x[1], reverse=False)[::]
+
     nodes_to_visit = [f"E_{x[0]}" for x in nodes_to_visit]
+
+    print(nodes_to_visit)
 
     return path_plan_all_nodes(["A"] + nodes_to_visit + ["A"])
 
+def final_path(events_detected):
+    paths = path_plan_based_on_events_detected(events_detected)
+    final = paths[0]
+    final.instructions += "l" if final.end_pose == LEFT else ""
+    return str(final)
 
 if __name__ == "__main__":
     events_detected = {
-        "A": "combat",
+        "D": "combat",
         "B": None,
         "C": None,
-        "D": "military_vehicles",
-        "E": "fire",
+        "A": "military_vehicles",
+        "E": None,
     }  # our model detected this events
 
     paths = path_plan_based_on_events_detected(events_detected)
+    
     print(str(paths[0]))
