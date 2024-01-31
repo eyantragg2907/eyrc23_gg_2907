@@ -12,7 +12,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 /* Configuration */
 
 #define SPEED_LEFTMOTOR 255  // motor LEFT speed, FORWARD
-#define SPEED_RIGHTMOTOR 230 // down from 255 motor RIGHT speed, FORWARD
+#define SPEED_RIGHTMOTOR 255 // down from 255 motor RIGHT speed, FORWARD
 #define ROTATE_SPEED 255     // motor BOTH speed, D90/ D180 TURNS
 
 #define BANGBANG_TURNSPEED 230 // correction motor speed when in WALL mode
@@ -22,7 +22,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 #define NODE_LEAVE_DELAY 300 // delay to move in front of a NODE w/o stopping logic
 
-#define LEAVE_BLACK_DELAY 450        // delay before black line detection begins
+#define LEAVE_BLACK_DELAY 450      // delay before black line detection begins
 #define LEAVE_BLACK_DELAY_UTURN 900  // delay before black line detection begins for D180 turn (uturn)
 
 #define ERROR_COUNTER_MAX 6 // delay of the number of times false detection of ALL OFF can happen at the end.
