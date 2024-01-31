@@ -4,7 +4,7 @@ from graph import Graph
 graph = Graph()
 
 
-class Path():
+class Path:
     def __init__(self, nodes=[], cost=0, instructions="", end_pose=INITIAL_POSE):
         self.nodes = nodes
         self.cost = cost
@@ -29,7 +29,7 @@ class Path():
     def __hash__(self):
         return hash(self.end_pose)
 
-    def has_goals(self,goal_nodes):
+    def has_goals(self, goal_nodes):
         return any(i in goal_nodes for i in self.nodes[:-1])
 
 
@@ -49,9 +49,9 @@ def get_shortest_path(
     paths = []
 
     for node, direction, distance, end_pose in children:
-        if node in visited: continue
+        if node in visited:
+            continue
 
-        # print("",path)
         cum_cost = distance + get_pose_cost(robot_pose, direction)
         turns = robot_pose - direction
         instructions = (
@@ -60,13 +60,10 @@ def get_shortest_path(
             else RIGHT_INSTRUCTION * abs(turns)
         )
 
-        if abs(turns) == 2: instructions = U_TURN_INSTRUCTION
-        if abs(turns) == 3: 
-            instructions = (
-                LEFT_INSTRUCTION 
-                if turns < 0
-                else RIGHT_INSTRUCTION 
-                )
+        if abs(turns) == 2:
+            instructions = U_TURN_INSTRUCTION
+        if abs(turns) == 3:
+            instructions = LEFT_INSTRUCTION if turns < 0 else RIGHT_INSTRUCTION
         forward_instruction = FORWARD_INSTRUCTION
         if node.startswith("E_"):
             if node == node_2:
@@ -92,17 +89,21 @@ def get_shortest_path(
             robot_pose=end_pose,
         )
 
-    return [i for i in sorted(paths, key=lambda x: x.cost)[::] if not i.has_goals(graph.goal_nodes)]
+    return [
+        i
+        for i in sorted(paths, key=lambda x: x.cost)[::]
+        if not i.has_goals(graph.goal_nodes)
+    ]
 
 
 def get_pose_cost(initial_pose, reqd_pose):
     diff = abs(initial_pose - reqd_pose)
-    
+
     # XXX: REMOVE THIS SHIT LATER!!! WE SHOULD REALLY ALLOW U-TURNS, WHY AREN'T WE?
     # TODO: REMOVE, WHO THE F WROTE THIS?
     if diff == 2:
         return 9999
-    
+
     if reqd_pose > initial_pose:
         return RIGHT_TURN_TIME * diff
     elif reqd_pose < initial_pose:
@@ -145,11 +146,13 @@ def path_plan_based_on_events_detected(events):
 
     return path_plan_all_nodes(["A"] + nodes_to_visit + ["A"])
 
+
 def final_path(events_detected):
     paths = path_plan_based_on_events_detected(events_detected)
     final = paths[0]
     final.instructions += "l" if final.end_pose == LEFT else ""
     return str(final)
+
 
 if __name__ == "__main__":
     events_detected = {
@@ -161,5 +164,5 @@ if __name__ == "__main__":
     }  # our model detected this events
 
     paths = path_plan_based_on_events_detected(events_detected)
-    
+
     print(str(paths[0]))

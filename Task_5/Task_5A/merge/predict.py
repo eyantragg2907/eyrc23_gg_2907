@@ -159,22 +159,10 @@ def predict(model, img):
     return event
 
 
-def return_events():
-
-    num_of_frames_skip = 100
-    # Initialize the camera
-    if sys.platform == "win32":
-        cap = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
-    else:
-        cap = cv2.VideoCapture(CAMERA_ID)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
-    # take a photo
-    for i in range(num_of_frames_skip):
-        ret, frame = cap.read()
-
+def return_events(cap):
 
     paths = ["A.png", "B.png", "C.png", "D.png", "E.png"]
+
     ret, frame = cap.read()
     get_events(frame, paths)
 
@@ -187,5 +175,6 @@ def return_events():
         if event == "empty":
             event = None
         output[act] = event
+    
     return output
     

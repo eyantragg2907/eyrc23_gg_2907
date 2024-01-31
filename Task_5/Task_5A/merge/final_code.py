@@ -18,9 +18,11 @@ import csv
 import pandas as pd
 import socket
 import threading
-# from 
+
+# from
 import djikstra
-import predict
+import predictor
+
 ##############################################################
 
 CAMERA_ID = 0  # camera ID for external camera
@@ -30,22 +32,15 @@ ARUCO_REQD_IDS = {4, 5, 6, 7}  # corners
 ARUCO_ROBOT_ID = 100  # we chose this ID as it wasn't in the csv
 IDEAL_MAP_SIZE = 1080  # map frame size
 
-IP_ADDRESS = "192.168.187.62"  # IP of the Laptop on Hotspot
-# COMMAND = "x\n"  # the path
-# BUZZER_COMMAND = "1111111111101\n"  # buzzer command
-
-COMMAND = "nnnrnlnrnrnnrnnln\n"
-COMMAND = "nnr\n"
-
-# COMMAND = "nnRnRnRn\n";
-# COMMAND = "nRn\n"
-# COMMAND = "nnrxn\n"  # the path
+IP_ADDRESS = "192.168.187.144"  # IP of the Laptop on Hotspot
 
 CHECK_FOR_ROBOT_AT_EVENT = True
+OUT_FILE_LOC = "live_location.csv"
+
+EVENT_FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
-OUT_FILE_LOC = "live_location.csv"
 if not os.path.exists(OUT_FILE_LOC):
     with open(OUT_FILE_LOC, "w") as f:
         writer = csv.writer(f)
@@ -56,15 +51,6 @@ def get_aruco_locs():
     return pd.read_csv("lat_long.csv", index_col="id")
 
 
-def set_command():
-    global COMMAND
-    events = predict.return_events()
-    print(events)
-    path = djikstra.final_path(events)
-    COMMAND =  "n" + path
-    COMMAND = "nnrnln"
-    print(COMMAND)
-
 def get_aruco_detector():
     dictionary = aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
     parameters = aruco.DetectorParameters()
@@ -72,12 +58,13 @@ def get_aruco_detector():
 
     return detector
 
+
 def cleanup(s):  # closes socket
     s.close()
 
 
 def send_setup_robot(
-    s: socket.socket, conn: socket.socket
+    s: socket.socket, conn: socket.socket, command: str
 ):  # sends setup command to robot
     data = conn.recv(1024)
     data = data.decode("utf-8")  # decode the data from bytes to string
@@ -91,8 +78,8 @@ def send_setup_robot(
 
     # conn.sendall(str.encode(COMMAND))
     conn.sendall(str.encode("START\n"))
-    conn.sendall(str.encode(COMMAND))
-    print(f"SENT START w/ {COMMAND}")
+    conn.sendall(str.encode(command))
+    print(f"SENT START w/ {command}")
 
     # print(f"Sent command to robot: {COMMAND}")
 
@@ -117,7 +104,7 @@ def get_frame(video):  # gets frame from camera
 
 def get_image_pts_from_frame(side_len):
     s = side_len
-    S = 1080
+    S = IDEAL_MAP_SIZE
     Apts = (np.array([[940 / S, 1026 / S], [222 / S, 308 / S]]) * s).astype(int)
     Bpts = (np.array([[729 / S, 816 / S], [717 / S, 802 / S]]) * s).astype(int)
     Cpts = (np.array([[513 / S, 601 / S], [725 / S, 811 / S]]) * s).astype(int)
@@ -127,10 +114,21 @@ def get_image_pts_from_frame(side_len):
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
 
-def get_robot_coords_and_frame(capture):  # updates the position of the robot
+def save_event_images(frame, pts, filenames):
+    for p, f in zip(pts, filenames):
+        event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
+        cv2.imwrite(f, event)
+
+
+def get_robot_coords_and_frame(
+    capture, save_images=False
+):  # updates the position of the robot
     frame = get_frame(capture)
     frame, side_len = transform_frame(frame)
     image_pts = get_image_pts_from_frame(side_len)
+
+    if save_images:
+        save_event_images(frame, image_pts, EVENT_FILENAMES)
 
     stopcoords = get_stopcoords(image_pts)
     pxcoords = get_robot_coords(frame)
@@ -146,6 +144,7 @@ def get_stopcoords(pts):
         )
 
     return stopcoords
+
 
 def transform_frame(frame):  # transforms the frame to get
     """
@@ -319,6 +318,7 @@ def get_pxcoords(robot_id, ids, corners):
     except:
         return []
 
+
 def get_nearestmarker(robotcoords, corners, ids):
     global prev_closest_marker
 
@@ -341,15 +341,16 @@ def get_nearestmarker(robotcoords, corners, ids):
 
     return closestmarker
 
+
 prev_closest_marker = None
 
 
 def write_csv(loc, csv_name):
-
     with open(csv_name, "w") as f:
         writer = csv.writer(f)
         writer.writerow(["lat", "lon"])
         writer.writerow(loc)
+
 
 def update_qgis_position(robotcoords, corners, ids):
     arucolat_long = get_aruco_locs()
@@ -358,11 +359,11 @@ def update_qgis_position(robotcoords, corners, ids):
         return None
     try:
         coordinate = arucolat_long.loc[nearest_marker]
-       
+
         write_csv(coordinate, OUT_FILE_LOC)
 
         return coordinate
-    
+
     except:
         print("No lat long from this marker!!")
         return None
@@ -372,27 +373,11 @@ def get_robot_coords(frame):
     corners, ids, _ = get_aruco_data(frame)
     robot_pxcoords = get_pxcoords(ARUCO_ROBOT_ID, ids, corners)
     update_qgis_position(robot_pxcoords, corners, ids)
-    print("UPD QGIS HAPPEND FFS")
 
     return robot_pxcoords
 
 
 def initialize_capture(frames_to_skip=100) -> cv2.VideoCapture:
-    """
-    Purpose:
-
-    This function initializes the camera
-
-    Input Arguments:
-
-    frames_to_skip :   [ int ]
-
-    Returns:
-
-    capture :   [ cv2.VideoCapture object ]
-
-    """
-
     capture = None
     if sys.platform == "win32":
         capture = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
@@ -410,7 +395,7 @@ def initialize_capture(frames_to_skip=100) -> cv2.VideoCapture:
 
 
 def listen_and_print(s, conn: socket.socket):
-    print("="*80)
+    print("=" * 80)
     while True:
         data = conn.recv(4096)
         data = data.decode("utf-8")
@@ -419,43 +404,40 @@ def listen_and_print(s, conn: socket.socket):
 
 ###############	Main Function	#################
 if __name__ == "__main__":
-
     capture = initialize_capture()
 
-    counter = 0
+    frame, stopcoords, pxcoords = get_robot_coords_and_frame(capture, save_images=True)
+    detected_events = predictor.run_predictor(EVENT_FILENAMES)
+    path = djikstra.final_path(detected_events)
+    command = "n" + path
 
-    # TODO: modify so that aruco detection starts before the connection, and only then the START command is sent...
-
-    # try:
-    while True:
-
-        # get a new frame, transform it and get the robots coordinates
-        frame, stopcoords, pxcoords = get_robot_coords_and_frame(capture)
-
-        # print(pxcoords)
-
-        if len(pxcoords) != 0:
-            # robot is in frame
-            for i in stopcoords:
-                # check if robot is at any of the stopcoords
-                if (i[0][0] < pxcoords[0] and i[1][0] > pxcoords[0]) and (
-                    i[0][1] < pxcoords[1] and i[1][1] > pxcoords[1]
-                ):  # robot is at the event
-                    # print("Robot at SPECIAL event")
-                    conn.sendall(str.encode("ISTOP\n"))
-                    
-    # except KeyboardInterrupt:
-    #     lpt.join()
-    #     cleanup(soc)
-    #     capture.release()
-    
-    set_command()
     print("Initializing Connection")
     soc, conn = init_connection()
     print("Sending command..")
-    send_setup_robot(soc, conn)
-
+    send_setup_robot(soc, conn, command)
 
     lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
 
     lpt.start()
+
+    try:
+        while True:
+            # get a new frame, transform it and get the robots coordinates
+            frame, stopcoords, pxcoords = get_robot_coords_and_frame(
+                capture, save_images=False
+            )
+
+            if len(pxcoords) != 0:
+                # robot is in frame
+                for i in stopcoords:
+                    # check if robot is at any of the stopcoords
+                    if (i[0][0] < pxcoords[0] and i[1][0] > pxcoords[0]) and (
+                        i[0][1] < pxcoords[1] and i[1][1] > pxcoords[1]
+                    ):  # robot is at the event
+                        conn.sendall(str.encode("ISTOP\n"))
+
+    except KeyboardInterrupt:
+        lpt.join()
+        cleanup(soc)
+        capture.release()
+        # delete_images()
