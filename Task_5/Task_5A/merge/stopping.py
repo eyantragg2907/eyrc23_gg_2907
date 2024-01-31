@@ -30,7 +30,7 @@ ARUCO_REQD_IDS = {4, 5, 6, 7}  # corners
 ARUCO_ROBOT_ID = 100  # we chose this ID as it wasn't in the csv
 IDEAL_MAP_SIZE = 1080  # map frame size
 
-IP_ADDRESS = "192.168.187.144"  # IP of the Laptop on Hotspot
+IP_ADDRESS = "192.168.187.62"  # IP of the Laptop on Hotspot
 # COMMAND = "x\n"  # the path
 # BUZZER_COMMAND = "1111111111101\n"  # buzzer command
 
