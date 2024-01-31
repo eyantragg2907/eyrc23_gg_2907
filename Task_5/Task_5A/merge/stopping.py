@@ -35,7 +35,7 @@ IP_ADDRESS = "192.168.187.62"  # IP of the Laptop on Hotspot
 # BUZZER_COMMAND = "1111111111101\n"  # buzzer command
 
 COMMAND = "nnnrnlnrnrnnrnnln\n"
-COMMAND = "nnnrxnrnrnln\n"
+COMMAND = "nnr\n"
 
 # COMMAND = "nnRnRnRn\n";
 # COMMAND = "nRn\n"
@@ -62,6 +62,7 @@ def set_command():
     print(events)
     path = djikstra.final_path(events)
     COMMAND =  "n" + path
+    COMMAND = "nnrnln"
     print(COMMAND)
 
 def get_aruco_detector():
@@ -378,6 +379,7 @@ def get_robot_coords(frame):
     corners, ids, _ = get_aruco_data(frame)
     robot_pxcoords = get_pxcoords(ARUCO_ROBOT_ID, ids, corners)
     update_qgis_position(robot_pxcoords, corners, ids)
+    print("UPD QGIS HAPPEND FFS")
 
     return robot_pxcoords
 

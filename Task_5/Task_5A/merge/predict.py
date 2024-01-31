@@ -3,13 +3,13 @@ import tensorflow as tf
 import cv2
 import numpy as np
 
-dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
+dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250) # init detector
 parameters = cv2.aruco.DetectorParameters()
 detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 
-CAMERA_ID = 0
+CAMERA_ID = 0 # ID for external camera
 
-CLASS_MAP = [
+CLASS_MAP = [ # total of 6 classes to be detected
     "combat",
     "destroyed_buildings",
     "fire",

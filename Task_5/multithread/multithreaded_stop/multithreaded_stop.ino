@@ -59,7 +59,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 const char *ssid = "pjrWifi";
 const char *password = "SimplePass01";
 const uint16_t port = 8002;
-const char *host = "192.168.187.144"; // laptops IP Address
+const char *host = "192.168.187.62"; // laptops IP Address
 WiFiClient client;
 
 /* IR sensor pins */
@@ -567,6 +567,7 @@ void establishInitialWifiConnection()
 
     do
     {
+      Serial.println(host);
         Serial.println("Connection to host failed... Retrying.");
         delay(CONNECTION_PING_DELAY);
     } while (!client.connect(host, port));

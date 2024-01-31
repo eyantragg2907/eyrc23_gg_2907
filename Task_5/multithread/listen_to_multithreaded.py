@@ -12,10 +12,10 @@ import socket
 
 ##############################################################
 
-IP_ADDRESS = "192.168.187.144"  # IP of the Laptop on Hotspot
+IP_ADDRESS = "192.168.187.62"  # IP of the Laptop on Hotspot
 COMMAND = "nn\n"  # the full cycle command
 
-COMMAND = "nnnrnlnrnrnnrnnln\n"
+COMMAND = "nnrn"
 # COMMAND = "nnrnn\n"
 # COMMAND = "nnrnlnrnrnn"
 
