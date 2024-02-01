@@ -11,19 +11,19 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 /* Configuration */
 
-#define SPEED_LEFTMOTOR 255  // motor LEFT speed, FORWARD
-#define SPEED_RIGHTMOTOR 255 // down from 255 motor RIGHT speed, FORWARD
+#define SPEED_LEFTMOTOR 240  // motor LEFT speed, FORWARD
+#define SPEED_RIGHTMOTOR 240 // down from 255 motor RIGHT speed, FORWARD
 #define ROTATE_SPEED 255     // motor BOTH speed, D90/ D180 TURNS
 
 #define BANGBANG_TURNSPEED 230 // correction motor speed when in WALL mode
-#define MIDDLE_TURNSPEED 200   // correction motor speed when in MIDDLE_LINE mode
+#define MIDDLE_TURNSPEED 150   // correction motor speed when in MIDDLE_LINE mode
 
 #define ROT_COMPLETE_DELAY 100 // STOP delay after a D90 TURN
 
-#define NODE_LEAVE_DELAY 300 // delay to move in front of a NODE w/o stopping logic
+#define NODE_LEAVE_DELAY 350 // delay to move in front of a NODE w/o stopping logic
 
-#define LEAVE_BLACK_DELAY 450      // delay before black line detection begins
-#define LEAVE_BLACK_DELAY_UTURN 900  // delay before black line detection begins for D180 turn (uturn)
+#define LEAVE_BLACK_DELAY 550       // delay before black line detection begins
+#define LEAVE_BLACK_DELAY_UTURN 900 // delay before black line detection begins for D180 turn (uturn)
 
 #define ERROR_COUNTER_MAX 6 // delay of the number of times false detection of ALL OFF can happen at the end.
 
@@ -31,18 +31,19 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 // #define BLACKLINE_MAXIMUM 650
 
-#define CENTER_CORRECT_DELAY 550 // delay to align center of rotation
+#define CENTER_CORRECT_DELAY 600 // delay to align center of rotation
 
 #define CONNECTION_PING_DELAY 200 // delay between WIFI-host retry's
 #define WIFI_TRY_DELAY 500        // delay between WIFI-connect retry's
 
 #define IGNORE_FALSE_NODE_TIME 400 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY.
 
-#define ALIGN_CENTER_BEGINNING 200 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
-#define TURN_DELAY_BEGINNING 130   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
+#define ALIGN_CENTER_BEGINNING 150 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
+#define TURN_DELAY_BEGINNING 80   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
 
-#define EVENT_NODE_REACHED_DELAY 1000  // delay for BUZZER every EVENT NODE
-#define NORMAL_NODE_REACHED_DELAY 0 // delay for BUZZER every NORMAL node, set to 0 to disable
+#define EVENT_NODE_REACHED_DELAY 1000 // delay for BUZZER every EVENT NODE
+#define NORMAL_NODE_REACHED_DELAY 200   // delay for BUZZER every NORMAL node, set to 0 to disable
+#define NORMAL_NODE_REACHED_DELAY 0
 
 #define END_SKIP_FORWARD_DELAY 700 // delay for which simple forward movement is present in END detection
 #define END_DELAY 5000             // delay for buzzer ring at the END.
@@ -52,14 +53,14 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define BEFORE_READY_FOR_NEXTCOMMAND 1000 // delay after a run after the END_DELAY. this is required so that the LED actually turns off after its on at the end of each run.
 
 /* wireless */
-// const char *ssid = "brainerd";
-// const char *password = "internetaccess";
-// const uint16_t port = 8002;
-// const char *host = "192.168.216.62"; // laptops IP Address
-const char *ssid = "pjrWifi";
-const char *password = "SimplePass01";
+const char *ssid = "brainerd";
+const char *password = "internetaccess";
 const uint16_t port = 8002;
-const char *host = "192.168.187.62"; // laptops IP Address
+const char *host = "192.168.209.62"; // laptops IP Address
+// const char *ssid = "pjrWifi";
+// const char *password = "SimplePass01";
+// const uint16_t port = 8002;
+// const char *host = "192.168.187.62"; // laptops IP Address
 WiFiClient client;
 
 /* IR sensor pins */
@@ -230,9 +231,9 @@ void conductMovement(char *path)
             delay(TURN_DELAY_BEGINNING);
             stop();
 
-            digitalWrite(buzzer, LOW);
+            // digitalWrite(buzzer, LOW);
             delay(NORMAL_NODE_REACHED_DELAY);
-            digitalWrite(buzzer, HIGH);
+            // digitalWrite(buzzer, HIGH);
 
             char msg[MESSAGE_QUEUE_SIZE];
             snprintf(msg, MESSAGE_QUEUE_SIZE, "left first node: %lu\n", millis());
@@ -276,9 +277,9 @@ void conductMovement(char *path)
                 readIRs();
             } while (!moveForwardTillReachedNode());
 
-            digitalWrite(buzzer, LOW);
+            // digitalWrite(buzzer, LOW);
             delay(NORMAL_NODE_REACHED_DELAY);
-            digitalWrite(buzzer, HIGH);
+            // digitalWrite(buzzer, HIGH);
 
             char msg[MESSAGE_QUEUE_SIZE];
             snprintf(msg, MESSAGE_QUEUE_SIZE, "normal node left: %lu\n", millis());
@@ -567,7 +568,7 @@ void establishInitialWifiConnection()
 
     do
     {
-      Serial.println(host);
+        Serial.println(host);
         Serial.println("Connection to host failed... Retrying.");
         delay(CONNECTION_PING_DELAY);
     } while (!client.connect(host, port));

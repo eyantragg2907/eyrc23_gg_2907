@@ -19,11 +19,10 @@ const char *host = "192.168.187.144";
 // const int IR4 = 5; // ACTUALLY IR2
 // const int IR5 = 33; // ACTUALLY IR4
 
-
 const int IR1 = 5; // IR sensors pins
 const int IR2 = 25;
 const int IR3 = 32;
-const int IR4 = 33; 
+const int IR4 = 33;
 const int IR5 = 18;
 
 // looking from the back
@@ -32,7 +31,6 @@ const int motor1f = 27; // motor LEFT forward
 const int motor1r = 13; // moto r LEFT reverse
 const int motor2f = 12; // motor RIGHT forward
 const int motor2r = 22; // motor RIGHT reverse, used to be 14
-
 
 const int led_red = 2; // misc
 const int led_green = 15;
@@ -217,13 +215,13 @@ void loop()
     // ledsTest();
 
     // delay(5000);
-    // readIRs();
+    readIRs();
     // teleop();
     // readIRs();
 
     // delay(200);
     // motorTest();
 
-    int in3 = digitalRead(IR3);
-    digitalWrite(led_red, in3);
+    // int in3 = digitalRead(IR3);
+    // digitalWrite(led_red, in3);
 }

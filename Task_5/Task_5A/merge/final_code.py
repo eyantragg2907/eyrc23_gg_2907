@@ -1,3 +1,4 @@
+
 """IMPORTANT"""
 ## LATEST ##
 ## TASK_4B FILE WITH QGIS AND LATEST DEBUGGING SYSTEM ##
@@ -18,6 +19,7 @@ import csv
 import pandas as pd
 import socket
 import threading
+import sys
 
 # from
 import djikstra
@@ -32,7 +34,7 @@ ARUCO_REQD_IDS = {4, 5, 6, 7}  # corners
 ARUCO_ROBOT_ID = 100  # we chose this ID as it wasn't in the csv
 IDEAL_MAP_SIZE = 1080  # map frame size
 
-IP_ADDRESS = "192.168.187.144"  # IP of the Laptop on Hotspot
+IP_ADDRESS = "192.168.209.62"  # IP of the Laptop on Hotspot
 
 CHECK_FOR_ROBOT_AT_EVENT = True
 OUT_FILE_LOC = "live_location.csv"
@@ -133,7 +135,7 @@ def get_robot_coords_and_frame(
     stopcoords = get_stopcoords(image_pts)
     pxcoords = get_robot_coords(frame)
 
-    return frame, stopcoords, pxcoords
+    return frame, stopcoords, pxcoords, image_pts
 
 
 def get_stopcoords(pts):
@@ -320,6 +322,23 @@ def get_pxcoords(robot_id, ids, corners):
 
 
 def get_nearestmarker(robotcoords, corners, ids):
+    """
+    Purpose:
+
+    This function returns the pixel coordinates of the robot
+
+    Input Arguments:
+
+    robotcoords :   [ numpy array ]
+
+    corners :   [ list ]
+
+    ids :   [ list ]
+
+    Returns:
+
+    closestmarker :   [ int ]
+    """
     global prev_closest_marker
 
     mindist = float("inf")
@@ -346,6 +365,16 @@ prev_closest_marker = None
 
 
 def write_csv(loc, csv_name):
+    """
+    Write the given location data to a CSV file.
+
+    Input Arguments:
+        loc (list): The location data to be written to the CSV file.
+        csv_name (str): The name of the CSV file.
+
+    Returns:
+        None
+    """
     with open(csv_name, "w") as f:
         writer = csv.writer(f)
         writer.writerow(["lat", "lon"])
@@ -353,6 +382,18 @@ def write_csv(loc, csv_name):
 
 
 def update_qgis_position(robotcoords, corners, ids):
+    """
+    Update the position of the robot in QGIS based on the given robot coordinates.
+
+    Input Arguments:
+        robotcoords (list): The coordinates of the robot.
+        corners (list): The corners of the markers.
+        ids (list): The IDs of the markers.
+
+    Returns:
+        coordinate (tuple): The updated coordinate of the robot in QGIS.
+        None: If no valid coordinate is found.
+    """
     arucolat_long = get_aruco_locs()
     nearest_marker = get_nearestmarker(robotcoords, corners, ids)
     if nearest_marker is None:
@@ -360,6 +401,7 @@ def update_qgis_position(robotcoords, corners, ids):
     try:
         coordinate = arucolat_long.loc[nearest_marker]
 
+        # print("upd qgis")
         write_csv(coordinate, OUT_FILE_LOC)
 
         return coordinate
@@ -370,6 +412,15 @@ def update_qgis_position(robotcoords, corners, ids):
 
 
 def get_robot_coords(frame):
+    """
+    Get the coordinates of the robot based on the given frame.
+
+    Input Arguments:
+        frame: The frame from which to extract the robot coordinates.
+
+    Returns:
+        robot_pxcoords: The pixel coordinates of the robot.
+    """
     corners, ids, _ = get_aruco_data(frame)
     robot_pxcoords = get_pxcoords(ARUCO_ROBOT_ID, ids, corners)
     update_qgis_position(robot_pxcoords, corners, ids)
@@ -378,6 +429,15 @@ def get_robot_coords(frame):
 
 
 def initialize_capture(frames_to_skip=100) -> cv2.VideoCapture:
+    """
+    Initialize the video capture device.
+
+    Input Arguments:
+        frames_to_skip: The number of frames to skip before starting the capture.
+
+    Returns:
+        capture: The initialized video capture device.
+    """
     capture = None
     if sys.platform == "win32":
         capture = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
@@ -395,21 +455,62 @@ def initialize_capture(frames_to_skip=100) -> cv2.VideoCapture:
 
 
 def listen_and_print(s, conn: socket.socket):
-    print("=" * 80)
-    while True:
-        data = conn.recv(4096)
-        data = data.decode("utf-8")
-        print(f"{data}")
+    """
+    Listen for incoming data from the socket connection and print it.
 
+    Input Arguments:
+        s: The socket object.
+        conn: The socket connection.
+
+    Returns:
+        None
+    """
+    print("=" * 80)
+    try:
+        while True:
+            data = conn.recv(4096)
+            data = data.decode("utf-8")
+            print(f"{data}")
+    except KeyboardInterrupt:
+        raise KeyboardInterrupt
+
+def add_rect_labels(frame, pts, labels):
+    for p, l in zip(pts, labels):
+        frame = cv2.rectangle(
+            frame, (p[1, 0], p[0, 0]), (p[1, 1], p[0, 1]), (0, 255, 0), 2
+        )
+        frame = cv2.putText(
+            frame,
+            str(l),
+            (p[1, 0], p[0, 0] - 15),
+            cv2.FONT_HERSHEY_COMPLEX,
+            0.8,
+            (0, 255, 0),
+            2,
+        )
+    return frame
 
 ###############	Main Function	#################
 if __name__ == "__main__":
+    
     capture = initialize_capture()
 
-    frame, stopcoords, pxcoords = get_robot_coords_and_frame(capture, save_images=True)
+    frame, stopcoords, pxcoords, img_pts = get_robot_coords_and_frame(capture, save_images=True)
+
     detected_events = predictor.run_predictor(EVENT_FILENAMES)
+    print(detected_events)
+    frame = add_rect_labels(frame, img_pts, detected_events.values())
     path = djikstra.final_path(detected_events)
     command = "n" + path
+    # cv2.imwrite("window.png", frame)
+    
+    cv2.namedWindow("window")
+    while True:
+        cv2.imshow("window", frame)
+        if cv2.waitKey(0) == ord('q'):
+            break
+        
+    # command = "nn"
 
     print("Initializing Connection")
     soc, conn = init_connection()
@@ -417,6 +518,7 @@ if __name__ == "__main__":
     send_setup_robot(soc, conn, command)
 
     lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
+    lpt.daemon = True
 
     lpt.start()
 
