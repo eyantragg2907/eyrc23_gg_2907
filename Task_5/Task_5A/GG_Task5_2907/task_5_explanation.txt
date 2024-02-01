@@ -4,13 +4,43 @@ We are detecting the four corners of the arena using cv2 AruCo detection. Then, 
 and get the images using a specified offset from the near aruco markers. We are also doing a morphological transformation of the frame.
 The events are being pre-preprocessed along the following - 
  - Pixel values are being scaled to 0-1
- - Images are being resized to 64 x 64 using bicubic interpolatoin
+ - Images are being resized to 64 x 64 using bicubic interpolation
 
 2. Event Detection
 
 The images are then fed into a model to classify the images.
 We are using a Convolutional Neural Network. Following is the architecture of the model:
-    - 
+    _________________________________________________________________
+    Layer (type)                Output Shape              Param #   
+    =================================================================
+    sequential (Sequential)     (None, 32, 32, 64)        38720     
+                                                                    
+    sequential_1 (Sequential)   (None, 16, 16, 128)       221440    
+                                                                    
+    dropout (Dropout)           (None, 16, 16, 128)       0         
+                                                                    
+    sequential_2 (Sequential)   (None, 4, 4, 128)         819456    
+                                                                    
+    sequential_3 (Sequential)   (None, 1, 1, 256)         2458112   
+                                                                    
+    flatten (Flatten)           (None, 256)               0         
+                                                                    
+    dropout_1 (Dropout)         (None, 256)               0         
+                                                                    
+    batch_normalization (Batch  (None, 256)               1024      
+    Normalization)                                                  
+                                                                    
+    dense (Dense)               (None, 1024)              263168    
+                                                                    
+    dense_1 (Dense)             (None, 1024)              1049600   
+                                                                    
+    dense_2 (Dense)             (None, 6)                 6150      
+                                                                    
+    =================================================================
+    Total params: 4857670 (18.53 MB)
+    Trainable params: 4857158 (18.53 MB)
+    Non-trainable params: 512 (2.00 KB)
+    _________________________________________________________________
 
 3. Line Following
     We are using 5 IR sensors for the line following algorithm. 
@@ -18,7 +48,7 @@ We are using a Convolutional Neural Network. Following is the architecture of th
 
     Line Following is activated when any of the 3 middle IR sensors detect a black line. Otherwise, bang bang mode is activated.
 
-    We have 8 different types of operation, for starting the run, ending the run, rotating etc, reaching the node. 
+    We have different types of operation, for starting the run, ending the run, rotating, reaching the node,etc. 
 
     In the Line Following mode, the middle IR is supposed to follow the black line. The 2nd and 4th IR sensors give the feedback required for this.
     In the Bang Bang mode, the extreme IRs are supposed to stay within the limits of the road. As soon as any of them detects a black line/grass,
