@@ -1,7 +1,6 @@
-
 """IMPORTANT"""
 ## LATEST ##
-## TASK_4B FILE WITH QGIS AND LATEST DEBUGGING SYSTEM ##
+## TASK_5A FILE WITH QGIS ##
 """IMPORTANT"""
 
 # Team ID:			[ 2907 ]
@@ -18,12 +17,11 @@ import sys
 import csv
 import pandas as pd
 import socket
-import threading
+
+# import threading
 import sys
 
-# from
 import djikstra
-import predictor
 
 ##############################################################
 
@@ -40,6 +38,8 @@ CHECK_FOR_ROBOT_AT_EVENT = True
 OUT_FILE_LOC = "live_location.csv"
 
 EVENT_FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
+
+EVENT_STOP_EXTRA_PIXELS = 25
 
 ################# ADD UTILITY FUNCTIONS HERE #################
 
@@ -81,7 +81,7 @@ def send_setup_robot(
     # conn.sendall(str.encode(COMMAND))
     conn.sendall(str.encode("START\n"))
     conn.sendall(str.encode(command))
-    print(f"SENT START w/ {command}")
+    # print(f"SENT START w/ {command}")
 
     # print(f"Sent command to robot: {COMMAND}")
 
@@ -92,7 +92,7 @@ def init_connection():  # initializes connection with robot
         s.bind((IP_ADDRESS, 8002))
         s.listen()
         conn, addr = s.accept()
-        print(f"Connected by {addr}")
+        # print(f"Connected by {addr}")
         return s, conn
 
 
@@ -142,7 +142,10 @@ def get_stopcoords(pts):
     stopcoords = []
     for p in pts:
         stopcoords.append(
-            [(p[1, 0] - 35, p[0, 0] - 100), (p[1, 1] + 35, p[0, 1] - 100)]
+            [
+                (p[1, 0] - EVENT_STOP_EXTRA_PIXELS, p[0, 0] - 100),
+                (p[1, 1] + EVENT_STOP_EXTRA_PIXELS, p[0, 1] - 100),
+            ]
         )
 
     return stopcoords
@@ -407,7 +410,7 @@ def update_qgis_position(robotcoords, corners, ids):
         return coordinate
 
     except:
-        print("No lat long from this marker!!")
+        # print("No lat long from this marker!!")
         return None
 
 
@@ -474,6 +477,7 @@ def listen_and_print(s, conn: socket.socket):
     except KeyboardInterrupt:
         raise KeyboardInterrupt
 
+
 def add_rect_labels(frame, pts, labels):
     for p, l in zip(pts, labels):
         frame = cv2.rectangle(
@@ -490,42 +494,61 @@ def add_rect_labels(frame, pts, labels):
         )
     return frame
 
-###############	Main Function	#################
-if __name__ == "__main__":
-    
-    capture = initialize_capture()
 
-    frame, stopcoords, pxcoords, img_pts = get_robot_coords_and_frame(capture, save_images=True)
+def get_detected_events():
+    import predictor
 
     detected_events = predictor.run_predictor(EVENT_FILENAMES)
-    print(detected_events)
-    frame = add_rect_labels(frame, img_pts, detected_events.values())
-    path = djikstra.final_path(detected_events)
-    command = "n" + path
-    # cv2.imwrite("window.png", frame)
-    
-    cv2.namedWindow("window")
-    while True:
-        cv2.imshow("window", frame)
-        if cv2.waitKey(0) == ord('q'):
-            break
-        
-    # command = "nn"
+    detected_events_out = {k: v for k, v in detected_events.items() if v is not None}
+    print(detected_events_out)
+    return detected_events
 
-    print("Initializing Connection")
+
+def delete_images():
+    for f in EVENT_FILENAMES:
+        os.remove(f)
+
+
+###############	Main Function	#################
+if __name__ == "__main__":
+    capture = initialize_capture()
+
+    frame, stopcoords, pxcoords, img_pts = get_robot_coords_and_frame(
+        capture, save_images=True
+    )
+
+    if (len(sys.argv) == 4) and (sys.argv[2] == "--command"):
+        detected_events = {k: None for k in EVENT_FILENAMES}
+        command = sys.argv[3]
+        print(f"DEBUG: moving with command: {command}")
+    else:
+        detected_events = get_detected_events()
+        frame = add_rect_labels(frame, img_pts, detected_events.values())
+
+        # show bounding boxes
+        cv2.namedWindow("image_with_boundingbox", cv2.WINDOW_NORMAL)
+        cv2.imshow("image_with_boundingbox", frame)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+        # run djikstra to get the path between events, maintainig priority
+        path = djikstra.final_path(detected_events)
+        command = "n" + path
+
+    # send robot the command!
     soc, conn = init_connection()
-    print("Sending command..")
     send_setup_robot(soc, conn, command)
 
-    lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
-    lpt.daemon = True
-
-    lpt.start()
+    # DEBUG: listen to robot
+    # lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
+    # lpt.daemon = True
+    # lpt.start()
 
     try:
+        cv2.namedWindow("robot_moving", cv2.WINDOW_NORMAL)
         while True:
             # get a new frame, transform it and get the robots coordinates
-            frame, stopcoords, pxcoords = get_robot_coords_and_frame(
+            frame, stopcoords, pxcoords, img_pts = get_robot_coords_and_frame(
                 capture, save_images=False
             )
 
@@ -538,8 +561,12 @@ if __name__ == "__main__":
                     ):  # robot is at the event
                         conn.sendall(str.encode("ISTOP\n"))
 
+            cv2.imshow("robot_moving", frame)
+            if cv2.waitKey(1) == ord("q"):
+                break
+
     except KeyboardInterrupt:
-        lpt.join()
         cleanup(soc)
         capture.release()
-        # delete_images()
+        cv2.destroyAllWindows()
+        delete_images()

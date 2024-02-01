@@ -142,8 +142,6 @@ def path_plan_based_on_events_detected(events):
 
     nodes_to_visit = [f"E_{x[0]}" for x in nodes_to_visit]
 
-    print(nodes_to_visit)
-
     return path_plan_all_nodes(["A"] + nodes_to_visit + ["A"])
 
 
