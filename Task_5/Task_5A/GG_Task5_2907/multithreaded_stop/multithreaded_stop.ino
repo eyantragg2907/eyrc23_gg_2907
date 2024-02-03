@@ -15,14 +15,14 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define SPEED_RIGHTMOTOR 240 // down from 255 motor RIGHT speed, FORWARD
 #define ROTATE_SPEED 255     // motor BOTH speed, D90/ D180 TURNS
 
-#define BANGBANG_TURNSPEED 230 // correction motor speed when in WALL mode
+#define BANGBANG_TURNSPEED 220 // correction motor speed when in WALL mode
 #define MIDDLE_TURNSPEED 150   // correction motor speed when in MIDDLE_LINE mode
 
 #define ROT_COMPLETE_DELAY 100 // STOP delay after a D90 TURN
 
 #define NODE_LEAVE_DELAY 350 // delay to move in front of a NODE w/o stopping logic
 
-#define LEAVE_BLACK_DELAY 550       // delay before black line detection begins
+#define LEAVE_BLACK_DELAY 520     // delay before black line detection begins
 #define LEAVE_BLACK_DELAY_UTURN 900 // delay before black line detection begins for D180 turn (uturn)
 
 #define ERROR_COUNTER_MAX 6 // delay of the number of times false detection of ALL OFF can happen at the end.
@@ -45,7 +45,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define NORMAL_NODE_REACHED_DELAY 200   // delay for BUZZER every NORMAL node, set to 0 to disable
 #define NORMAL_NODE_REACHED_DELAY 0
 
-#define END_SKIP_FORWARD_DELAY 700 // delay for which simple forward movement is present in END detection
+#define END_SKIP_FORWARD_DELAY 400 // delay for which simple forward movement is present in END detection
 #define END_DELAY 5000             // delay for buzzer ring at the END.
 
 // #define D90_TURNTIME 580
@@ -56,7 +56,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 const char *ssid = "brainerd";
 const char *password = "internetaccess";
 const uint16_t port = 8002;
-const char *host = "192.168.209.62"; // laptops IP Address
+const char *host = "192.168.160.62"; // laptops IP Address
 // const char *ssid = "pjrWifi";
 // const char *password = "SimplePass01";
 // const uint16_t port = 8002;
@@ -177,7 +177,7 @@ void controlLoop(void *pvParameters)
                 {
                     Serial.print("Path message received succesfully.");
                 }
-
+                // delay(15000);
                 conductMovement(path);
 
                 /* dont give the false idea that restart-able is ready, due to the connection issue explained above. */
@@ -350,6 +350,12 @@ void conductMovement(char *path)
             snprintf(msg, MESSAGE_QUEUE_SIZE, "180d left turn complete: %lu\n", millis());
             xQueueSend(send_to_wifi_queue, msg, 0);
         }
+        else if (next_movement == 'p') {
+          do
+            {
+                readIRs();
+            } while (!turn_special(LEFT, LEAVE_BLACK_DELAY-150));
+        }
         else
         {
             // never reach here
@@ -362,9 +368,10 @@ void conductMovement(char *path)
     analogWrite(motor2r, 0);
     analogWrite(motor1f, SPEED_LEFTMOTOR);
     analogWrite(motor2f, SPEED_RIGHTMOTOR);
-    delay(NODE_LEAVE_DELAY);
+    delay(NODE_LEAVE_DELAY - 150);
 
     start_of_end_detect = millis();
+    int error_counter = 0;
     while (1)
     {
         readIRs();
@@ -373,8 +380,11 @@ void conductMovement(char *path)
         {
             if (input3 == 0 && input2 == 0 && input4 == 0)
             {
-                endDetectionCode();
-                break;
+                error_counter += 1;
+                if (error_counter == ERROR_COUNTER_MAX) {
+                  endDetectionCode();
+                  break;
+                }
             }
         }
     }
@@ -473,6 +483,72 @@ int turn(char dirn, int leave_black_delay)
     else if (dirn == LEFT) // rotate left
     {
         if (input3 == 1 && (input2 == 0 && input4 == 0))
+        {
+            Serial.println("Rotation Completed");
+            rotflag = 0;
+            node = true;
+            stop();
+            delay(ROT_COMPLETE_DELAY);
+            return 1;
+        }
+        else
+        {
+            turn_left();
+        }
+    }
+
+    return 0;
+}
+
+int turn_special(char dirn, int leave_black_delay)
+{
+    if (node)
+    { // at a node
+        // moved forward to align center of rotation
+        analogWrite(motor1f, SPEED_LEFTMOTOR);
+        analogWrite(motor2f, SPEED_RIGHTMOTOR);
+        delay(CENTER_CORRECT_DELAY);
+        node = false;
+        return 0;
+    } // Now we have left the node for sure!
+
+    // leave black line w/o active detection
+    if (rotflag == 0)
+    {
+        if (dirn == RIGHT)
+        {
+            turn_right();
+        }
+        else if (dirn == LEFT) // left
+        {
+            turn_left();
+        }
+        delay(leave_black_delay);
+        Serial.println("Rotated to leave the middle black line!");
+        rotflag = 1;
+        return 0;
+    }
+
+    if (dirn == RIGHT) // rotate right
+    {
+        if (input3 == 1 && (input2 == 0 || input4 == 0)) // reached the middle line again, we completed rotation
+        {
+            // client.print("BLACK_LINE DETECTED\n");
+            Serial.println("Rotation Completed");
+            rotflag = 0;
+            node = true;
+            stop();
+            delay(ROT_COMPLETE_DELAY);
+            return 1;
+        }
+        else
+        {
+            turn_right();
+        }
+    }
+    else if (dirn == LEFT) // rotate left
+    {
+        if (input3 == 1 && (input2 == 0 || input4 == 0))
         {
             Serial.println("Rotation Completed");
             rotflag = 0;

@@ -1,5 +1,6 @@
 from constants import *
 from graph import Graph
+import numpy as np
 
 graph = Graph()
 
@@ -102,7 +103,7 @@ def get_pose_cost(initial_pose, reqd_pose):
     # XXX: REMOVE THIS SHIT LATER!!! WE SHOULD REALLY ALLOW U-TURNS, WHY AREN'T WE?
     # TODO: REMOVE, WHO THE F WROTE THIS?
     if diff == 2:
-        return 9999
+        return 99999999
 
     if reqd_pose > initial_pose:
         return RIGHT_TURN_TIME * diff
@@ -148,7 +149,7 @@ def path_plan_based_on_events_detected(events):
 def final_path(events_detected):
     paths = path_plan_based_on_events_detected(events_detected)
     final = paths[0]
-    final.instructions += "l" if final.end_pose == LEFT else ""
+    final.instructions += "p" if final.end_pose == LEFT else ""
     return str(final)
 
 

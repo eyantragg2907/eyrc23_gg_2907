@@ -3,15 +3,15 @@
 #define MOVE_SPEED 180
 #define MOTORTEST_SPEED 255
 
-const char *ssid = "pjrWifi";
-const char *password = "SimplePass01";
-const uint16_t port = 8002;
-const char *host = "192.168.187.144";
-
-// const char *ssid = "brainerd";
-// const char *password = "internetaccess";
+// const char *ssid = "pjrWifi";
+// const char *password = "SimplePass01";
 // const uint16_t port = 8002;
-// const char *host = "192.168.56.1";
+// const char *host = "192.168.187.144";
+
+const char *ssid = "brainerd";
+const char *password = "internetaccess";
+const uint16_t port = 8002;
+const char *host = "192.168.56.1";
 
 // const int IR1 = 18; // IR sensors pins ACTUALLY IR2
 // const int IR2 = 25; // ACTUALLY IR5

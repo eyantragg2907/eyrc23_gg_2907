@@ -1,3 +1,5 @@
+All the code is run through the main file `final_code.py`
+
 1. Image Processing
 
 We are detecting the four corners of the arena using cv2 AruCo detection. Then, we transform the frame (rotate and zoom)
@@ -8,7 +10,7 @@ The events are being pre-preprocessed along the following -
 
 2. Event Detection
 
-The images are then fed into a model to classify the images.
+The images are then fed into a model to classify the images. `predictor.py` is the file that contains the model and the code to predict the events.
 We are using a Convolutional Neural Network. Following is the architecture of the model:
     _________________________________________________________________
     Layer (type)                Output Shape              Param #   
@@ -48,14 +50,14 @@ We are using a Convolutional Neural Network. Following is the architecture of th
 
     Line Following is activated when any of the 3 middle IR sensors detect a black line. Otherwise, bang bang mode is activated.
 
-    We have different types of operation, for starting the run, ending the run, rotating, reaching the node,etc. 
+    We have different types of operation, for starting the run, ending the run, rotating, reaching the node,etc. The robot switches between them based on the IR sensor feedback and the command given by the path planning algorithm.
 
     In the Line Following mode, the middle IR is supposed to follow the black line. The 2nd and 4th IR sensors give the feedback required for this.
     In the Bang Bang mode, the extreme IRs are supposed to stay within the limits of the road. As soon as any of them detects a black line/grass,
     the robot moves in the other direction to stay on track.
 
     The entire Arduino Code is multithreaded to run the Wi-Fi module and the line following algorithm simultaneously on separate threads.
-    
+    Aruco detection is used for stopping at events. Aruco Detection (getting the aruco coords which is closest to the robot coords) is also used for getting the location of the robot for simulating the robot moving in the qgis map.
     A path is given to the robot in the Arduino Code which has the following keywords ->
     l -> left turn
     r -> right turn 
@@ -67,7 +69,10 @@ We are using a Convolutional Neural Network. Following is the architecture of th
 
 4. Path Planning
 
-We are using Djikstra algorithm for path planning. The algorithm is implemented in the file `dkistra.py`. 
+We are using Djikstra algorithm for path planning. The algorithm is implemented in the file `dkistra.py`.
+Graph datastructure is used to represent the arena and is implemented in the file `graph.py`. 
+map_data.txt has the weights for edges in the graph.
+
 The algorithm is implemented in the following steps:
 1. We have given names to every node and event spot on the arena which are used for path planning.
 2. The module maintains a constants.py that has the times the robot takes to move between nodes/events. Our naming convetion is used there.

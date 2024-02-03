@@ -17,7 +17,7 @@ import sys
 import csv
 import pandas as pd
 import socket
-
+import time
 # import threading
 import sys
 
@@ -32,7 +32,7 @@ ARUCO_REQD_IDS = {4, 5, 6, 7}  # corners
 ARUCO_ROBOT_ID = 100  # we chose this ID as it wasn't in the csv
 IDEAL_MAP_SIZE = 1080  # map frame size
 
-IP_ADDRESS = "192.168.209.62"  # IP of the Laptop on Hotspot
+IP_ADDRESS = "192.168.160.62"  # IP of the Laptop on Hotspot
 
 CHECK_FOR_ROBOT_AT_EVENT = True
 OUT_FILE_LOC = "live_location.csv"
@@ -527,25 +527,31 @@ if __name__ == "__main__":
 
         # show bounding boxes
         cv2.namedWindow("image_with_boundingbox", cv2.WINDOW_NORMAL)
-        cv2.imshow("image_with_boundingbox", frame)
+        cv2.resizeWindow("image_with_boundingbox", (750, 750))
+        cv2.imshow("image_with_boundingbox", cv2.resize(frame, (750, 750)))
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
         # run djikstra to get the path between events, maintainig priority
         path = djikstra.final_path(detected_events)
         command = "n" + path
-
+        
+    # print(command)
     # send robot the command!
     soc, conn = init_connection()
+    # command="nnn"
     send_setup_robot(soc, conn, command)
 
     # DEBUG: listen to robot
     # lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
     # lpt.daemon = True
     # lpt.start()
+    
+
 
     try:
         cv2.namedWindow("robot_moving", cv2.WINDOW_NORMAL)
+        cv2.resizeWindow("robot_moving", (750, 750))
         while True:
             # get a new frame, transform it and get the robots coordinates
             frame, stopcoords, pxcoords, img_pts = get_robot_coords_and_frame(
@@ -561,7 +567,7 @@ if __name__ == "__main__":
                     ):  # robot is at the event
                         conn.sendall(str.encode("ISTOP\n"))
 
-            cv2.imshow("robot_moving", frame)
+            cv2.imshow("robot_moving", cv2.resize(frame, (750, 750)))
             if cv2.waitKey(1) == ord("q"):
                 break
 
