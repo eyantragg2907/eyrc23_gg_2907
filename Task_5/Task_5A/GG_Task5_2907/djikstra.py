@@ -2,6 +2,8 @@ from constants import *
 from graph import Graph
 import numpy as np
 
+from tqdm import tqdm
+
 graph = Graph()
 
 
@@ -113,21 +115,29 @@ def get_pose_cost(initial_pose, reqd_pose):
         return 0
 
 
+def get_unique_paths(cum_paths):
+    if not cum_paths: return
+    return cum_paths
+
 def path_plan_all_nodes(nodes, end_pose=INITIAL_POSE, cum_path=Path()):
     global graph
     cum_paths = [cum_path]
     for node_1, node_2 in zip(nodes[:-1], nodes[1:]):
         temp_cum_paths = []
-        for cum_path in cum_paths:
+        poses_covered = set()
+        for cum_path in tqdm(cum_paths):
             # print(node_1, node_2, str(cum_path))
             paths = get_shortest_path(
                 graph, node_1, node_2, path=cum_path, robot_pose=cum_path.end_pose
             )
-            unique_end_poses = set()
-            [unique_end_poses.add(i) for i in paths]
-            temp_cum_paths += list(unique_end_poses)
-        # print(temp_cum_paths)
+            for i in paths:
+                if i.end_pose not in poses_covered:
+                    temp_cum_paths.append(i)
+                    poses_covered.add(i.end_pose)
+
+        print(temp_cum_paths)
         cum_paths = temp_cum_paths
+        print(node_1,node_2)
 
     return sorted(cum_paths, key=lambda x: x.cost)[::]
 
@@ -156,10 +166,10 @@ def final_path(events_detected):
 if __name__ == "__main__":
     events_detected = {
         "D": "combat",
-        "B": None,
-        "C": None,
+        "B": "fire",
+        "C": "humanitarian_aid_and_rehabilitation",
         "A": "military_vehicles",
-        "E": None,
+        "E": "destroyed_buildings",
     }  # our model detected this events
 
     paths = path_plan_based_on_events_detected(events_detected)
