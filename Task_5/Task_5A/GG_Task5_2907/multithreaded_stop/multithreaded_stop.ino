@@ -15,7 +15,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define SPEED_RIGHTMOTOR 240 // down from 255 motor RIGHT speed, FORWARD
 #define ROTATE_SPEED 255     // motor BOTH speed, D90/ D180 TURNS
 
-#define BANGBANG_TURNSPEED 220 // correction motor speed when in WALL mode
+#define BANGBANG_TURNSPEED 255 // correction motor speed when in WALL mode
 #define MIDDLE_TURNSPEED 150   // correction motor speed when in MIDDLE_LINE mode
 
 #define ROT_COMPLETE_DELAY 100 // STOP delay after a D90 TURN
@@ -177,7 +177,7 @@ void controlLoop(void *pvParameters)
                 {
                     Serial.print("Path message received succesfully.");
                 }
-                // delay(15000);
+                delay(10000);
                 conductMovement(path);
 
                 /* dont give the false idea that restart-able is ready, due to the connection issue explained above. */

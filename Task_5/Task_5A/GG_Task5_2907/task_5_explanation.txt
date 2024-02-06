@@ -50,12 +50,14 @@ We are using a Convolutional Neural Network. Following is the architecture of th
 
     Line Following is activated when any of the 3 middle IR sensors detect a black line. Otherwise, bang bang mode is activated.
 
-    We have different types of operation, for starting the run, ending the run, rotating, reaching the node,etc. The robot switches between them based on the IR sensor feedback and the command given by the path planning algorithm.
+    We have different types of functions, for starting the run, moving forwards till we reach a node,ending the run, rotating, leaving the node,etc.
+    The robot calls them based on the IR sensor feedback and the command given by the path planning algorithm.
 
     In the Line Following mode, the middle IR is supposed to follow the black line. The 2nd and 4th IR sensors give the feedback required for this.
     In the Bang Bang mode, the extreme IRs are supposed to stay within the limits of the road. As soon as any of them detects a black line/grass,
     the robot moves in the other direction to stay on track.
-
+    `multithreaded_stop.ino` is the arduino file that contains the code for the line following algorithm.
+    It has a lot of constants that are used for movement where line following is not possible for eg. turns.
     The entire Arduino Code is multithreaded to run the Wi-Fi module and the line following algorithm simultaneously on separate threads.
     Aruco detection is used for stopping at events. Aruco Detection (getting the aruco coords which is closest to the robot coords) is also used for getting the location of the robot for simulating the robot moving in the qgis map.
     A path is given to the robot in the Arduino Code which has the following keywords ->

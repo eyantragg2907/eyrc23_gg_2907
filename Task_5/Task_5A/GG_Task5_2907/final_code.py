@@ -81,18 +81,19 @@ def send_setup_robot(
     # conn.sendall(str.encode(COMMAND))
     conn.sendall(str.encode("START\n"))
     conn.sendall(str.encode(command))
-    # print(f"SENT START w/ {command}")
+    print(f"SENT START w/ {command}")
 
     # print(f"Sent command to robot: {COMMAND}")
 
 
 def init_connection():  # initializes connection with robot
+    print("INIIT")
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((IP_ADDRESS, 8002))
         s.listen()
         conn, addr = s.accept()
-        # print(f"Connected by {addr}")
+        print(f"Connected by {addr}")
         return s, conn
 
 
@@ -536,12 +537,18 @@ if __name__ == "__main__":
         path = djikstra.final_path(detected_events)
         command = "n" + path
         
-    # print(command)
+    print(command)
+    
     # send robot the command!
     soc, conn = init_connection()
     # command="nnn"
+    print("SENDING")
+    
     send_setup_robot(soc, conn, command)
-
+    # print("SENT")
+    
+    
+    
     # DEBUG: listen to robot
     # lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
     # lpt.daemon = True
