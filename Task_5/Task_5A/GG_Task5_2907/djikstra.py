@@ -27,7 +27,7 @@ class Path:
         return len(self.nodes)
 
     def __str__(self):
-        return f"{self.instructions}"
+        return f"Path < {self.instructions=} {self.cost=} >"
 
     def __hash__(self):
         return hash(self.end_pose)
@@ -130,13 +130,21 @@ def path_plan_all_nodes(nodes, end_pose=INITIAL_POSE, cum_path=Path()):
             paths = get_shortest_path(
                 graph, node_1, node_2, path=cum_path, robot_pose=cum_path.end_pose
             )
-            for i in paths:
-                if i.end_pose not in poses_covered:
-                    temp_cum_paths.append(i)
-                    poses_covered.add(i.end_pose)
+            temp_cum_paths += paths 
 
-        print(temp_cum_paths)
-        cum_paths = temp_cum_paths
+        cum_paths = []
+        temp_cum_paths = [
+            i
+            for i in sorted(temp_cum_paths, key=lambda x: x.cost)[::]
+            if not i.has_goals(graph.goal_nodes)
+        ]
+
+        for i in temp_cum_paths:
+            if i.end_pose not in poses_covered:
+                print(i)
+                cum_paths.append(i)
+                poses_covered.add(i.end_pose)
+        print([str(i) for i in cum_paths])
         print(node_1,node_2)
 
     return sorted(cum_paths, key=lambda x: x.cost)[::]
