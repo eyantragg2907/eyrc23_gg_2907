@@ -102,10 +102,10 @@ def get_shortest_path(
 def get_pose_cost(initial_pose, reqd_pose):
     diff = abs(initial_pose - reqd_pose)
 
-    # XXX: REMOVE THIS SHIT LATER!!! WE SHOULD REALLY ALLOW U-TURNS, WHY AREN'T WE?
-    # TODO: REMOVE, WHO THE F WROTE THIS?
-    if diff == 2:
-        return 99999999
+    # # XXX: REMOVE THIS SHIT LATER!!! WE SHOULD REALLY ALLOW U-TURNS, WHY AREN'T WE?
+    # # TODO: REMOVE, WHO THE F WROTE THIS?
+    # if diff == 2:
+    #     return 99999999
 
     if reqd_pose > initial_pose:
         return RIGHT_TURN_TIME * diff
@@ -125,7 +125,7 @@ def path_plan_all_nodes(nodes, end_pose=INITIAL_POSE, cum_path=Path()):
     for node_1, node_2 in zip(nodes[:-1], nodes[1:]):
         temp_cum_paths = []
         poses_covered = set()
-        for cum_path in tqdm(cum_paths):
+        for cum_path in cum_paths:
             # print(node_1, node_2, str(cum_path))
             paths = get_shortest_path(
                 graph, node_1, node_2, path=cum_path, robot_pose=cum_path.end_pose
@@ -141,11 +141,11 @@ def path_plan_all_nodes(nodes, end_pose=INITIAL_POSE, cum_path=Path()):
 
         for i in temp_cum_paths:
             if i.end_pose not in poses_covered:
-                print(i)
+                # print(i)
                 cum_paths.append(i)
                 poses_covered.add(i.end_pose)
-        print([str(i) for i in cum_paths])
-        print(node_1,node_2)
+        # print([str(i) for i in cum_paths])
+        # print(node_1,node_2)
 
     return sorted(cum_paths, key=lambda x: x.cost)[::]
 
@@ -168,7 +168,7 @@ def final_path(events_detected):
     paths = path_plan_based_on_events_detected(events_detected)
     final = paths[0]
     final.instructions += "p" if final.end_pose == LEFT else ""
-    return str(final)
+    return final.instructions
 
 
 if __name__ == "__main__":
@@ -182,4 +182,4 @@ if __name__ == "__main__":
 
     paths = path_plan_based_on_events_detected(events_detected)
 
-    print(str(paths[0]))
+    # print(str(paths[0]))

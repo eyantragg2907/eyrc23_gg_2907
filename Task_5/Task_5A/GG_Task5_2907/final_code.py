@@ -18,7 +18,7 @@ import csv
 import pandas as pd
 import socket
 import time
-# import threading
+import threading
 import sys
 
 import djikstra
@@ -80,20 +80,20 @@ def send_setup_robot(
 
     # conn.sendall(str.encode(COMMAND))
     conn.sendall(str.encode("START\n"))
-    conn.sendall(str.encode(command))
-    print(f"SENT START w/ {command}")
+    conn.sendall(str.encode(command + "\n"))
+    # print(f"SENT START w/ {command}")
 
     # print(f"Sent command to robot: {COMMAND}")
 
 
 def init_connection():  # initializes connection with robot
-    print("INIIT")
+    # print("INIIT")
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((IP_ADDRESS, 8002))
         s.listen()
         conn, addr = s.accept()
-        print(f"Connected by {addr}")
+        # print(f"Connected by {addr}")
         return s, conn
 
 
@@ -367,7 +367,6 @@ def get_nearestmarker(robotcoords, corners, ids):
 
 prev_closest_marker = None
 
-
 def write_csv(loc, csv_name):
     """
     Write the given location data to a CSV file.
@@ -432,7 +431,7 @@ def get_robot_coords(frame):
     return robot_pxcoords
 
 
-def initialize_capture(frames_to_skip=100) -> cv2.VideoCapture:
+def initialize_capture(frames_to_skip=20) -> cv2.VideoCapture:
     """
     Initialize the video capture device.
 
@@ -518,9 +517,9 @@ if __name__ == "__main__":
         capture, save_images=True
     )
 
-    if (len(sys.argv) == 4) and (sys.argv[2] == "--command"):
+    if (len(sys.argv) == 3) and (sys.argv[1] == "--command"):
         detected_events = {k: None for k in EVENT_FILENAMES}
-        command = sys.argv[3]
+        command = sys.argv[2]
         print(f"DEBUG: moving with command: {command}")
     else:
         detected_events = get_detected_events()
@@ -530,6 +529,7 @@ if __name__ == "__main__":
         cv2.namedWindow("image_with_boundingbox", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("image_with_boundingbox", (750, 750))
         cv2.imshow("image_with_boundingbox", cv2.resize(frame, (750, 750)))
+        cv2.moveWindow("image_with_boundingbox", 0, 0)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
@@ -537,12 +537,12 @@ if __name__ == "__main__":
         path = djikstra.final_path(detected_events)
         command = "n" + path
         
-    print(command)
+    # print(command)
     
     # send robot the command!
     soc, conn = init_connection()
     # command="nnn"
-    print("SENDING")
+    # print("SENDING")
     
     send_setup_robot(soc, conn, command)
     # print("SENT")
@@ -575,11 +575,13 @@ if __name__ == "__main__":
                         conn.sendall(str.encode("ISTOP\n"))
 
             cv2.imshow("robot_moving", cv2.resize(frame, (750, 750)))
+            cv2.moveWindow("robot_moving", 0, 0)
             if cv2.waitKey(1) == ord("q"):
                 break
 
     except KeyboardInterrupt:
         cleanup(soc)
         capture.release()
+        # lpt.join()
         cv2.destroyAllWindows()
         delete_images()
