@@ -211,11 +211,11 @@ void teleop()
 
 void loop()
 {
-    // buzzerTest();
+    buzzerTest();
     // ledsTest();
 
     // delay(5000);
-    readIRs();
+    //readIRs();
     // teleop();
     // readIRs();
 
