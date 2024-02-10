@@ -76,7 +76,7 @@ def get_clean_video_frame(frames_to_skip=100):
         video.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
         video.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
     else:
-        video = cv2.VideoCapture(1)
+        video = cv2.VideoCapture()
 
     frames_to_skip = 100
     for _ in range(frames_to_skip):

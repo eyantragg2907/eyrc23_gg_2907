@@ -1,10 +1,11 @@
-CAMERA_ID = 1  # 0 for internal, 1 for external as a basis
+CAMERA_ID = 0  # 0 for internal, 1 for external as a basis
 
 import cv2
 from datetime import datetime
 import time
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 parameters = cv2.aruco.DetectorParameters()
@@ -17,6 +18,8 @@ def get_aruco_data(frame):
     # plt.show()
     global detector
     c, i, r = detector.detectMarkers(frame)
+
+    print(c)
 
     if len(c) == 0:
         raise Exception("No Aruco Markers Found")
@@ -76,49 +79,70 @@ def transform_frame(frame):
     M = cv2.getPerspectiveTransform(input_pts, output_pts)
     out = cv2.warpPerspective(frame, M, (maxWidth, maxHeight), flags=cv2.INTER_LINEAR)
     out = out[:s, :s]
-    # out = cv2.resize(out, (1024,1024), interpolation = cv2.INTER_AREA)
+    out = cv2.resize(out, (1080, 1080), interpolation = cv2.INTER_AREA)
+    
+    cv2.imwrite("temp_perspective.jpg", out)
 
-    return out, s
+    return out, 1080
 
+def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
+    gaussian_3 = cv2.GaussianBlur(image, (0, 0), 2.0)
+    return cv2.addWeighted(image, 2.0, gaussian_3, -1.0, 0)
 
-def get_pts_from_frame(frame, s):
-    S = 937
-    Apts = (np.array([[811 / S, 887 / S], [194 / S, 269 / S]]) * s).astype(int)
-    Bpts = (np.array([[628 / S, 705 / S], [620 / S, 695 / S]]) * s).astype(int)
-    Cpts = (np.array([[444 / S, 519 / S], [628 / S, 701 / S]]) * s).astype(int)
-    Dpts = (np.array([[440 / S, 516 / S], [183 / S, 260 / S]]) * s).astype(int)
-    Epts = (np.array([[136 / S, 212 / S], [200 / S, 276 / S]]) * s).astype(int)
+def get_pts_from_frame(s):
+    S = 1080
+    Apts = (np.array([[940 / S, 1026 / S], [222 / S, 308 / S]]) * s).astype(int)
+    Bpts = (np.array([[729 / S, 816 / S], [717 / S, 802 / S]]) * s).astype(int)
+    Cpts = (np.array([[513 / S, 601 / S], [725 / S, 811 / S]]) * s).astype(int)
+    Dpts = (np.array([[509 / S, 597 / S], [206 / S, 293 / S]]) * s).astype(int)
+    Epts = (np.array([[157 / S, 245 / S], [227 / S, 313 / S]]) * s).astype(int)
 
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
 
-def get_event_images(frame, pts, filenames):
-    events = []
+def save_event_images(frame, pts, filenames):
     for p, f in zip(pts, filenames):
+        print(p)
+        print(frame)
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
+<<<<<<< HEAD
         print(f)
+=======
+        # event = unsharp_mask(event)
+        print(event)
+        print("saving to", f)
+>>>>>>> e2e61ada25ce24973767a854a22fe4260366aa4f
         cv2.imwrite(f, event)
-        events.append(event)
-    return events
 
 
 def get_events(frame, filenames):
     frame, side = transform_frame(frame)
-    pts = get_pts_from_frame(frame, side)
-    events = get_event_images(frame, pts, filenames)
+    pts = get_pts_from_frame(side)
+    
+    save_event_images(frame, pts, filenames)
 
-    return frame, pts, events
+    return frame, None, None
 
 
 def main():
     num_of_frames_skip = 100
     # Initialize the camera
+<<<<<<< HEAD
     cap = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1080)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1920)
+=======
+    if sys.platform == "win32":
+        cap = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
+    else:
+        cap = cv2.VideoCapture(CAMERA_ID)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+>>>>>>> e2e61ada25ce24973767a854a22fe4260366aa4f
     # take a photo
     for i in range(num_of_frames_skip):
         ret, frame = cap.read()
+
 
     # frame = increase_brightness(frame, value=30)
 
@@ -129,6 +153,7 @@ def main():
     # D = "military_vehicles"
     # E = "combat"
 
+<<<<<<< HEAD
     classmap = [
         "combat",
         "destroyed_buildings",
@@ -142,9 +167,28 @@ def main():
     C = 2
     D = 0
     E = 3
+=======
+
+    classmap = [
+        "combat",
+        "building",
+        "fire",
+        "human",
+        "vehicle",
+    ]
+
+    A = classmap.index("building")
+    B = classmap.index("fire")
+    C = classmap.index("combat")
+    D = classmap.index("human")
+    E = classmap.index("vehicle")
+
+    SET = "NEWSET_"
+>>>>>>> e2e61ada25ce24973767a854a22fe4260366aa4f
 
     SET = "NOISY_DATASET"
 
+<<<<<<< HEAD
     FOLDER = "empty_train"
     c = datetime.now().strftime("%Y%m%d%H%M%S")
 
@@ -159,6 +203,32 @@ def main():
         frame, pts, events = get_events(frame, filenames)
         print(f"Photo {c} saved")
     print("Now we wait")
+=======
+    # while True:
+    # # if ret:
+    #     ret, frame = cap.read()
+    #     cv2.imshow("frame", frame)
+    #     if cv2.waitKey(1) == ord("q"):
+    #         break
+    
+    # cv2.destroyAllWindows()
+
+    c = 0
+    while c < 12:
+        ret, frame = cap.read()
+        
+        # save the photo
+        cx = datetime.now().timestamp()
+        if ret is True:
+            cv2.imwrite(f"temp_save.jpg", frame)
+            filenames = f"{FOLDER}/{A}/{cx}{SET}.png {FOLDER}/{B}/{cx}{SET}.png {FOLDER}/{C}/{cx}{SET}.png {FOLDER}/{D}/{cx}{SET}.png {FOLDER}/{E}/{cx}{SET}.png".split()
+            frame, pts, events = get_events(frame, filenames)
+            c += 1
+        
+        print("Now we wait")
+
+    print("Done")
+>>>>>>> e2e61ada25ce24973767a854a22fe4260366aa4f
 
     cap.release()
 

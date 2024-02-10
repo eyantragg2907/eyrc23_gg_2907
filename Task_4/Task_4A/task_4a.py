@@ -51,7 +51,7 @@ FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
 MODEL_PATH = "lr_net_arnav_1000.tf"  # model.tf should be a folder containing the model
 
-CAMERA_ID = 1
+CAMERA_ID = 0
 
 ARUCO_REQD_IDS = {4, 5, 6, 7}  # the ids of the corners!
 
@@ -110,10 +110,7 @@ def classify_event(imagepath: str) -> str:
 
     """
     # the model is trained on 75x75 images
-    img = tf.keras.preprocessing.image.load_img(imagepath, target_size=(75, 75))  # type: ignore
-    """
-    img = cv2.imread(imagepath)
-    img = cv2.resize(img, (75, 75))
+    img = tf.keras.preprocessing.image.load_img(imagepath, target_size=(64, 64))  # type: ignore
     img = np.array(img, dtype=np.float32)
     img = tf.expand_dims(img, axis=0)
 

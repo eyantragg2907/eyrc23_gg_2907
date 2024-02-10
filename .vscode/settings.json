@@ -21,6 +21,7 @@
         "utility": "cpp",
         "random": "cpp",
         "string_view": "cpp",
-        "initializer_list": "cpp"
+        "initializer_list": "cpp",
+        "queue": "cpp"
     }
 }
