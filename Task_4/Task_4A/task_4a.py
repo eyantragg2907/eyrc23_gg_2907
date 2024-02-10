@@ -108,13 +108,18 @@ def classify_event(imagepath: str) -> str:
     if model is None:
         raise Exception("Model is not loaded")
 
+    """
     # the model is trained on 75x75 images
     img = tf.keras.preprocessing.image.load_img(imagepath, target_size=(75, 75))  # type: ignore
+    """
+    img = cv2.imread(imagepath)
+    img = cv2.resize(img, (75, 75))
     img = np.array(img, dtype=np.float32)
     img = tf.expand_dims(img, axis=0)
 
     # predict the event
     prediction = model.predict(img, verbose=0)
+    print(prediction)
     predicted_class = np.argmax(prediction[0], axis=-1)
 
     event = CLASS_MAP[predicted_class]
@@ -551,7 +556,8 @@ def task_4a_return():
     identified_labels = {}
 
     ##############	ADD YOUR CODE HERE	##############
-    frame = get_clean_video_frame()
+    frame = get_clean_video_frame() if len(sys.argv) < 2 else cv2.imread("test.jpg")
+    cv2.imwrite("vis.png", frame)
 
     frame, pts, _ = process_and_get_events_from_frame(frame)
 
