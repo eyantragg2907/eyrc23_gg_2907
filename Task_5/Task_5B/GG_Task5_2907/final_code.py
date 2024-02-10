@@ -296,9 +296,6 @@ def get_aruco_data(frame, flatten=True):
         
     if len(c) == 0:
         raise Exception("Markers not detected")
-    if len(GLOBAL_ARUCO) < 53:
-        GLOBAL_ARUCO = copy.deepcopy(c)
-        GLOBAL_ID = copy.deepcopy(i.flatten())
     if flatten:
         i = i.flatten()
     # print(len(GLOBAL_ARUCO))
@@ -324,6 +321,12 @@ def get_pxcoords(robot_id, ids, corners):
     coords :   [ numpy array ]
 
     """
+    global GLOBAL_ARUCO, GLOBAL_ID
+    
+    if len(GLOBAL_ARUCO) < 53 and len(corners) > len(GLOBAL_ARUCO):
+        GLOBAL_ARUCO = copy.deepcopy(corners)
+        GLOBAL_ID = copy.deepcopy(ids.flatten())
+    
     try:
         index = np.where(ids == robot_id)[0][0]
         coords = np.mean(corners[index].reshape((4, 2)), axis=0)
@@ -432,6 +435,7 @@ def get_robot_coords(frame):
     Returns:
         robot_pxcoords: The pixel coordinates of the robot.
     """
+    frame, _ = transform_frame(frame)
     corners, ids, _ = get_aruco_data(frame)
     robot_pxcoords = get_pxcoords(ARUCO_ROBOT_ID, ids, corners)
     update_qgis_position(robot_pxcoords, corners, ids)
