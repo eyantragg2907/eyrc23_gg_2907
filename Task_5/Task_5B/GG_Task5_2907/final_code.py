@@ -20,7 +20,7 @@ import socket
 import time
 import threading
 import sys
-
+import copy
 import djikstra
 
 ##############################################################
@@ -41,6 +41,8 @@ EVENT_FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
 EVENT_STOP_EXTRA_PIXELS = 25
 
+GLOBAL_ARUCO = []
+GLOBAL_ID = []
 ################# ADD UTILITY FUNCTIONS HERE #################
 
 if not os.path.exists(OUT_FILE_LOC):
@@ -286,15 +288,20 @@ def get_aruco_data(frame, flatten=True):
     rrejected :   [ list ]
 
     """
+    global GLOBAL_ARUCO, GLOBAL_ID
     detector = get_aruco_detector()
 
     c, i, r = detector.detectMarkers(frame)
-
+    
+        
     if len(c) == 0:
-        raise Exception("No Aruco Markers Found")
+        raise Exception("Markers not detected")
+    if len(GLOBAL_ARUCO) < 53:
+        GLOBAL_ARUCO = copy.deepcopy(c)
+        GLOBAL_ID = copy.deepcopy(i.flatten())
     if flatten:
         i = i.flatten()
-
+    # print(len(GLOBAL_ARUCO))
     return c, i, r
 
 
@@ -325,7 +332,7 @@ def get_pxcoords(robot_id, ids, corners):
         return []
 
 
-def get_nearestmarker(robotcoords, corners, ids):
+def get_nearestmarker(robotcoords, corners=GLOBAL_ARUCO, ids=GLOBAL_ID):
     """
     Purpose:
 
@@ -343,14 +350,15 @@ def get_nearestmarker(robotcoords, corners, ids):
 
     closestmarker :   [ int ]
     """
-    global prev_closest_marker
+    global prev_closest_marker, GLOBAL_ARUCO, GLOBAL_ID
+    corners, ids = GLOBAL_ARUCO, GLOBAL_ID
 
     mindist = float("inf")
     closestmarker = None
+    # print(len(corners), len(ids))
 
     if len(robotcoords) == 0:
         return prev_closest_marker
-
     for markerCorner, markerID in zip(corners, ids):
         if markerID != ARUCO_ROBOT_ID:
             corners = markerCorner.reshape((4, 2))
@@ -361,7 +369,7 @@ def get_nearestmarker(robotcoords, corners, ids):
                 mindist = dist
 
     prev_closest_marker = closestmarker
-
+    print(closestmarker)
     return closestmarker
 
 
@@ -398,7 +406,7 @@ def update_qgis_position(robotcoords, corners, ids):
         None: If no valid coordinate is found.
     """
     arucolat_long = get_aruco_locs()
-    nearest_marker = get_nearestmarker(robotcoords, corners, ids)
+    nearest_marker = get_nearestmarker(robotcoords)
     if nearest_marker is None:
         return None
     try:
