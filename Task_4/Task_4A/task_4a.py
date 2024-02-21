@@ -49,7 +49,7 @@ CLASS_MAP = [
 ]
 FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
-MODEL_PATH = "model.tf"  # model.tf should be a folder containing the model
+MODEL_PATH = "lr_net_arnav_1000.tf"  # model.tf should be a folder containing the model
 
 CAMERA_ID = 0
 
@@ -108,6 +108,7 @@ def classify_event(imagepath: str) -> str:
     if model is None:
         raise Exception("Model is not loaded")
 
+    """
     # the model is trained on 75x75 images
     img = tf.keras.preprocessing.image.load_img(imagepath, target_size=(64, 64))  # type: ignore
     img = np.array(img, dtype=np.float32)
@@ -115,6 +116,7 @@ def classify_event(imagepath: str) -> str:
 
     # predict the event
     prediction = model.predict(img, verbose=0)
+    print(prediction)
     predicted_class = np.argmax(prediction[0], axis=-1)
 
     event = CLASS_MAP[predicted_class]
@@ -551,7 +553,8 @@ def task_4a_return():
     identified_labels = {}
 
     ##############	ADD YOUR CODE HERE	##############
-    frame = get_clean_video_frame()
+    frame = get_clean_video_frame() if len(sys.argv) < 2 else cv2.imread("test.jpg")
+    cv2.imwrite("vis.png", frame)
 
     frame, pts, _ = process_and_get_events_from_frame(frame)
 
