@@ -20,9 +20,8 @@ import socket
 import time
 import threading
 import sys
-import copy
 import djikstra
-
+import pickle
 ##############################################################
 
 CAMERA_ID = 0  # camera ID for external camera
@@ -32,7 +31,7 @@ ARUCO_REQD_IDS = {4, 5, 6, 7}  # corners
 ARUCO_ROBOT_ID = 100  # we chose this ID as it wasn't in the csv
 IDEAL_MAP_SIZE = 1080  # map frame size
 
-IP_ADDRESS = "192.168.160.62"  # IP of the Laptop on Hotspot
+IP_ADDRESS = "192.168.57.7"  # IP of the Laptop on Hotspot
 
 CHECK_FOR_ROBOT_AT_EVENT = True
 OUT_FILE_LOC = "live_location.csv"
@@ -41,8 +40,12 @@ EVENT_FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
 EVENT_STOP_EXTRA_PIXELS = 25
 
-GLOBAL_ARUCO = []
-GLOBAL_ID = []
+with open("map_corners.pkl", "rb") as f:
+    GLOBAL_ARUCO_CORNERS = pickle.load(f)
+with open("map_ids.pkl", "rb") as f:
+    GLOBAL_ARUCO_IDS = pickle.load(f)
+# print(len(GLOBAL_ARUCO_IDS), len(GLOBAL_ARUCO_CORNERS))
+
 ################# ADD UTILITY FUNCTIONS HERE #################
 
 if not os.path.exists(OUT_FILE_LOC):
@@ -288,17 +291,16 @@ def get_aruco_data(frame, flatten=True):
     rrejected :   [ list ]
 
     """
-    global GLOBAL_ARUCO, GLOBAL_ID
     detector = get_aruco_detector()
 
     c, i, r = detector.detectMarkers(frame)
     
-        
     if len(c) == 0:
-        raise Exception("Markers not detected")
+        raise Exception("No Aruco Markers Found")
+
     if flatten:
         i = i.flatten()
-    # print(len(GLOBAL_ARUCO))
+
     return c, i, r
 
 
@@ -321,12 +323,6 @@ def get_pxcoords(robot_id, ids, corners):
     coords :   [ numpy array ]
 
     """
-    global GLOBAL_ARUCO, GLOBAL_ID
-    
-    if len(GLOBAL_ARUCO) < 53 and len(corners) > len(GLOBAL_ARUCO):
-        GLOBAL_ARUCO = copy.deepcopy(corners)
-        GLOBAL_ID = copy.deepcopy(ids.flatten())
-    
     try:
         index = np.where(ids == robot_id)[0][0]
         coords = np.mean(corners[index].reshape((4, 2)), axis=0)
@@ -335,7 +331,7 @@ def get_pxcoords(robot_id, ids, corners):
         return []
 
 
-def get_nearestmarker(robotcoords, corners=GLOBAL_ARUCO, ids=GLOBAL_ID):
+def get_nearestmarker(robotcoords, corners, ids):
     """
     Purpose:
 
@@ -353,26 +349,30 @@ def get_nearestmarker(robotcoords, corners=GLOBAL_ARUCO, ids=GLOBAL_ID):
 
     closestmarker :   [ int ]
     """
-    global prev_closest_marker, GLOBAL_ARUCO, GLOBAL_ID
-    corners, ids = GLOBAL_ARUCO, GLOBAL_ID
+    global prev_closest_marker
 
     mindist = float("inf")
     closestmarker = None
-    # print(len(corners), len(ids))
-
+    # print(f"Len corners: {len(corners)}")
     if len(robotcoords) == 0:
         return prev_closest_marker
-    for markerCorner, markerID in zip(corners, ids):
+    # print(len(GLOBAL_ARUCO_IDS), len(GLOBAL_ARUCO_CORNERS))
+    # with open("map_corners.pkl", "wb") as f:
+    #     pickle.dump(corners, f)
+    # with open("map_ids.pkl", "wb") as f:
+    #     pickle.dump(ids, f)
+    # print(len(corners))
+    for markerCorner, markerID in zip(GLOBAL_ARUCO_CORNERS, GLOBAL_ARUCO_IDS):
         if markerID != ARUCO_ROBOT_ID:
-            corners = markerCorner.reshape((4, 2))
-            marker_center = np.mean(corners, axis=0)
+            corners_ = markerCorner.reshape((4, 2))
+            marker_center = np.mean(corners_, axis=0)
             dist = np.linalg.norm(robotcoords - marker_center)
             if dist < mindist:  # type: ignore
                 closestmarker = markerID
                 mindist = dist
 
     prev_closest_marker = closestmarker
-    print(closestmarker)
+    # print(closestmarker)
     return closestmarker
 
 
@@ -389,10 +389,14 @@ def write_csv(loc, csv_name):
     Returns:
         None
     """
+    #print("INSIDE", csv_name, loc)
+    # os.remove(csv_name)
     with open(csv_name, "w") as f:
-        writer = csv.writer(f)
-        writer.writerow(["lat", "lon"])
-        writer.writerow(loc)
+        #print(f"writing to file, {loc}")
+        f.write(f"lat, lon\n{loc[0]}, {loc[1]}")
+    
+    # with open(csv_name, "r") as f:
+    #     print(f"{f.readlines()=}")
 
 
 def update_qgis_position(robotcoords, corners, ids):
@@ -409,13 +413,18 @@ def update_qgis_position(robotcoords, corners, ids):
         None: If no valid coordinate is found.
     """
     arucolat_long = get_aruco_locs()
-    nearest_marker = get_nearestmarker(robotcoords)
+    # print(len(GLOBAL_ARUCO_CORNERS))
+    nearest_marker = get_nearestmarker(robotcoords, corners, ids)
     if nearest_marker is None:
         return None
     try:
-        coordinate = arucolat_long.loc[nearest_marker]
 
-        # print("upd qgis")
+        coordinate = arucolat_long.loc[nearest_marker]
+        # print(coordinate)
+        # print("upd qgis") 
+        coordinate.reset_index()
+        coordinate = tuple(coordinate)
+        # print(coordinate)
         write_csv(coordinate, OUT_FILE_LOC)
 
         return coordinate
@@ -435,7 +444,6 @@ def get_robot_coords(frame):
     Returns:
         robot_pxcoords: The pixel coordinates of the robot.
     """
-    frame, _ = transform_frame(frame)
     corners, ids, _ = get_aruco_data(frame)
     robot_pxcoords = get_pxcoords(ARUCO_ROBOT_ID, ids, corners)
     update_qgis_position(robot_pxcoords, corners, ids)

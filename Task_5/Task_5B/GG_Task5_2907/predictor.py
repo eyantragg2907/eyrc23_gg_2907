@@ -1,8 +1,14 @@
 import os
+import logging
+logging.disable(logging.WARNING)
+logging.getLogger('tensorflow').disabled = True
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 import tensorflow as tf
+tf.get_logger().setLevel('INFO')
+tf.autograph.set_verbosity(1)
 import numpy as np
+
 
 CLASS_MAP = [
     "combat",
