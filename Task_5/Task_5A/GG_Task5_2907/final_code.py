@@ -32,7 +32,7 @@ ARUCO_REQD_IDS = {4, 5, 6, 7}  # corners
 ARUCO_ROBOT_ID = 100  # we chose this ID as it wasn't in the csv
 IDEAL_MAP_SIZE = 1080  # map frame size
 
-IP_ADDRESS = "192.168.160.62"  # IP of the Laptop on Hotspot
+IP_ADDRESS = "192.168.246.62"  # IP of the Laptop on Hotspot
 
 CHECK_FOR_ROBOT_AT_EVENT = True
 OUT_FILE_LOC = "live_location.csv"
