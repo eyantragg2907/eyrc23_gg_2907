@@ -11,43 +11,43 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 /* Configuration */
 
-#define SPEED_LEFTMOTOR 240  // motor LEFT speed, FORWARD
-#define SPEED_RIGHTMOTOR 240 // down from 255 motor RIGHT speed, FORWARD
+#define SPEED_LEFTMOTOR 200  // motor LEFT speed, FORWARD
+#define SPEED_RIGHTMOTOR 200 // down from 255 motor RIGHT speed, FORWARD
 #define ROTATE_SPEED 255     // motor BOTH speed, D90/ D180 TURNS
 
-#define BANGBANG_TURNSPEED 230 // correction motor speed when in WALL mode
+#define BANGBANG_TURNSPEED 255 // correction motor speed when in WALL mode
 #define MIDDLE_TURNSPEED 150   // correction motor speed when in MIDDLE_LINE mode
 
 #define ROT_COMPLETE_DELAY 100 // STOP delay after a D90 TURN
 
-#define NODE_LEAVE_DELAY 350 // delay to move in front of a NODE w/o stopping logic
+#define NODE_LEAVE_DELAY 200 // delay to move in front of a NODE w/o stopping logic
 
-#define LEAVE_BLACK_DELAY 450     // delay before black line detection begins
-#define LEAVE_BLACK_DELAY_UTURN 1050 // delay before black line detection begins for D180 turn (uturn)
+#define LEAVE_BLACK_DELAY 300     // delay before black line detection begins
+#define LEAVE_BLACK_DELAY_UTURN 850 // delay before black line detection begins for D180 turn (uturn)
 
-#define ERROR_COUNTER_MAX 8 // delay of the number of times false detection of ALL OFF can happen at the end.
+#define ERROR_COUNTER_MAX 6 // delay of the number of times false detection of ALL OFF can happen at the end.
 
-#define END_SKIP 1200 // delay before END (ALL OFF) detection logic starts working
+#define END_SKIP 800 // delay before END (ALL OFF) detection logic starts working
 
 // #define BLACKLINE_MAXIMUM 650
 
-#define CENTER_CORRECT_DELAY 520 // delay to align center of rotation
+#define CENTER_CORRECT_DELAY 300 // delay to align center of rotation
 
 #define CONNECTION_PING_DELAY 200 // delay between WIFI-host retry's
 #define WIFI_TRY_DELAY 500        // delay between WIFI-connect retry's
 
-#define IGNORE_FALSE_NODE_TIME 400 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY.
+#define IGNORE_FALSE_NODE_TIME 200 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY.
 
-#define ALIGN_CENTER_BEGINNING 150 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
+#define ALIGN_CENTER_BEGINNING 0 // def: 80 // delay for aligning center of rotation in the beginning, when the situation is different.
 //#define ALIGN_CENTER_BEGINNING 0 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
-#define TURN_DELAY_BEGINNING 80   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
+#define TURN_DELAY_BEGINNING 0   // def: 50 // delay for a small left turn in the beginning, for correction purposes.
 //#define TURN_DELAY_BEGINNING 0   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
 
 #define EVENT_NODE_REACHED_DELAY 1000 // delay for BUZZER every EVENT NODE
 #define NORMAL_NODE_REACHED_DELAY 200   // delay for BUZZER every NORMAL node, set to 0 to disable
 #define NORMAL_NODE_REACHED_DELAY 0
 
-#define END_SKIP_FORWARD_DELAY 500 // delay for which simple forward movement is present in END detection
+#define END_SKIP_FORWARD_DELAY 300 // delay for which simple forward movement is present in END detection
 #define END_DELAY 5000             // delay for buzzer ring at the END.
 
 // #define D90_TURNTIME 580
@@ -58,7 +58,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 const char *ssid = "brainerd";
 const char *password = "internetaccess";
 const uint16_t port = 8002;
-const char *host = "192.168.160.62"; // laptops IP Address
+const char *host = "192.168.67.62"; // laptops IP Address
 // const char *ssid = "pjrWifi";
 // const char *password = "SimplePass01";
 // const uint16_t port = 8002;
@@ -73,8 +73,8 @@ const int IR4 = 33;
 const int IR5 = 18;
 
 /* motors */
-const int motor1f = 27; // motor LEFT forward
-const int motor1r = 13; // moto r LEFT reverse
+const int motor1f = 13; // motor LEFT forward
+const int motor1r = 27; // moto r LEFT reverse
 const int motor2f = 12; // motor RIGHT forward
 const int motor2r = 22; // motor RIGHT reverse, used to be 14
 

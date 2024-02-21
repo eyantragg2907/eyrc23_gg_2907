@@ -25,14 +25,14 @@ import pickle
 import ast
 ##############################################################
 
-CAMERA_ID = 1  # camera ID for external camera
+CAMERA_ID = 0  # camera ID for external camera
 
 ARUCO_REQD_IDS = {4, 5, 6, 7}  # corners
 
 ARUCO_ROBOT_ID = 100  # we chose this ID as it wasn't in the csv
 IDEAL_MAP_SIZE = 1080  # map frame size
 
-IP_ADDRESS = "192.168.57.7"  # IP of the Laptop on Hotspot
+IP_ADDRESS = "192.168.67.62"  # IP of the Laptop on Hotspot
 
 CHECK_FOR_ROBOT_AT_EVENT = True
 OUT_FILE_LOC = "live_location.csv"
@@ -98,13 +98,13 @@ def send_setup_robot(
 
 
 def init_connection():  # initializes connection with robot
-    # print("INIIT")
+    print("INIIT")
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((IP_ADDRESS, 8002))
         s.listen()
         conn, addr = s.accept()
-        # print(f"Connected by {addr}")
+        print(f"Connected by {addr}")
         return s, conn
 
 
@@ -570,11 +570,11 @@ if __name__ == "__main__":
     # print(command)
     
     # send robot the command!
-    # soc, conn = init_connection()
+    soc, conn = init_connection()
     # command="nnn"
     # print("SENDING")
     
-    # send_setup_robot(soc, conn, command)
+    send_setup_robot(soc, conn, command)
     # print("SENT")
     
     

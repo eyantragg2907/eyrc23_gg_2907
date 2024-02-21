@@ -22,7 +22,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 #define NODE_LEAVE_DELAY 350 // delay to move in front of a NODE w/o stopping logic
 
-#define LEAVE_BLACK_DELAY 450     // delay before black line detection begins
+#define LEAVE_BLACK_DELAY 450        // delay before black line detection begins
 #define LEAVE_BLACK_DELAY_UTURN 1050 // delay before black line detection begins for D180 turn (uturn)
 
 #define ERROR_COUNTER_MAX 8 // delay of the number of times false detection of ALL OFF can happen at the end.
@@ -39,12 +39,12 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define IGNORE_FALSE_NODE_TIME 400 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY.
 
 #define ALIGN_CENTER_BEGINNING 150 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
-//#define ALIGN_CENTER_BEGINNING 0 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
-#define TURN_DELAY_BEGINNING 80   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
-//#define TURN_DELAY_BEGINNING 0   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
+// #define ALIGN_CENTER_BEGINNING 0 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
+#define TURN_DELAY_BEGINNING 80 // def: 150 // delay for a small left turn in the beginning, for correction purposes.
+// #define TURN_DELAY_BEGINNING 0   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
 
 #define EVENT_NODE_REACHED_DELAY 1000 // delay for BUZZER every EVENT NODE
-#define NORMAL_NODE_REACHED_DELAY 200   // delay for BUZZER every NORMAL node, set to 0 to disable
+#define NORMAL_NODE_REACHED_DELAY 200 // delay for BUZZER every NORMAL node, set to 0 to disable
 #define NORMAL_NODE_REACHED_DELAY 0
 
 #define END_SKIP_FORWARD_DELAY 500 // delay for which simple forward movement is present in END detection
@@ -181,7 +181,7 @@ void controlLoop(void *pvParameters)
                 {
                     Serial.print("Path message received succesfully.");
                 }
-                
+
                 conductMovement(path);
 
                 /* dont give the false idea that restart-able is ready, due to the connection issue explained above. */
@@ -361,11 +361,12 @@ void conductMovement(char *path)
             snprintf(msg, MESSAGE_QUEUE_SIZE, "180d left turn complete: %lu\n", millis());
             xQueueSend(send_to_wifi_queue, msg, 0);
         }
-        else if (next_movement == 'p') {
-          do
+        else if (next_movement == 'p')
+        {
+            do
             {
                 readIRs();
-            } while (!turn_special(LEFT, LEAVE_BLACK_DELAY-150));
+            } while (!turn_special(LEFT, LEAVE_BLACK_DELAY - 150));
         }
         else
         {
@@ -392,9 +393,10 @@ void conductMovement(char *path)
             if (input3 == 0 && input2 == 0 && input4 == 0)
             {
                 error_counter += 1;
-                if (error_counter == ERROR_COUNTER_MAX) {
-                  endDetectionCode();
-                  break;
+                if (error_counter == ERROR_COUNTER_MAX)
+                {
+                    endDetectionCode();
+                    break;
                 }
             }
         }

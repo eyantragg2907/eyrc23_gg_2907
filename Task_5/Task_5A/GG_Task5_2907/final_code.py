@@ -25,7 +25,7 @@ import djikstra
 
 ##############################################################
 
-CAMERA_ID = 0  # camera ID for external camera
+CAMERA_ID = 1 # camera ID for external camera
 
 ARUCO_REQD_IDS = {4, 5, 6, 7}  # corners
 

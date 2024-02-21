@@ -27,8 +27,8 @@ const int IR5 = 18;
 
 // looking from the back
 
-const int motor1f = 27; // motor LEFT forward
-const int motor1r = 13; // moto r LEFT reverse
+const int motor1f = 13; // motor LEFT forward
+const int motor1r = 27; // moto r LEFT reverse
 const int motor2f = 12; // motor RIGHT forward
 const int motor2r = 22; // motor RIGHT reverse, used to be 14
 
@@ -211,16 +211,16 @@ void teleop()
 
 void loop()
 {
-    buzzerTest();
+    // buzzerTest();
     // ledsTest();
 
     // delay(5000);
-    //readIRs();
+    readIRs();
     // teleop();
     // readIRs();
 
     // delay(200);
-    // motorTest();
+    //motorTest();
 
     // int in3 = digitalRead(IR3);
     // digitalWrite(led_red, in3);
