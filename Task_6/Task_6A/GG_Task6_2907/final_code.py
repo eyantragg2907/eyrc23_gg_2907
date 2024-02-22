@@ -504,6 +504,9 @@ def listen_and_print(s, conn: socket.socket):
             data = conn.recv(4096)
             data = data.decode("utf-8")
             print(f"{data}")
+            if "terminate" in data:
+                cv2.destroyAllWindows()
+                sys.exit(0)
     except KeyboardInterrupt:
         raise KeyboardInterrupt
 
@@ -580,9 +583,9 @@ if __name__ == "__main__":
     
     
     # DEBUG: listen to robot
-    # lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
-    # lpt.daemon = True
-    # lpt.start()
+    lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
+    lpt.daemon = True
+    lpt.start()
     
 
 
@@ -612,6 +615,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         # cleanup(soc)
         capture.release()
-        # lpt.join()
+        lpt.join()
         cv2.destroyAllWindows()
         delete_images()
