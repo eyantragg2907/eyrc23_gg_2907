@@ -51,12 +51,12 @@ def get_shortest_path(
     children = graph.nodes[node_1]
     paths = []
 
-    for node, direction, distance, end_pose in children:
+    for node, start_pose, distance, end_pose in children:
         if node in visited:
             continue
 
-        cum_cost = distance + get_pose_cost(robot_pose, direction)
-        turns = robot_pose - direction
+        cum_cost = distance + get_pose_cost(robot_pose, start_pose)
+        turns = robot_pose - start_pose
         instructions = (
             LEFT_INSTRUCTION * abs(turns)
             if turns > 0
@@ -67,10 +67,11 @@ def get_shortest_path(
             instructions = U_TURN_INSTRUCTION
         if abs(turns) == 3:
             instructions = LEFT_INSTRUCTION if turns < 0 else RIGHT_INSTRUCTION
-        forward_instruction = FORWARD_INSTRUCTION
+        tricky_node = start_pose != end_pose
+        forward_instruction = SLOW_FORWARD if tricky_node else FORWARD_INSTRUCTION
         if node.startswith("E_"):
             if node == node_2:
-                forward_instruction = SPECIAL_FORWARD_INSTRUCTION
+                forward_instruction = SPL_SLOW_FWD if tricky_node else SPL_FWD_INSTRUCTION
             else:
                 forward_instruction = ""
         updated_path = path + (
@@ -175,11 +176,11 @@ if __name__ == "__main__":
     events_detected = {
         "D": "combat",
         "B": "fire",
-        "C": "humanitarian_aid_and_rehabilitation",
-        "A": "military_vehicles",
-        "E": "destroyed_buildings",
+        "C": "military_vehicles",
+        "A": "fire",
+        "E": "military_vehicles",
     }  # our model detected this events
 
     paths = path_plan_based_on_events_detected(events_detected)
 
-    # print(str(paths[0]))
+    print(str(paths[0]))
