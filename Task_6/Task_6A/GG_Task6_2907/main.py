@@ -1,14 +1,11 @@
-"""IMPORTANT"""
-## LATEST ##
-## TASK_5A FILE WITH QGIS ##
-"""IMPORTANT"""
-
-# Team ID:			[ 2907 ]
-# Author List:		[ Arnav Rustagi, Abhinav Lodha, Pranjal Rastogi]
-# Filename:			task_4b.py
-
-####################### IMPORT MODULES #######################
-
+""" 
+* Team Id : 2907
+* Author List : Arnav Rustagi, Abhinav Lodha, Pranjal Rastogi
+* Filename: main.py
+* Theme: GeoGuide (GG)
+* Functions: 
+* Global Variables: 
+"""
 import cv2
 import cv2.aruco as aruco
 import numpy as np
@@ -17,70 +14,95 @@ import sys
 import csv
 import pandas as pd
 import socket
-import time
 import threading
 import sys
 import djikstra
-import pickle
 import ast
-##############################################################
 
-CAMERA_ID = 0  # camera ID for external camera
+# Camera ID has to be specified for using external camera
+CAMERA_ID = 0  
 
-ARUCO_REQD_IDS = {4, 5, 6, 7}  # corners
+# IDs of corner AruCos
+ARUCO_CORNER_IDS = {4, 5, 6, 7}  
 
-ARUCO_ROBOT_ID = 100  # we chose this ID as it wasn't in the csv
-IDEAL_MAP_SIZE = 1080  # map frame size
+ARUCO_ROBOT_ID = 100  
 
-IP_ADDRESS = "192.168.67.62"  # IP of the Laptop on Hotspot
+IDEAL_MAP_SIZE = 1080  
+
+# IP address of the computer (changed everytime)
+HOST_IP_ADDRESS = "192.168.67.62"  
 
 CHECK_FOR_ROBOT_AT_EVENT = True
-OUT_FILE_LOC = "live_location.csv"
+
+# For QGIS live tracking
+CLOSEST_ARUCO_OUTPUT_FILE_LOC = "live_location.csv"
+
+# This file maps pixel coordinates to AruCo IDs for optimal live tracking
+ARUCO_DATA_PATH = "corners.csv"
+
+# This file contains the mapping between AruCo IDs and GPS coordinates
+GPS_COORDS_DATA = "lat_long.csv"
 
 EVENT_FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
 EVENT_STOP_EXTRA_PIXELS = 25
 
-# with open("map_corners.pkl", "rb") as f:
-#     GLOBAL_ARUCO_CORNERS = pickle.load(f)
-# with open("map_ids.pkl", "rb") as f:
-#     GLOBAL_ARUCO_IDS = pickle.load(f)
-# print(len(GLOBAL_ARUCO_IDS), len(GLOBAL_ARUCO_CORNERS))
+# Reads the AruCo IDs and Corners Data
+GLOBAL_ARUCOS_DF = pd.read_csv(ARUCO_DATA_PATH)
+GLOBAL_ARUCO_CORNERS = [np.array(ast.literal_eval(x.replace('\n', ',').replace('.', ','))) \
+                        for x in GLOBAL_ARUCOS_DF["corners"].values]
+GLOBAL_ARUCO_IDS = GLOBAL_ARUCOS_DF["ids"].values
 
-df = pd.read_csv("corners.csv")
-
-GLOBAL_ARUCO_CORNERS = [np.array(ast.literal_eval(x.replace('\n', ',').replace('.', ','))) for x in df["corners"].values]
-GLOBAL_ARUCO_IDS = df["ids"].values
-# print(GLOBAL_ARUCO_IDS, GLOBAL_ARUCO_CORNERS)
-################# ADD UTILITY FUNCTIONS HERE #################
-
-if not os.path.exists(OUT_FILE_LOC):
-    with open(OUT_FILE_LOC, "w") as f:
+# Creates file if not exists
+if not os.path.exists(CLOSEST_ARUCO_OUTPUT_FILE_LOC):
+    with open(CLOSEST_ARUCO_OUTPUT_FILE_LOC, "w") as f:
         writer = csv.writer(f)
         writer.writerow(["lat", "lon"])
 
+""" 
+* Function Name: get_aruco_gps_df
+* Input: None
+* Output: pandas.DataFrame
+* Logic: Returns the dataframe containing the mapping between AruCo IDs and GPS coordinates
+* Example Call: get_aruco_gps_df() -> pandas.DataFrame
+"""
+def get_aruco_gps_df() -> pd.DataFrame:
+    return pd.read_csv(GPS_COORDS_DATA, index_col="id")
 
-def get_aruco_locs():
-    return pd.read_csv("lat_long.csv", index_col="id")
 
-
-def get_aruco_detector():
+""" 
+* Function Name: get_aruco_detector
+* Input: None
+* Output: aruco.ArucoDetector
+* Logic: Returns the aruco detector
+* Example Call: get_aruco_detector() -> aruco.ArucoDetector
+"""
+def get_aruco_detector() -> aruco.ArucoDetector:
     dictionary = aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
     parameters = aruco.DetectorParameters()
     detector = aruco.ArucoDetector(dictionary, parameters)
-
     return detector
 
-
-def cleanup(s):  # closes socket
+""" 
+* Function Name: cleanup
+* Input: s: socket.socket
+* Output: None
+* Logic: closes socket
+* Example Call: cleanup(s) -> None
+"""
+def cleanup(s: socket.socket) -> None:  
     s.close()
 
-
-def send_setup_robot(
-    s: socket.socket, conn: socket.socket, command: str
-):  # sends setup command to robot
+""" 
+* Function Name: connect_and_move
+* Input: s: socket.socket, conn: socket.socket, path: str
+* Output: None
+* Logic: Checks connection to the robot and sends the path
+* Example Call: connect_and_move(s, conn, "nnn") -> None
+"""
+def connect_and_move(s: socket.socket, conn: socket.socket, path: str) -> None: 
     data = conn.recv(1024)
-    data = data.decode("utf-8")  # decode the data from bytes to string
+    data = data.decode("utf-8")  
 
     if data == "ACK_REQ_FROM_ROBOT":
         pass
@@ -89,34 +111,55 @@ def send_setup_robot(
         cleanup(s)
         sys.exit(1)
 
-    # conn.sendall(str.encode(COMMAND))
+    # Send start ping and path to robot
     conn.sendall(str.encode("START\n"))
-    conn.sendall(str.encode(command + "\n"))
-    # print(f"SENT START w/ {command}")
+    conn.sendall(str.encode(path + "\n"))
+  
 
-    # print(f"Sent command to robot: {COMMAND}")
-
-
-def init_connection():  # initializes connection with robot
-    print("INIIT")
+""" 
+* Function Name: init_connection
+* Input: None
+* Output: tuple[socket.socket, socket.socket]
+* Logic: Initializes the connection with the robot
+* Example Call: init_connection() -> (socket.socket, socket.socket)
+"""
+def init_connection() -> tuple[socket.socket, socket.socket]: 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        s.bind((IP_ADDRESS, 8002))
+
+        # We are using port 8002 for our connections
+        s.bind((HOST_IP_ADDRESS, 8002))
+
         s.listen()
         conn, addr = s.accept()
-        print(f"Connected by {addr}")
         return s, conn
 
 
-def get_frame(video):  # gets frame from camera
-    ret, frame = video.read()
+""" 
+* Function Name: get_camera_frame
+* Input: capture: cv2.VideoCapture
+* Output: numpy.ndarray
+* Logic: Returns the frame from the camera
+* Example Call: get_camera_frame(capture) -> numpy.ndarray
+"""
+def get_camera_frame(capture: cv2.VideoCapture) -> np.ndarray:
+    ret, frame = capture.read()
     if ret:
         return frame
     else:
-        raise Exception("Fatal camera error")
+        raise Exception("Fatal Camera Error!")
 
+""" 
+* Function Name: get_events_coords
+* Input: side_len: int
+* Output: tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray]
+* Logic: Returns the pixel coordinates (bounding boxes) of the events
+* Example Call: get_events_coords(1080) -> (numpy.ndarray, numpy.ndarray, 
+                            numpy.ndarray, numpy.ndarray, numpy.ndarray)
+"""
+def get_events_coords(side_len: int) -> tuple[np.ndarray, np.ndarray, np.ndarray, 
+                                              np.ndarray, np.ndarray]:
 
-def get_image_pts_from_frame(side_len):
     s = side_len
     S = IDEAL_MAP_SIZE
     Apts = (np.array([[940 / S, 1026 / S], [222 / S, 308 / S]]) * s).astype(int)
@@ -127,8 +170,15 @@ def get_image_pts_from_frame(side_len):
 
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
-
-def save_event_images(frame, pts, filenames):
+""" 
+* Function Name: get_events_coords
+* Input: side_len: int
+* Output: tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray]
+* Logic: Returns the pixel coordinates (bounding boxes) of the events
+* Example Call: get_events_coords(1080) -> (numpy.ndarray, numpy.ndarray, 
+                            numpy.ndarray, numpy.ndarray, numpy.ndarray)
+"""
+def save_event_images(frame: np.ndarray, pts, filenames):
     for p, f in zip(pts, filenames):
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
         cv2.imwrite(f, event)
@@ -137,17 +187,17 @@ def save_event_images(frame, pts, filenames):
 def get_robot_coords_and_frame(
     capture, save_images=False
 ):  # updates the position of the robot
-    frame = get_frame(capture)
+    frame = get_camera_frame(capture)
     frame, side_len = transform_frame(frame)
-    image_pts = get_image_pts_from_frame(side_len)
+    event_coords = get_events_coords(side_len)
 
     if save_images:
-        save_event_images(frame, image_pts, EVENT_FILENAMES)
+        save_event_images(frame, event_coords, EVENT_FILENAMES)
 
-    stopcoords = get_stopcoords(image_pts)
+    stopcoords = get_stopcoords(event_coords)
     pxcoords = get_robot_coords(frame)
 
-    return frame, stopcoords, pxcoords, image_pts
+    return frame, stopcoords, pxcoords, event_coords
 
 
 def get_stopcoords(pts):
@@ -162,25 +212,15 @@ def get_stopcoords(pts):
 
     return stopcoords
 
-
-def transform_frame(frame):  # transforms the frame to get
-    """
-    Purpose:
-    ---
-    Transforms the frame based on the markers
-
-    Arguments:
-    ---
-    `frame` : { numpy.ndarray }
-        the frame to transform
-
-    Returns:
-    ---
-    `out` : { numpy.ndarray }
-        the transformed frame
-    `IDEAL_FRAME_SIZE` : { int }
-        the length of the frame
-    """
+""" 
+* Function Name: transform_frame
+* Input: frame: numpy.ndarray
+* Output: tuple[numpy.ndarray, int]
+* Logic: Transforms the frame to a square and returns 
+         the transformed frame and the side length of the square
+* Example Call: transform_frame(frame) -> (numpy.ndarray, int)
+"""
+def transform_frame(frame: np.ndarray) -> tuple[np.ndarray, int]: 
 
     pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
 
@@ -244,7 +284,7 @@ def get_points_from_aruco(frame):
     pt_A, pt_B, pt_C, pt_D = None, None, None, None
 
     for markerCorner, markerID in zip(corners, ids):
-        if markerID not in ARUCO_REQD_IDS:
+        if markerID not in ARUCO_CORNER_IDS:
             continue
 
         corners = markerCorner.reshape((4, 2))
@@ -422,7 +462,7 @@ def update_qgis_position(robotcoords, corners, ids):
         coordinate (tuple): The updated coordinate of the robot in QGIS.
         None: If no valid coordinate is found.
     """
-    arucolat_long = get_aruco_locs()
+    arucolat_long = get_aruco_gps_df()
     # print(len(GLOBAL_ARUCO_CORNERS))
     nearest_marker = get_nearestmarker(robotcoords, corners, ids)
     if nearest_marker is None:
@@ -435,7 +475,7 @@ def update_qgis_position(robotcoords, corners, ids):
         coordinate.reset_index()
         coordinate = tuple(coordinate)
         # print(coordinate)
-        write_csv(coordinate, OUT_FILE_LOC)
+        write_csv(coordinate, CLOSEST_ARUCO_OUTPUT_FILE_LOC)
 
         return coordinate
 
@@ -461,17 +501,16 @@ def get_robot_coords(frame):
     return robot_pxcoords
 
 
-def initialize_capture(frames_to_skip=20) -> cv2.VideoCapture:
-    """
-    Initialize the video capture device.
+""" 
+* Function Name: initialize_capture
+* Input: frames_to_skip: int
+* Output: cv2.VideoCapture
+* Logic: Initializes the camera capture
+* Example Call: initialize_capture() -> cv2.VideoCapture
+"""
+def initialize_capture(frames_to_skip : int = 20) -> cv2.VideoCapture:
 
-    Input Arguments:
-        frames_to_skip: The number of frames to skip before starting the capture.
-
-    Returns:
-        capture: The initialized video capture device.
-    """
-    capture = None
+    # Windows uses DirectShow API to access the camera
     if sys.platform == "win32":
         capture = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
     else:
@@ -481,6 +520,7 @@ def initialize_capture(frames_to_skip=20) -> cv2.VideoCapture:
     capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
+    # skip the first few frames to allow the camera to adjust to the light
     for _ in range(frames_to_skip):
         ret, frame = capture.read()
 
@@ -577,7 +617,7 @@ if __name__ == "__main__":
     # command="nnn"
     # print("SENDING")
     
-    send_setup_robot(soc, conn, command)
+    connect_and_move(soc, conn, command)
     # print("SENT")
     
     
