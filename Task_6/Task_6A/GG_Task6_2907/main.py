@@ -3,9 +3,18 @@
 * Author List : Arnav Rustagi, Abhinav Lodha, Pranjal Rastogi
 * Filename: main.py
 * Theme: GeoGuide (GG)
-* Functions: 
-* Global Variables: 
+* Functions: get_aruco_gps_df, get_aruco_detector, cleanup, connect_and_move, init_connection, get_camera_frame,
+            get_events_coords, save_event_images, get_robot_coords_and_frame, get_stopcoords, transform_frame,
+            get_corners_map, get_aruco_map_data, get_robot_pxcoords, get_nearest_aruco, write_live_location_csv,
+            update_qgis_position, get_robot_pxcoords_update_qgis, initialize_capture, listen_and_print,
+            draw_event_labels, get_detected_events, delete_event_images
+* Global Variables: CAMERA_ID, ARUCO_CORNER_IDS, ARUCO_ROBOT_ID, IDEAL_MAP_SIZE, HOST_IP_ADDRESS,
+                    CHECK_FOR_ROBOT_AT_EVENT, CLOSEST_ARUCO_OUTPUT_FILE_LOC, ARUCO_DATA_PATH, GPS_COORDS_DATA,
+                    EVENT_FILENAMES, EVENT_STOP_EXTRA_PIXELS, GLOBAL_ARUCOS_DF, GLOBAL_ARUCO_CORNERS, GLOBAL_ARUCO_IDS,
+                    prev_closest_aruco
 """
+
+# Importing libraries
 import cv2
 import cv2.aruco as aruco
 import numpy as np
@@ -18,6 +27,15 @@ import threading
 import sys
 import djikstra
 import ast
+
+
+# Importing local modules
+import predictor
+
+# Importing Types of Type Hinting
+from cv2.typing import MatLike
+from collections.abc import Sequence
+from typing import Tuple
 
 # Camera ID has to be specified for using external camera
 CAMERA_ID = 0  
@@ -52,6 +70,9 @@ GLOBAL_ARUCOS_DF = pd.read_csv(ARUCO_DATA_PATH)
 GLOBAL_ARUCO_CORNERS = [np.array(ast.literal_eval(x.replace('\n', ',').replace('.', ','))) \
                         for x in GLOBAL_ARUCOS_DF["corners"].values]
 GLOBAL_ARUCO_IDS = GLOBAL_ARUCOS_DF["ids"].values
+
+# Used for tracking last closest AruCo marker to robot
+prev_closest_aruco = None
 
 # Creates file if not exists
 if not os.path.exists(CLOSEST_ARUCO_OUTPUT_FILE_LOC):
@@ -152,13 +173,12 @@ def get_camera_frame(capture: cv2.VideoCapture) -> np.ndarray:
 """ 
 * Function Name: get_events_coords
 * Input: side_len: int
-* Output: tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray]
+* Output: Tuple[numpy.ndarray, ...]
 * Logic: Returns the pixel coordinates (bounding boxes) of the events
 * Example Call: get_events_coords(1080) -> (numpy.ndarray, numpy.ndarray, 
                             numpy.ndarray, numpy.ndarray, numpy.ndarray)
 """
-def get_events_coords(side_len: int) -> tuple[np.ndarray, np.ndarray, np.ndarray, 
-                                              np.ndarray, np.ndarray]:
+def get_events_coords(side_len: int) -> Tuple[np.ndarray, ...]:
 
     s = side_len
     S = IDEAL_MAP_SIZE
@@ -171,22 +191,31 @@ def get_events_coords(side_len: int) -> tuple[np.ndarray, np.ndarray, np.ndarray
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
 """ 
-* Function Name: get_events_coords
-* Input: side_len: int
-* Output: tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray]
-* Logic: Returns the pixel coordinates (bounding boxes) of the events
-* Example Call: get_events_coords(1080) -> (numpy.ndarray, numpy.ndarray, 
-                            numpy.ndarray, numpy.ndarray, numpy.ndarray)
+* Function Name: save_event_images
+* Input: frame: numpy.ndarray, pts: Tuple[numpy.ndarray, ...],
+            filenames: list[str]
+* Output: None
+* Logic: Saves the images of the events
+* Example Call: save_event_images(frame, (Apts, Bpts, Cpts, Dpts, Epts),
+                            ["A.png", "B.png", "C.png", "D.png", "E.png"]) -> None
 """
-def save_event_images(frame: np.ndarray, pts, filenames):
+def save_event_images(frame: np.ndarray, 
+                      pts: Tuple[np.ndarray, ...], 
+                      filenames: list[str]) -> None:
     for p, f in zip(pts, filenames):
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
         cv2.imwrite(f, event)
 
-
-def get_robot_coords_and_frame(
-    capture, save_images=False
-):  # updates the position of the robot
+""" 
+* Function Name: get_robot_coords_and_frame
+* Input: capture: cv2.VideoCapture, save_images: bool
+* Output: tuple[np.ndarray, list[np.ndarray], np.ndarray, Tuple[np.ndarray, ...]]
+* Logic: Returns the frame, stopcoords, pxcoords and event_coords
+* Example Call: get_robot_coords_and_frame(capture) -> (np.ndarray, list[np.ndarray],
+                    np.ndarray, Tuple[np.ndarray, ...])
+"""
+def get_robot_coords_and_frame(capture: cv2.VideoCapture, save_images=False) -> \
+    tuple[np.ndarray, list[np.ndarray], np.ndarray, Tuple[np.ndarray, ...]]:  
     frame = get_camera_frame(capture)
     frame, side_len = transform_frame(frame)
     event_coords = get_events_coords(side_len)
@@ -195,14 +224,20 @@ def get_robot_coords_and_frame(
         save_event_images(frame, event_coords, EVENT_FILENAMES)
 
     stopcoords = get_stopcoords(event_coords)
-    pxcoords = get_robot_coords(frame)
+    pxcoords = get_robot_pxcoords_update_qgis(frame)
 
     return frame, stopcoords, pxcoords, event_coords
 
-
-def get_stopcoords(pts):
+""" 
+* Function Name: get_stopcoords
+* Input: event_coords: Tuple[numpy.ndarray, ...]
+* Output: list[numpy.ndarray]
+* Logic: Returns the stop coordinates for the robot to stop at the events
+* Example Call: get_stopcoords(event_coords) -> list[numpy.ndarray]
+"""
+def get_stopcoords(event_coords: Tuple[np.ndarray, ...]) -> list[np.ndarray]:
     stopcoords = []
-    for p in pts:
+    for p in event_coords:
         stopcoords.append(
             [
                 (p[1, 0] - EVENT_STOP_EXTRA_PIXELS, p[0, 0] - 100),
@@ -222,7 +257,7 @@ def get_stopcoords(pts):
 """
 def transform_frame(frame: np.ndarray) -> tuple[np.ndarray, int]: 
 
-    pt_A, pt_B, pt_C, pt_D = get_points_from_aruco(frame)
+    pt_A, pt_B, pt_C, pt_D = get_corners_map(frame)
 
     if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
         print(f"{pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
@@ -253,33 +288,18 @@ def transform_frame(frame: np.ndarray) -> tuple[np.ndarray, int]:
 
 prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D = None, None, None, None  # corners
 
-
-def get_points_from_aruco(frame):
-    """
-
-    Purpose:
-    ---
-    This function returns the corners of the aruco markers
-
-    Input Arguments:
-
-    frame :   [ numpy array ]
-
-
-    Returns:
-
-    pt_A :   [ tuple ]
-
-    pt_B :   [ tuple ]
-
-    pt_C :   [ tuple ]
-
-    pt_D :   [ tuple ]
-
-    """
+""" 
+* Function Name: get_corners_map
+* Input: frame: numpy.ndarray
+* Output: Tuple[numpy.ndarray, ...]
+* Logic: Returns the updated corners of the map (accounts of minute camera movements)
+* Example Call: transform_frame(frame) -> (numpy.ndarray, int)
+"""
+def get_corners_map(frame: np.ndarray) -> Tuple[Tuple[int, ...], ...] | Tuple[None, ...]:
+    
     global prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D
 
-    corners, ids, _ = get_aruco_data(frame)
+    corners, ids, _ = get_aruco_map_data(frame)
 
     pt_A, pt_B, pt_C, pt_D = None, None, None, None
 
@@ -315,188 +335,112 @@ def get_points_from_aruco(frame):
 
     return pt_A, pt_B, pt_C, pt_D
 
-
-def get_aruco_data(frame, flatten=True):
-    """
-    Purpose:
-    ---
-    This function returns the aruco data
-
-    Input Arguments:
-
-    frame :   [ numpy array ]
-
-    flatten :   [ boolean ]
-
-    Returns:
-
-    corners :   [ list ]
-
-    ids :   [ list ]
-
-    rrejected :   [ list ]
-
-    """
+""" 
+* Function Name: get_aruco_data
+* Input: frame: numpy.ndarray, flatten: bool
+* Output: tuple[Sequence[MatLike], MatLike, Sequence[MatLike]]
+* Logic: Detects the aruco markers and returns the corners, ids and rejected points
+* Example Call: get_aruco_data(frame) -> (Sequence[MatLike], MatLike, Sequence[MatLike])
+"""
+def get_aruco_map_data(frame: np.ndarray, flatten : bool = True) -> tuple[Sequence[MatLike], MatLike, Sequence[MatLike]]:
     detector = get_aruco_detector()
-
     c, i, r = detector.detectMarkers(frame)
-    
     if len(c) == 0:
         raise Exception("No Aruco Markers Found")
-
     if flatten:
         i = i.flatten()
-
     return c, i, r
 
-
-def get_pxcoords(robot_id, ids, corners):
-    """
-    Purpose:
-
-    This function returns the pixel coordinates of the robot
-
-    Input Arguments:
-
-    robot_id :   [ int ]
-
-    ids :   [ list ]
-
-    corners :   [ list ]
-
-    Returns:
-
-    coords :   [ numpy array ]
-
-    """
+""" 
+* Function Name: get_robot_pxcoords
+* Input: robot_id: int, ids: MatLike, corners: Sequence[MatLike]
+* Output: np.ndarray
+* Logic: Returns the pixel coordinates of the robot
+* Example Call: get_robot_pxcoords(100, ids, corners) -> np.ndarray
+"""
+def get_robot_pxcoords(robot_id: int, ids: MatLike, corners: Sequence[MatLike]) -> np.ndarray:
     try:
         index = np.where(ids == robot_id)[0][0]
         coords = np.mean(corners[index].reshape((4, 2)), axis=0)
         return np.array([int(x) for x in coords])
     except:
-        return []
+        return np.array([])
 
+""" 
+* Function Name: get_nearest_aruco
+* Input: robotcoords: np.ndarray
+* Output: int | None
+* Logic: Returns the nearest aruco marker to the robot 
+        (uses GLOBAL_ARUCO_CORNERS and GLOBAL_ARUCO_IDS)
+* Example Call: get_nearest_aruco(robotcoords) -> 4
+"""
+def get_nearest_aruco(robotcoords: np.ndarray) -> int | None:
 
-def get_nearestmarker(robotcoords, corners, ids):
-    """
-    Purpose:
-
-    This function returns the pixel coordinates of the robot
-
-    Input Arguments:
-
-    robotcoords :   [ numpy array ]
-
-    corners :   [ list ]
-
-    ids :   [ list ]
-
-    Returns:
-
-    closestmarker :   [ int ]
-    """
-    global prev_closest_marker
+    global prev_closest_aruco
 
     mindist = float("inf")
     closestmarker = None
-    # print(f"Len corners: {len(corners)}")
     if len(robotcoords) == 0:
-        return prev_closest_marker
-    
-    df = pd.DataFrame({"corners": corners, "ids": ids})
-    # print(df)
-    # print(df)
-    # df.to_csv("corners.csv")
-    # print(len(corners))
+        return prev_closest_aruco
+
     for markerCorner, markerID in zip(GLOBAL_ARUCO_CORNERS, GLOBAL_ARUCO_IDS):
         if markerID != ARUCO_ROBOT_ID:
             corners_ = markerCorner.reshape((4, 2))
             marker_center = np.mean(corners_, axis=0)
             dist = np.linalg.norm(robotcoords - marker_center)
-            if dist < mindist:  # type: ignore
+            if dist < mindist: 
                 closestmarker = markerID
                 mindist = dist
-    # for corner, ID in zip(corners, ids): ADD FAKE ARUCOS
-    #     if ID == ARUCO_ROBOT_ID:
-    #         corners_ = corner.reshape((4, 2))
-    #         print(corners_)
-    # print(closestmarker)
-    prev_closest_marker = closestmarker
-    # print(closestmarker)
+
+    prev_closest_aruco = closestmarker
     return closestmarker
 
 
-prev_closest_marker = None
 
-def write_csv(loc, csv_name):
-    """
-    Write the given location data to a CSV file.
-
-    Input Arguments:
-        loc (list): The location data to be written to the CSV file.
-        csv_name (str): The name of the CSV file.
-
-    Returns:
-        None
-    """
-    #print("INSIDE", csv_name, loc)
-    # os.remove(csv_name)
+""" 
+* Function Name: write_live_location_csv
+* Input: loc: tuple[float, float], csv_name: str
+* Output: None
+* Logic: Writes the live location to a csv file
+* Example Call: write_live_location_csv((28.7041, 77.1025), "live_location.csv") -> None
+"""
+# TYPE HINT TO BE ADDED HERE AFTER CHECK
+def write_live_location_csv(loc, csv_name: str) -> None:
     with open(csv_name, "w") as f:
-        #print(f"writing to file, {loc}")
         f.write(f"lat, lon\n{loc[0]}, {loc[1]}")
     
-    # with open(csv_name, "r") as f:
-    #     print(f"{f.readlines()=}")
+""" 
+* Function Name: update_qgis_position
+* Input: robotcoords: np.ndarray
+* Output: None
+* Logic: Updates the QGIS position by writing to a csv which QGIS reads
+* Example Call: update_qgis_position(robotcoords) -> None
+"""
+def update_qgis_position(robotcoords: np.ndarray) -> None:
 
+    arucos_gps_data = get_aruco_gps_df()
+    nearest_marker = get_nearest_aruco(robotcoords)
+    if nearest_marker is not None:
+        try:
+            coordinate = arucos_gps_data.loc[nearest_marker]
+            coordinate.reset_index()
+            coordinate = tuple(coordinate)
+            write_live_location_csv(coordinate, CLOSEST_ARUCO_OUTPUT_FILE_LOC)
+        except:
+            return None
 
-def update_qgis_position(robotcoords, corners, ids):
-    """
-    Update the position of the robot in QGIS based on the given robot coordinates.
+""" 
+* Function Name: get_robot_pxcoords_update_qgis
+* Input: frame: numpy.ndarray
+* Output: np.ndarray
+* Logic: Updates the QGIS position and returns the pixel coordinates of the robot
+* Example Call: get_robot_pxcoords_update_qgis(frame) -> np.ndarray
+"""
+def get_robot_pxcoords_update_qgis(frame : np.ndarray) -> np.ndarray:
 
-    Input Arguments:
-        robotcoords (list): The coordinates of the robot.
-        corners (list): The corners of the markers.
-        ids (list): The IDs of the markers.
-
-    Returns:
-        coordinate (tuple): The updated coordinate of the robot in QGIS.
-        None: If no valid coordinate is found.
-    """
-    arucolat_long = get_aruco_gps_df()
-    # print(len(GLOBAL_ARUCO_CORNERS))
-    nearest_marker = get_nearestmarker(robotcoords, corners, ids)
-    if nearest_marker is None:
-        return None
-    try:
-
-        coordinate = arucolat_long.loc[nearest_marker]
-        # print(coordinate)
-        # print("upd qgis") 
-        coordinate.reset_index()
-        coordinate = tuple(coordinate)
-        # print(coordinate)
-        write_csv(coordinate, CLOSEST_ARUCO_OUTPUT_FILE_LOC)
-
-        return coordinate
-
-    except:
-        # print("No lat long from this marker!!")
-        return None
-
-
-def get_robot_coords(frame):
-    """
-    Get the coordinates of the robot based on the given frame.
-
-    Input Arguments:
-        frame: The frame from which to extract the robot coordinates.
-
-    Returns:
-        robot_pxcoords: The pixel coordinates of the robot.
-    """
-    corners, ids, _ = get_aruco_data(frame)
-    robot_pxcoords = get_pxcoords(ARUCO_ROBOT_ID, ids, corners)
-    update_qgis_position(robot_pxcoords, corners, ids)
+    corners, ids, _ = get_aruco_map_data(frame)
+    robot_pxcoords = get_robot_pxcoords(ARUCO_ROBOT_ID, ids, corners)
+    update_qgis_position(robot_pxcoords)
 
     return robot_pxcoords
 
@@ -526,18 +470,14 @@ def initialize_capture(frames_to_skip : int = 20) -> cv2.VideoCapture:
 
     return capture
 
-
-def listen_and_print(s, conn: socket.socket):
-    """
-    Listen for incoming data from the socket connection and print it.
-
-    Input Arguments:
-        s: The socket object.
-        conn: The socket connection.
-
-    Returns:
-        None
-    """
+""" 
+* Function Name: listen_and_print
+* Input: conn: socket.socket
+* Output: None
+* Logic: Listens to the robot and prints the data received
+* Example Call: listen_and_print(conn) -> None
+"""
+def listen_and_print(s: socket.socket, conn: socket.socket) -> None:
     print("=" * 80)
     try:
         while True:
@@ -550,8 +490,15 @@ def listen_and_print(s, conn: socket.socket):
     except KeyboardInterrupt:
         raise KeyboardInterrupt
 
-
-def add_rect_labels(frame, pts, labels):
+### TYPE HINT TO BE ADDED HERE
+""" 
+* Function Name: draw_event_labels
+* Input: frame: np.ndarray, pts: np.ndarray, labels: list[str]
+* Output: np.ndarray
+* Logic: Draws the bounding boxes and labels on the frame
+* Example Call: draw_event_labels(frame, pts, ["fire", "combat"]) -> np.ndarray
+"""
+def draw_event_labels(frame: np.ndarray, pts, labels: list[str]) -> np.ndarray:
     for p, l in zip(pts, labels):
         frame = cv2.rectangle(
             frame, (p[1, 0], p[0, 0]), (p[1, 1], p[0, 1]), (0, 255, 0), 2
@@ -568,35 +515,50 @@ def add_rect_labels(frame, pts, labels):
     return frame
 
 
-def get_detected_events():
-    import predictor
+""" 
+* Function Name: get_detected_events
+* Input: None
+* Output: dict
+* Logic: Returns the detected events using the predictor
+* Example Call: get_detected_events() -> {"A": "fire", "B": "empty", "C": "combat"}
+"""
+def get_detected_events() -> dict:
 
     detected_events = predictor.run_predictor(EVENT_FILENAMES)
+
+    # Removing None values (no events)
     detected_events_out = {k: v for k, v in detected_events.items() if v is not None}
     print(detected_events_out)
     return detected_events
 
-
-def delete_images():
+""" 
+* Function Name: delete_event_images
+* Input: None
+* Output: None
+* Logic: Deletes the event images after use
+* Example Call: delete_event_images() -> None
+"""
+def delete_event_images() -> None:
     for f in EVENT_FILENAMES:
         os.remove(f)
 
 
-###############	Main Function	#################
 if __name__ == "__main__":
+
     capture = initialize_capture()
 
     frame, stopcoords, pxcoords, img_pts = get_robot_coords_and_frame(
         capture, save_images=True
     )
 
+    # Debugging code for custom paths
     if (len(sys.argv) == 3) and (sys.argv[1] == "--command"):
         detected_events = {k: None for k in EVENT_FILENAMES}
         command = sys.argv[2]
         print(f"DEBUG: moving with command: {command}")
     else:
         detected_events = get_detected_events()
-        frame = add_rect_labels(frame, img_pts, detected_events.values())
+        frame = draw_event_labels(frame, img_pts, list(detected_events.values()))
 
         # show bounding boxes
         cv2.namedWindow("image_with_boundingbox", cv2.WINDOW_NORMAL)
@@ -608,26 +570,18 @@ if __name__ == "__main__":
 
         # run djikstra to get the path between events, maintainig priority
         path = djikstra.final_path(detected_events)
-        command = "n" + path
+        path = "n" + path
         
-    # print(command)
-    
-    # send robot the command!
+   
     soc, conn = init_connection()
-    # command="nnn"
-    # print("SENDING")
-    
-    connect_and_move(soc, conn, command)
-    # print("SENT")
-    
-    
+
+    connect_and_move(soc, conn, command)    
     
     # DEBUG: listen to robot
     lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
     lpt.daemon = True
     lpt.start()
     
-
 
     try:
         cv2.namedWindow("robot_moving", cv2.WINDOW_NORMAL)
@@ -638,14 +592,14 @@ if __name__ == "__main__":
                 capture, save_images=False
             )
 
-            # if len(pxcoords) != 0:
-            #     # robot is in frame
-            #     for i in stopcoords:
-            #         # check if robot is at any of the stopcoords
-            #         if (i[0][0] < pxcoords[0] and i[1][0] > pxcoords[0]) and (
-            #             i[0][1] < pxcoords[1] and i[1][1] > pxcoords[1]
-            #         ):  # robot is at the event
-            #             conn.sendall(str.encode("ISTOP\n"))
+            if len(pxcoords) != 0:
+                # robot is in frame
+                for i in stopcoords:
+                    # check if robot is at any of the stopcoords
+                    if (i[0][0] < pxcoords[0] and i[1][0] > pxcoords[0]) and (
+                        i[0][1] < pxcoords[1] and i[1][1] > pxcoords[1]
+                    ):  # robot is at the event
+                        conn.sendall(str.encode("ISTOP\n"))
 
             cv2.imshow("robot_moving", cv2.resize(frame, (750, 750)))
             cv2.moveWindow("robot_moving", 0, 0)
@@ -657,4 +611,4 @@ if __name__ == "__main__":
         capture.release()
         lpt.join()
         cv2.destroyAllWindows()
-        delete_images()
+        delete_event_images()

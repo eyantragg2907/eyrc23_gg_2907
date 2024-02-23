@@ -54,12 +54,12 @@ label2priority = {
 * Logic: Returns the reverse of the pose
 * Example Call: reverse_pose(0) -> 2
 """
-def reverse_pose(pose):
+def reverse_pose(pose: int) -> int:
     if pose == FRONT:
         return BACK
-    if pose == RIGHT:
+    elif pose == RIGHT:
         return LEFT
-    if pose == BACK:
+    elif pose == BACK:
         return FRONT
-    if pose == LEFT:
+    else:
         return RIGHT
