@@ -35,7 +35,7 @@ import predictor
 # Importing Types of Type Hinting
 from cv2.typing import MatLike
 from collections.abc import Sequence
-from typing import Tuple
+from typing import Tuple, Union
 
 # Camera ID has to be specified for using external camera
 CAMERA_ID = 0  
@@ -48,7 +48,7 @@ ARUCO_ROBOT_ID = 100
 IDEAL_MAP_SIZE = 1080  
 
 # IP address of the computer (changed everytime)
-HOST_IP_ADDRESS = "192.168.67.62"  
+HOST_IP_ADDRESS = "192.168.76.62"  
 
 CHECK_FOR_ROBOT_AT_EVENT = True
 
@@ -295,7 +295,7 @@ prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D = None, None, None, None  # corners
 * Logic: Returns the updated corners of the map (accounts of minute camera movements)
 * Example Call: transform_frame(frame) -> (numpy.ndarray, int)
 """
-def get_corners_map(frame: np.ndarray) -> Tuple[Tuple[int, ...], ...] | Tuple[None, ...]:
+def get_corners_map(frame: np.ndarray) -> Union[Tuple[Tuple[int, ...], ...], Tuple[None, ...]]:
     
     global prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D
 
@@ -374,7 +374,7 @@ def get_robot_pxcoords(robot_id: int, ids: MatLike, corners: Sequence[MatLike]) 
         (uses GLOBAL_ARUCO_CORNERS and GLOBAL_ARUCO_IDS)
 * Example Call: get_nearest_aruco(robotcoords) -> 4
 """
-def get_nearest_aruco(robotcoords: np.ndarray) -> int | None:
+def get_nearest_aruco(robotcoords: np.ndarray) -> Union[int,None]:
 
     global prev_closest_aruco
 
@@ -570,17 +570,16 @@ if __name__ == "__main__":
 
         # run djikstra to get the path between events, maintainig priority
         path = djikstra.final_path(detected_events)
-        path = "n" + path
-        
-   
+        command = "n" + path
+        print(command)
     soc, conn = init_connection()
 
     connect_and_move(soc, conn, command)    
     
     # DEBUG: listen to robot
-    lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
-    lpt.daemon = True
-    lpt.start()
+    # lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
+    # lpt.daemon = True
+    # lpt.start()
     
 
     try:
@@ -609,6 +608,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         # cleanup(soc)
         capture.release()
-        lpt.join()
+        # lpt.join()
         cv2.destroyAllWindows()
         delete_event_images()

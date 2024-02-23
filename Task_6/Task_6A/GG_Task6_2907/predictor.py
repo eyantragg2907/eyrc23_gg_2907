@@ -64,7 +64,7 @@ def get_model() -> tf.keras.Model:
     if model is not None:
         model.compile(
             optimizer="adam",
-            loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),  =
+            loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), 
             metrics=["accuracy"],
         )
         return model

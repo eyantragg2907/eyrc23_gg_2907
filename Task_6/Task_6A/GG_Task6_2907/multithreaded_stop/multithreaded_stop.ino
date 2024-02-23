@@ -11,58 +11,63 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 /* Configuration */
 
-#define SPEED_LEFTMOTOR 240  // motor LEFT speed, FORWARD
-#define SPEED_RIGHTMOTOR 240 // down from 255 motor RIGHT speed, FORWARD
-#define ROTATE_SPEED 255     // motor BOTH speed, D90/ D180 TURNS
+// Measurements taken and optimized at 8.05V
+// 5 runs: no loss
+// 11 runs: 8.05V
+// 25 runs: 7.95V
+// 35 runs: 7.91V
 
-#define BANGBANG_TURNSPEED 230 // correction motor speed when in WALL mode
+/* SPEED CONTROLS */
+#define SPEED_LEFTMOTOR 175 // motor LEFT speed, FORWARD
+#define SPEED_RIGHTMOTOR 175 // down from 255 motor RIGHT speed, FORWARD
+#define SPEED_LEFTMOTOR_SLOW 150
+#define SPEED_RIGHTMOTOR_SLOW 150
+#define ROTATE_SPEED 165     // motor BOTH speed, D90/ D180 TURNS
+
+#define BANGBANG_TURNSPEED 240 // correction motor speed when in WALL mode
 #define MIDDLE_TURNSPEED 150   // correction motor speed when in MIDDLE_LINE mode
 
-#define ROT_COMPLETE_DELAY 100 // STOP delay after a D90 TURN
+/* STOP DELAYS */
+#define ROT_COMPLETE_DELAY 100        // STOP delay after a D90 turn.
+#define EVENT_NODE_REACHED_DELAY 1000 // STOP delay for every EVENT NODE. Also activates BUZZER
+#define NORMAL_NODE_REACHED_DELAY 200 // STOP delay after every node. No BUZZER.
+#define END_DELAY 5000                // delay for buzzer ring at the END
 
-#define NODE_LEAVE_DELAY 350 // delay to move in front of a NODE w/o stopping logic
+/* TURN LOGIC: DONT DO BLACK LINE DETECTION FOR X */
+#define CENTER_CORRECT_DELAY 320 // delay to align center of rotation for turning
+#define LEAVE_BLACK_DELAY 400    // delay before black line detection begins in turning D90
 
-#define LEAVE_BLACK_DELAY 450        // delay before black line detection begins
-#define LEAVE_BLACK_DELAY_UTURN 1050 // delay before black line detection begins for D180 turn (uturn)
+/* TURN LOGIC: UTURN  */
+#define UTURN_TIME 850 // exact delay for which a D180 turn is undertaken. No black line detection happens in 180s.
 
-#define ERROR_COUNTER_MAX 8 // delay of the number of times false detection of ALL OFF can happen at the end.
+/* FALSE NODE IGNORE LOGIC */
+#define NODE_LEAVE_DELAY 200       // delay to move in front of a NODE w/o stopping logic. Without moving logic.
+#define IGNORE_FALSE_NODE_TIME 200 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY. With moving logic.
 
-#define END_SKIP 1200 // delay before END (ALL OFF) detection logic starts working
+/* SPECIAL BEGINNING LOGIC */
+#define ALIGN_CENTER_BEGINNING 90 // d: 80 // delay for aligning center of rotation in the beginning, when the situation is different.
+#define TURN_DELAY_BEGINNING 50   // d: 50 // delay for a small left turn in the beginning, for correction purposes.
 
-// #define BLACKLINE_MAXIMUM 650
+/* SPECIAL END LOGIC */
+#define ERROR_COUNTER_MAX 6        // delay of the number of times false detection of ALL OFF can happen at the end.
+#define END_SKIP 800               // delay before END (ALL OFF) detection logic starts working. But with moving logic.
+#define END_SKIP_FORWARD_DELAY 300 // delay for which simple forward movement is present in END detection
 
-#define CENTER_CORRECT_DELAY 520 // delay to align center of rotation
-
+/* WIFI AND SETUP */
 #define CONNECTION_PING_DELAY 200 // delay between WIFI-host retry's
 #define WIFI_TRY_DELAY 500        // delay between WIFI-connect retry's
 
-#define IGNORE_FALSE_NODE_TIME 400 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY.
-
-#define ALIGN_CENTER_BEGINNING 150 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
-// #define ALIGN_CENTER_BEGINNING 0 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
-#define TURN_DELAY_BEGINNING 80 // def: 150 // delay for a small left turn in the beginning, for correction purposes.
-// #define TURN_DELAY_BEGINNING 0   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
-
-#define EVENT_NODE_REACHED_DELAY 1000 // delay for BUZZER every EVENT NODE
-#define NORMAL_NODE_REACHED_DELAY 200 // delay for BUZZER every NORMAL node, set to 0 to disable
-#define NORMAL_NODE_REACHED_DELAY 0
-
-#define END_SKIP_FORWARD_DELAY 500 // delay for which simple forward movement is present in END detection
-#define END_DELAY 5000             // delay for buzzer ring at the END.
-
-// #define D90_TURNTIME 580
-
-#define BEFORE_READY_FOR_NEXTCOMMAND 1000 // delay after a run after the END_DELAY. this is required so that the LED actually turns off after its on at the end of each run.
+#define SETUP_DELAY 0 // delay in the beginning before the robot starts moving to give us time to put it on the grid
 
 /* wireless */
-const char *ssid = "brainerd";
-const char *password = "internetaccess";
-const uint16_t port = 8002;
-const char *host = "192.168.160.62"; // laptops IP Address
-// const char *ssid = "pjrWifi";
-// const char *password = "SimplePass01";
+// const char *ssid = "brainerd";
+// const char *password = "internetaccess";
 // const uint16_t port = 8002;
-// const char *host = "192.168.187.62"; // laptops IP Address
+// const char *host = "192.168.67.62"; // laptops IP Address
+  const char *ssid = "pjrWifi";
+  const char *password = "SimplePass01";
+  const uint16_t port = 8002;
+  const char *host = "192.168.76.62"; // laptops IP Address
 WiFiClient client;
 
 /* IR sensor pins */
@@ -73,8 +78,8 @@ const int IR4 = 33;
 const int IR5 = 18;
 
 /* motors */
-const int motor1f = 27; // motor LEFT forward
-const int motor1r = 13; // moto r LEFT reverse
+const int motor1f = 13; // motor LEFT forward
+const int motor1r = 27; // moto r LEFT reverse
 const int motor2f = 12; // motor RIGHT forward
 const int motor2r = 22; // motor RIGHT reverse, used to be 14
 
@@ -170,7 +175,7 @@ void controlLoop(void *pvParameters)
             case START_ACTIONCODE:
             {
                 // standard start-up procedure should be followed
-                delay(6000); // delay so that we have time to set up
+                delay(SETUP_DELAY); // delay so that we have time to set up
 
                 resetGlobals();
                 digitalWrite(led_red, LOW);
@@ -183,10 +188,6 @@ void controlLoop(void *pvParameters)
                 }
 
                 conductMovement(path);
-
-                /* dont give the false idea that restart-able is ready, due to the connection issue explained above. */
-                // delay(BEFORE_READY_FOR_NEXTCOMMAND);
-                // digitalWrite(led_red, HIGH);
             }
             default:
             {
@@ -225,7 +226,7 @@ void conductMovement(char *path)
             do
             {
                 readIRs();
-            } while (!moveForwardTillReachedNode());
+            } while (!moveForwardTillReachedNode(SPEED_RIGHTMOTOR, SPEED_LEFTMOTOR));
 
             analogWrite(motor1f, SPEED_LEFTMOTOR);
             analogWrite(motor2f, SPEED_RIGHTMOTOR);
@@ -279,7 +280,30 @@ void conductMovement(char *path)
             do
             {
                 readIRs();
-            } while (!moveForwardTillReachedNode());
+            } while (!moveForwardTillReachedNode(SPEED_RIGHTMOTOR, SPEED_LEFTMOTOR));
+
+            // digitalWrite(buzzer, LOW);
+            delay(NORMAL_NODE_REACHED_DELAY);
+            // digitalWrite(buzzer, HIGH);
+
+            char msg[MESSAGE_QUEUE_SIZE];
+            snprintf(msg, MESSAGE_QUEUE_SIZE, "normal node left: %lu\n", millis());
+            xQueueSend(send_to_wifi_queue, msg, 0);
+
+            node_left_time = millis();
+        }
+        else if (next_movement == 'd') {
+           Serial.println("===> slow forward.");
+            analogWrite(motor1r, 0);
+            analogWrite(motor2r, 0);
+            analogWrite(motor1f, SPEED_LEFTMOTOR);
+            analogWrite(motor2f, SPEED_RIGHTMOTOR);
+            delay(NODE_LEAVE_DELAY);
+            node_left_time = millis();
+            do
+            {
+                readIRs();
+            } while (!moveForwardTillReachedNode(SPEED_RIGHTMOTOR_SLOW, SPEED_LEFTMOTOR_SLOW));
 
             // digitalWrite(buzzer, LOW);
             delay(NORMAL_NODE_REACHED_DELAY);
@@ -306,7 +330,34 @@ void conductMovement(char *path)
                 do
                 {
                     readIRs();
-                } while (!moveForwardTillStopped());
+                } while (!moveForwardTillStopped(SPEED_RIGHTMOTOR, SPEED_LEFTMOTOR));
+
+                digitalWrite(buzzer, LOW);
+                delay(EVENT_NODE_REACHED_DELAY);
+                digitalWrite(buzzer, HIGH);
+
+                char msg[MESSAGE_QUEUE_SIZE];
+                snprintf(msg, MESSAGE_QUEUE_SIZE, "special node left: %lu\n", millis());
+                xQueueSend(send_to_wifi_queue, msg, 0);
+
+                node_left_time = millis();
+            }
+        }
+        else if (next_movement == 'X') {
+           Serial.println("===> special forward.");
+            int send_me_istop = 1;
+            if (xQueueSend(reverse_action_queue, &send_me_istop, portMAX_DELAY))
+            {
+                analogWrite(motor1r, 0);
+                analogWrite(motor2r, 0);
+                analogWrite(motor1f, SPEED_LEFTMOTOR);
+                analogWrite(motor2f, SPEED_RIGHTMOTOR);
+                delay(NODE_LEAVE_DELAY);
+
+                do
+                {
+                    readIRs();
+                } while (!moveForwardTillStopped(SPEED_RIGHTMOTOR_SLOW, SPEED_LEFTMOTOR_SLOW));
 
                 digitalWrite(buzzer, LOW);
                 delay(EVENT_NODE_REACHED_DELAY);
@@ -323,7 +374,7 @@ void conductMovement(char *path)
         {
             Serial.println("===> 180D TURN!");
             turn_right();
-            delay(LEAVE_BLACK_DELAY_UTURN);
+            delay(UTURN_TIME);
             stop();
             readIRs();
             // do
@@ -354,7 +405,7 @@ void conductMovement(char *path)
             //     readIRs();
             // } while (!turn(LEFT, LEAVE_BLACK_DELAY_UTURN));
             turn_left();
-            delay(LEAVE_BLACK_DELAY_UTURN);
+            delay(UTURN_TIME);
             stop();
             readIRs();
             char msg[MESSAGE_QUEUE_SIZE];
@@ -387,7 +438,7 @@ void conductMovement(char *path)
     while (1)
     {
         readIRs();
-        moveForwardLogic();
+        moveForwardLogic(SPEED_RIGHTMOTOR, SPEED_LEFTMOTOR);
         if (millis() - start_of_end_detect >= END_SKIP)
         {
             if (input3 == 0 && input2 == 0 && input4 == 0)
@@ -401,6 +452,10 @@ void conductMovement(char *path)
             }
         }
     }
+
+    char msg[MESSAGE_QUEUE_SIZE];
+    snprintf(msg, MESSAGE_QUEUE_SIZE, "terminate\n");
+    xQueueSend(send_to_wifi_queue, msg, 0);
 }
 
 void resetGlobals()
@@ -431,9 +486,9 @@ void endDetectionCode()
     digitalWrite(buzzer, HIGH);
 }
 
-int moveForwardTillStopped()
+int moveForwardTillStopped(int right_speed, int left_speed)
 {
-    moveForwardLogic();
+    moveForwardLogic(right_speed, left_speed);
 
     int action_code = 0;
     if (xQueueReceive(action_queue, &action_code, 0))
@@ -579,19 +634,19 @@ int turn_special(char dirn, int leave_black_delay)
     return 0;
 }
 
-int moveForwardTillReachedNode()
+int moveForwardTillReachedNode(int right_speed, int left_speed)
 {
     if (!((input2 == 1 && input3 == 1) && input4 == 1))
     {
         // if not at a node
-        moveForwardLogic();
+        moveForwardLogic(right_speed, left_speed);
         return 0;
     }
     else
     { // reached a node
         if (millis() - node_left_time < IGNORE_FALSE_NODE_TIME)
         {
-            moveForwardLogic();
+            moveForwardLogic(right_speed, left_speed);
             return 0;
         }
         else
@@ -601,7 +656,7 @@ int moveForwardTillReachedNode()
         }
     }
 }
-void moveForwardLogic()
+void moveForwardLogic(int right_speed, int left_speed)
 {
 
     // if (input1 == 1 && input5 == 0) // left line detected by left sensor
@@ -634,16 +689,16 @@ void moveForwardLogic()
         }
         else
         {
-            analogWrite(motor1f, SPEED_LEFTMOTOR);
-            analogWrite(motor2f, SPEED_RIGHTMOTOR);
+            analogWrite(motor1f, left_speed);
+            analogWrite(motor2f, right_speed);
         }
     }
     else
     {
         if (input3 == 1 && (input2 == 0 && input4 == 0)) // move forward if middle line detected only by middle sensor
         {
-            analogWrite(motor1f, SPEED_LEFTMOTOR);
-            analogWrite(motor2f, SPEED_RIGHTMOTOR);
+            analogWrite(motor1f, left_speed);
+            analogWrite(motor2f, right_speed);
         }
         else if (input2 == 1) // middle line detected by middle left sensor
         {
