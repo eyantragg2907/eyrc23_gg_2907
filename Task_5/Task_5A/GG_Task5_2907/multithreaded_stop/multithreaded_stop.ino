@@ -43,8 +43,8 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define IGNORE_FALSE_NODE_TIME 200 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY. With moving logic.
 
 /* SPECIAL BEGINNING LOGIC */
-#define ALIGN_CENTER_BEGINNING 0 // d: 80 // delay for aligning center of rotation in the beginning, when the situation is different.
-#define TURN_DELAY_BEGINNING 0   // d: 50 // delay for a small left turn in the beginning, for correction purposes.
+#define ALIGN_CENTER_BEGINNING 90 // d: 80 // delay for aligning center of rotation in the beginning, when the situation is different.
+#define TURN_DELAY_BEGINNING 60  // d: 50 // delay for a small left turn in the beginning, for correction purposes.
 
 /* SPECIAL END LOGIC */
 #define ERROR_COUNTER_MAX 6 // delay of the number of times false detection of ALL OFF can happen at the end.
