@@ -554,8 +554,10 @@ def get_detected_events() -> dict:
 
     detected_events = predictor.run_predictor(EVENT_FILENAMES)
 
-    # Removing None values (no events)
-    detected_events_out = {k: v for k, v in detected_events.items() if v is not None}
+    # Removing None values (no events) and swapping the values for correct terminal output
+    terminal_output_events_swap = {"combat":"Combat","destroyed_buildings":"Destroyed Buildings","fire":"Fire",
+                                   "humanitarian_aid":"Humanitarian Aid and rehabilitation", "military_vehicles":"Military Vehicles"}
+    detected_events_out = {k: terminal_output_events_swap[v] for k, v in detected_events.items() if v is not None}
     print(detected_events_out)
     return detected_events
 
@@ -600,7 +602,7 @@ if __name__ == "__main__":
         # run djikstra to get the path between events, maintainig priority
         path = djikstra.final_path(detected_events)
         command = "n" + path
-        # print(command)
+        print(command)
     soc, conn = init_connection()
 
     connect_and_move(soc, conn, command)

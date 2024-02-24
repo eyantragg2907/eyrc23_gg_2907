@@ -43,7 +43,7 @@ SPL_SLOW_FWD= "X"
 label2priority = {
     "fire": 1,
     "destroyed_buildings": 2,
-    "human_aid_rehabilitation": 3,
+    "humanitarian_aid": 3,
     "military_vehicles": 4,
     "combat": 5,
 }

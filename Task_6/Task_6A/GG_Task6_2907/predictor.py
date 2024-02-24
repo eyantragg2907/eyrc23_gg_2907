@@ -29,9 +29,9 @@ CLASS_MAP = [
     "combat",
     "destroyed_buildings",
     "fire",
-    "human_aid_rehabilitation",
+    "humanitarian_aid",
     "military_vehicles",
-    "empty"
+    None
 ]
 IMG_SHAPE = (64, 64)
 
@@ -106,8 +106,6 @@ def run_predictor(filepaths: list[str]) -> dict[str, str]:
     for x_path, pos in zip(filepaths, ["A", "B", "C", "D", "E"]):
         img = preprocess_image(x_path)
         event = predict(model, img)
-        if event == "empty":
-            event = None
         output[pos] = event
     
     return output
