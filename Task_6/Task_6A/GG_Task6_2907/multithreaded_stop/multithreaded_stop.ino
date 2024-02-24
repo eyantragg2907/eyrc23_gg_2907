@@ -25,13 +25,14 @@
 #define SPEED_RIGHTMOTOR 150 // down from 255 motor RIGHT speed, FORWARD
 #define SPEED_RIGHTMOTOR_LO 130 // 'x' speed
 #define SPEED_LEFTMOTOR_LO 130
-#define SPEED_LEFTMOTOR_SLOW 100 // 'X' speed
-#define SPEED_RIGHTMOTOR_SLOW 100
+#define SPEED_LEFTMOTOR_SLOW 75 // 'X' speed
+#define SPEED_RIGHTMOTOR_SLOW 75
 #define SPEED_LEFTMOTOR_SLOWSLOW 140 // 'd' speed
 #define SPEED_RIGHTMOTOR_SLOWSLOW 140
 #define ROTATE_SPEED 140 // motor BOTH speed, D90/ D180 TURNS
 #define ROTATE_SPEED_LEFT 135 // or 70
 #define ROTATE_SPEED_UTURN 200 // we turn faster on uturns since they are time-controlled anyway
+#define XINCREASEBANGBANG 35
 
 #define BANGBANG_TURNSPEED 220 // correction motor speed when in WALL mode
 #define MIDDLE_TURNSPEED 125   // correction motor speed when in MIDDLE_LINE mode
@@ -48,7 +49,7 @@
 #define LEAVE_BLACK_DELAY_LEFT 590 // delay before black line detection begins in turning D90 for LEFT Turn
 
 /* TURN LOGIC: UTURN  */
-#define UTURN_TIME 832 // exact delay for which a D180 turn is undertaken. No black line detection happens in 180s.
+#define UTURN_TIME 845 // exact delay for which a D180 turn is undertaken. No black line detection happens in 180s.
 
 /* FALSE NODE IGNORE LOGIC */
 #define NODE_LEAVE_DELAY 140      // delay to move in front of a NODE w/o stopping logic. Without moving logic.
@@ -68,7 +69,7 @@
 #define CONNECTION_PING_DELAY 200 // delay between WIFI-host retry's
 #define WIFI_TRY_DELAY 500        // delay between WIFI-connect retry's
 
-#define SETUP_DELAY 0 // delay in the beginning before the robot starts moving to give us time to put it on the grid
+#define SETUP_DELAY 8000 // delay in the beginning before the robot starts moving to give us time to put it on the grid
 
 /* wireless */
 const char *ssid = "brainerd";
@@ -404,7 +405,7 @@ void conductMovement(char *path)
                 do
                 {
                     readIRs();
-                } while (!moveForwardTillStopped(SPEED_RIGHTMOTOR_SLOW, SPEED_LEFTMOTOR_SLOW));
+                } while (!moveForwardTillStoppedSpecial(SPEED_RIGHTMOTOR_SLOW, SPEED_LEFTMOTOR_SLOW));
 
                 digitalWrite(buzzer, LOW);
                 delay(EVENT_NODE_REACHED_DELAY);
@@ -548,6 +549,23 @@ int moveForwardTillStopped(int right_speed, int left_speed)
     }
     return 0;
 }
+
+int moveForwardTillStoppedSpecial(int right_speed, int left_speed)
+{
+    moveForwardLogicHighBangBang(right_speed, left_speed);
+
+    int action_code = 0;
+    if (xQueueReceive(action_queue, &action_code, 0))
+    {
+        if (action_code == INTERRUPTSTOP_ACTIONCODE)
+        {
+            stop();
+            return 1;
+        }
+    }
+    return 0;
+}
+
 
 int turn(char dirn, int leave_black_delay)
 {
@@ -741,6 +759,47 @@ void moveForwardLogic(int right_speed, int left_speed)
         {
             analogWrite(motor1f, 0);
             analogWrite(motor2f, BANGBANG_TURNSPEED);
+        }
+    }
+    else
+    {
+        if (input3 == 1 && (input2 == 0 && input4 == 0)) // move forward if middle line detected only by middle sensor
+        {
+            analogWrite(motor1f, left_speed);
+            analogWrite(motor2f, right_speed);
+        }
+        else if (input2 == 1) // middle line detected by middle left sensor
+        {
+            analogWrite(motor1f, 0);
+            analogWrite(motor2f, MIDDLE_TURNSPEED);
+        }
+        else if (input4 == 1) // middle line detected by middle right sensor
+        {
+            analogWrite(motor1f, MIDDLE_TURNSPEED);
+            analogWrite(motor2f, 0);
+        }
+    }
+}
+
+void moveForwardLogicHighBangBang(int right_speed, int left_speed)
+{
+    if (input2 == 0 && input3 == 0 && input4 == 0) // bang bang controller
+    {
+
+        if ((input1 == 0 && input5 == 0) || (input1 == 1 && input5 == 1))
+        {
+            analogWrite(motor1f, left_speed);
+            analogWrite(motor2f, right_speed);
+        }
+        else if (input1 == 1 && input5 == 0) // left line detected by left sensor
+        {
+            analogWrite(motor1f, BANGBANG_TURNSPEED + XINCREASEBANGBANG);
+            analogWrite(motor2f, 0);
+        }
+        else if (input5 == 1 && input1 == 0) // right line detected by right sensor
+        {
+            analogWrite(motor1f, 0);
+            analogWrite(motor2f, BANGBANG_TURNSPEED + XINCREASEBANGBANG);
         }
     }
     else

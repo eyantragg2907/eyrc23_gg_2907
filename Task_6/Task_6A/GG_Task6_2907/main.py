@@ -38,7 +38,7 @@ from collections.abc import Sequence
 from typing import Tuple, Union
 
 # Camera ID has to be specified for using external camera
-CAMERA_ID = 0
+CAMERA_ID = 1
 
 # IDs of corner AruCos
 ARUCO_CORNER_IDS = {4, 5, 6, 7}
@@ -479,7 +479,7 @@ def initialize_capture(frames_to_skip: int = 30) -> cv2.VideoCapture:
 
     # Windows uses DirectShow API to access the camera
     if sys.platform == "win32":
-        capture = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
+        capture = cv2.VideoCapture(CAMERA_ID) # cv2.CAP_DSHOW
     else:
         capture = cv2.VideoCapture(CAMERA_ID)
 
@@ -602,7 +602,7 @@ if __name__ == "__main__":
         # run djikstra to get the path between events, maintainig priority
         path = djikstra.final_path(detected_events)
         command = "n" + path
-        print(command)
+        # print(command)
     soc, conn = init_connection()
 
     connect_and_move(soc, conn, command)

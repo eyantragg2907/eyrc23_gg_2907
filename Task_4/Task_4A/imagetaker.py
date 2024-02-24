@@ -1,4 +1,4 @@
-CAMERA_ID = 0  # 0 for internal, 1 for external as a basis
+CAMERA_ID = 1 # 0 for internal, 1 for external as a basis
 
 import cv2
 from datetime import datetime
@@ -19,7 +19,7 @@ def get_aruco_data(frame):
     global detector
     c, i, r = detector.detectMarkers(frame)
 
-    print(c)
+    # print(c)
 
     if len(c) == 0:
         raise Exception("No Aruco Markers Found")
@@ -99,16 +99,20 @@ def get_pts_from_frame(s):
 
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
-
+COUNTER = 0
 def save_event_images(frame, pts, filenames):
+    global COUNTER
     for p, f in zip(pts, filenames):
-        print(p)
-        print(frame)
+        # print(p)
+        # print(frame)
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
         # event = unsharp_mask(event)
-        print(event)
+        # print(event)
+        dt = str(datetime.now().timestamp()).replace(".", "")
+        f = f.split(".")[0] + dt + f"_{COUNTER}.png"
         print("saving to", f)
         cv2.imwrite(f, event)
+        COUNTER += 1
 
 
 def get_events(frame, filenames):
@@ -121,10 +125,10 @@ def get_events(frame, filenames):
 
 
 def main():
-    num_of_frames_skip = 100
+    num_of_frames_skip = 40
     # Initialize the camera
     if sys.platform == "win32":
-        cap = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
+        cap = cv2.VideoCapture(CAMERA_ID)
     else:
         cap = cv2.VideoCapture(CAMERA_ID)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
@@ -153,11 +157,11 @@ def main():
         "None"
     ]
 
-    A = classmap.index("human")
-    B = classmap.index("combat")
-    C = classmap.index("fire")
-    D = classmap.index("None")
-    E = classmap.index("building")
+    A = classmap.index("vehicle")
+    B = classmap.index("building")
+    C = classmap.index("combat")
+    D = classmap.index("fire")
+    E = classmap.index("fire")
 
     SET = "NEWSET_"
     FOLDER = "overfit"
@@ -178,7 +182,7 @@ def main():
         # save the photo
         cx = c
         if ret is True:
-            cv2.imwrite(f"temp_save.jpg", frame)
+            # cv2.imwrite(f"temp_save.jpg", frame)
             filenames = f"{FOLDER}/{A}/{cx}{SET}.png {FOLDER}/{B}/{cx}{SET}.png {FOLDER}/{C}/{cx}{SET}.png {FOLDER}/{D}/{cx}{SET}.png {FOLDER}/{E}/{cx}{SET}.png".split()
             frame, pts, events = get_events(frame, filenames)
             c += 1
