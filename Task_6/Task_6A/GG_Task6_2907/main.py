@@ -61,7 +61,7 @@ GPS_COORDS_DATA = "lat_long.csv"
 
 EVENT_FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
-EVENT_STOP_EXTRA_PIXELS = 30
+EVENT_STOP_EXTRA_PIXELS = 35
 
 # Reads the AruCo IDs and Corners Data
 GLOBAL_ARUCOS_DF = pd.read_csv(ARUCO_DATA_PATH)

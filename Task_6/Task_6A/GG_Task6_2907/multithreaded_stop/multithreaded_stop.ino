@@ -22,11 +22,11 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define ROTATE_SPEED_LEFT 70
 #define ROTATE_SPEED_UTURN 200 // we turn faster on uturns since they are time-controlled anyway
 
-#define BANGBANG_TURNSPEED 230 // correction motor speed when in WALL mode
-#define MIDDLE_TURNSPEED 120   // correction motor speed when in MIDDLE_LINE mode
+#define BANGBANG_TURNSPEED 235 // correction motor speed when in WALL mode
+#define MIDDLE_TURNSPEED 125  // correction motor speed when in MIDDLE_LINE mode
 
 /* STOP DELAYS */
-#define ROT_COMPLETE_DELAY 100        // STOP delay after a D90 turn.
+#define ROT_COMPLETE_DELAY 100       // STOP delay after a D90 turn.
 #define EVENT_NODE_REACHED_DELAY 1000 // STOP delay for every EVENT NODE. Also activates BUZZER
 #define NORMAL_NODE_REACHED_DELAY 50 // STOP delay after every node. No BUZZER.
 #define END_DELAY 5000                // delay for buzzer ring at the END
@@ -34,7 +34,7 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 /* TURN LOGIC: DONT DO BLACK LINE DETECTION FOR X */
 #define CENTER_CORRECT_DELAY 375 // delay to align center of rotation for turning 350
 #define LEAVE_BLACK_DELAY 340    // delay before black line detection begins in turning D90 400
-#define LEAVE_BLACK_DELAY_LEFT 390     // delay before black line detection begins in turning D90 for LEFT Turn
+#define LEAVE_BLACK_DELAY_LEFT 380     // delay before black line detection begins in turning D90 for LEFT Turn
 
 /* TURN LOGIC: UTURN  */
 #define UTURN_TIME 800 // exact delay for which a D180 turn is undertaken. No black line detection happens in 180s.
@@ -48,15 +48,15 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 #define TURN_DELAY_BEGINNING 50   // d: 50 // delay for a small left turn in the beginning, for correction purposes.
 
 /* SPECIAL END LOGIC */
-#define ERROR_COUNTER_MAX 6        // delay of the number of times false detection of ALL OFF can happen at the end.
-#define END_SKIP 800               // delay before END (ALL OFF) detection logic starts working. But with moving logic.
+#define ERROR_COUNTER_MAX 9        // delay of the number of times false detection of ALL OFF can happen at the end.
+#define END_SKIP 900               // delay before END (ALL OFF) detection logic starts working. But with moving logic.
 #define END_SKIP_FORWARD_DELAY 500 // delay for which simple forward movement is present in END detection
 
 /* WIFI AND SETUP */
 #define CONNECTION_PING_DELAY 200 // delay between WIFI-host retry's
 #define WIFI_TRY_DELAY 500        // delay between WIFI-connect retry's
 
-#define SETUP_DELAY 5000 // delay in the beginning before the robot starts moving to give us time to put it on the grid
+#define SETUP_DELAY 8000 // delay in the beginning before the robot starts moving to give us time to put it on the grid
 
 /* wireless */
 const char *ssid = "brainerd";
@@ -440,7 +440,7 @@ void conductMovement(char *path)
     while (1)
     {
         readIRs();
-        moveForwardLogic(SPEED_RIGHTMOTOR, SPEED_LEFTMOTOR);
+        moveForwardLogicSpecial(SPEED_RIGHTMOTOR, SPEED_LEFTMOTOR);
         if (millis() - start_of_end_detect >= END_SKIP)
         {
             if (input3 == 0 && input2 == 0 && input4 == 0)
@@ -715,6 +715,25 @@ void moveForwardLogic(int right_speed, int left_speed)
             analogWrite(motor2f, 0);
         }
     }
+}
+
+void moveForwardLogicSpecial(int right_speed, int left_speed)
+{
+        if (input3 == 1 && (input2 == 0 && input4 == 0)) // move forward if middle line detected only by middle sensor
+        {
+            analogWrite(motor1f, left_speed);
+            analogWrite(motor2f, right_speed);
+        }
+        else if (input2 == 1) // middle line detected by middle left sensor
+        {
+            analogWrite(motor1f, 0);
+            analogWrite(motor2f, MIDDLE_TURNSPEED);
+        }
+        else if (input4 == 1) // middle line detected by middle right sensor
+        {
+            analogWrite(motor1f, MIDDLE_TURNSPEED);
+            analogWrite(motor2f, 0);
+        }
 }
 
 /* wifi functions */
