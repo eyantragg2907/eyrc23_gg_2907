@@ -5,8 +5,8 @@
 * Theme:                GeoGuide (GG)
 * Functions:            reverse_pose
 * Global Variables:     LEFT_TURN_TIME, RIGHT_TURN_TIME, FRONT, RIGHT, BACK, LEFT, TOTAL_POSES, INITIAL_POSE, 
-                        GRAPH_DATA_FILENAME, LEFT_INSTRUCTION, RIGHT_INSTRUCTION, SLOW_FORWARD, 
-                        U_TURN_INSTRUCTION, SPL_FWD_INSTRUCTION, SPL_SLOW_FWD, label2priority
+                        GRAPH_DATA_FILENAME, LEFT_INSTRUCTION, RIGHT_INSTRUCTION, FORWARD_INSTRUCTION, 
+                        SLOW_FORWARD, U_TURN_INSTRUCTION, SPL_FWD_INSTRUCTION, SPL_SLOW_FWD, label2priority
 """
 
 # Turn times in milliseconds measured physically

@@ -1,6 +1,6 @@
 All the main python code is run through the main file `main.py`. This includes event detection and live tracking.
 Training code is run through `model_training_code/train.py`.
-Embeddec c code is present in `embedded-c/robot_code/robot_code.ino`
+Embedded c code is present in `embedded-c/robot_code/robot_code.ino`
 
 1. Image Processing
 

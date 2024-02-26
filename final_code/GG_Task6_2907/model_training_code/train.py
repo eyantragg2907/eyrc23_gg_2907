@@ -1,6 +1,6 @@
 """ 
 * Team Id:              2907
-* Author List:          Arnav Rustagi
+* Author List:          Arnav Rustagi, Subham Jalan
 * Filename:             train.py
 * File use:             This file contains the code for training the model to recognize 
                             the different classes of images

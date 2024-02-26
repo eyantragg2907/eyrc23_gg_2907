@@ -24,7 +24,7 @@ import tensorflow as tf
 tf.get_logger().setLevel("INFO")
 tf.autograph.set_verbosity(1)
 
-# Class map for the model, the indexes are important.
+# Class map for the model, the indices are important.
 CLASS_MAP = [
     "combat",
     "destroyed_buildings",
