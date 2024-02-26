@@ -11,48 +11,51 @@ Written by: Pranjal Rastogi (github.com/PjrCodes). Some sections taken from earl
 
 /* Configuration */
 
+// Measurements taken and optimized at 8.05V
+// 5 runs: no loss
+// 11 runs: 8.05V
+// 25 runs: 7.95V
+// 35 runs: 7.91V
+
+/* SPEED CONTROLS */
 #define SPEED_LEFTMOTOR 200  // motor LEFT speed, FORWARD
 #define SPEED_RIGHTMOTOR 200 // down from 255 motor RIGHT speed, FORWARD
-#define ROTATE_SPEED 255     // motor BOTH speed, D90/ D180 TURNS
+#define ROTATE_SPEED 200    // motor BOTH speed, D90/ D180 TURNS
 
 #define BANGBANG_TURNSPEED 255 // correction motor speed when in WALL mode
 #define MIDDLE_TURNSPEED 150   // correction motor speed when in MIDDLE_LINE mode
 
-#define ROT_COMPLETE_DELAY 100 // STOP delay after a D90 TURN
+/* STOP DELAYS */
+#define ROT_COMPLETE_DELAY 100 // STOP delay after a D90 turn.
+#define EVENT_NODE_REACHED_DELAY 1000 // STOP delay for every EVENT NODE. Also activates BUZZER
+#define NORMAL_NODE_REACHED_DELAY 200   // STOP delay after every node. No BUZZER.
+#define END_DELAY 5000             // delay for buzzer ring at the END
 
-#define NODE_LEAVE_DELAY 200 // delay to move in front of a NODE w/o stopping logic
+/* TURN LOGIC: DONT DO BLACK LINE DETECTION FOR X */
+#define CENTER_CORRECT_DELAY 230  // delay to align center of rotation for turning
+#define LEAVE_BLACK_DELAY 430     // delay before black line detection begins in turning D90
 
-#define LEAVE_BLACK_DELAY 300     // delay before black line detection begins
-#define LEAVE_BLACK_DELAY_UTURN 850 // delay before black line detection begins for D180 turn (uturn)
+/* TURN LOGIC: UTURN  */
+#define UTURN_TIME 850 // exact delay for which a D180 turn is undertaken. No black line detection happens in 180s.
 
+/* FALSE NODE IGNORE LOGIC */
+#define NODE_LEAVE_DELAY 200 // delay to move in front of a NODE w/o stopping logic. Without moving logic.
+#define IGNORE_FALSE_NODE_TIME 200 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY. With moving logic.
+
+/* SPECIAL BEGINNING LOGIC */
+#define ALIGN_CENTER_BEGINNING 90 // d: 80 // delay for aligning center of rotation in the beginning, when the situation is different.
+#define TURN_DELAY_BEGINNING 60  // d: 50 // delay for a small left turn in the beginning, for correction purposes.
+
+/* SPECIAL END LOGIC */
 #define ERROR_COUNTER_MAX 6 // delay of the number of times false detection of ALL OFF can happen at the end.
+#define END_SKIP 800 // delay before END (ALL OFF) detection logic starts working. But with moving logic.
+#define END_SKIP_FORWARD_DELAY 300 // delay for which simple forward movement is present in END detection
 
-#define END_SKIP 800 // delay before END (ALL OFF) detection logic starts working
-
-// #define BLACKLINE_MAXIMUM 650
-
-#define CENTER_CORRECT_DELAY 300 // delay to align center of rotation
-
+/* WIFI AND SETUP */
 #define CONNECTION_PING_DELAY 200 // delay between WIFI-host retry's
 #define WIFI_TRY_DELAY 500        // delay between WIFI-connect retry's
 
-#define IGNORE_FALSE_NODE_TIME 200 // delay before node-detection logic fires up again. Counted after NODE_LEAVE_DELAY.
-
-#define ALIGN_CENTER_BEGINNING 0 // def: 80 // delay for aligning center of rotation in the beginning, when the situation is different.
-//#define ALIGN_CENTER_BEGINNING 0 // def: 200 // delay for aligning center of rotation in the beginning, when the situation is different.
-#define TURN_DELAY_BEGINNING 0   // def: 50 // delay for a small left turn in the beginning, for correction purposes.
-//#define TURN_DELAY_BEGINNING 0   // def: 150 // delay for a small left turn in the beginning, for correction purposes.
-
-#define EVENT_NODE_REACHED_DELAY 1000 // delay for BUZZER every EVENT NODE
-#define NORMAL_NODE_REACHED_DELAY 200   // delay for BUZZER every NORMAL node, set to 0 to disable
-#define NORMAL_NODE_REACHED_DELAY 0
-
-#define END_SKIP_FORWARD_DELAY 300 // delay for which simple forward movement is present in END detection
-#define END_DELAY 5000             // delay for buzzer ring at the END.
-
-// #define D90_TURNTIME 580
-
-#define BEFORE_READY_FOR_NEXTCOMMAND 1000 // delay after a run after the END_DELAY. this is required so that the LED actually turns off after its on at the end of each run.
+#define SETUP_DELAY 0 // delay in the beginning before the robot starts moving to give us time to put it on the grid
 
 /* wireless */
 const char *ssid = "brainerd";
@@ -170,7 +173,7 @@ void controlLoop(void *pvParameters)
             case START_ACTIONCODE:
             {
                 // standard start-up procedure should be followed
-                delay(6000); // delay so that we have time to set up
+                delay(SETUP_DELAY); // delay so that we have time to set up
 
                 resetGlobals();
                 digitalWrite(led_red, LOW);
@@ -183,10 +186,6 @@ void controlLoop(void *pvParameters)
                 }
                 
                 conductMovement(path);
-
-                /* dont give the false idea that restart-able is ready, due to the connection issue explained above. */
-                // delay(BEFORE_READY_FOR_NEXTCOMMAND);
-                // digitalWrite(led_red, HIGH);
             }
             default:
             {
@@ -323,7 +322,7 @@ void conductMovement(char *path)
         {
             Serial.println("===> 180D TURN!");
             turn_right();
-            delay(LEAVE_BLACK_DELAY_UTURN);
+            delay(UTURN_TIME);
             stop();
             readIRs();
             // do
@@ -354,7 +353,7 @@ void conductMovement(char *path)
             //     readIRs();
             // } while (!turn(LEFT, LEAVE_BLACK_DELAY_UTURN));
             turn_left();
-            delay(LEAVE_BLACK_DELAY_UTURN);
+            delay(UTURN_TIME);
             stop();
             readIRs();
             char msg[MESSAGE_QUEUE_SIZE];
@@ -399,6 +398,10 @@ void conductMovement(char *path)
             }
         }
     }
+    
+    char msg[MESSAGE_QUEUE_SIZE];
+    snprintf(msg, MESSAGE_QUEUE_SIZE, "terminate\n");
+    xQueueSend(send_to_wifi_queue, msg, 0);
 }
 
 void resetGlobals()
@@ -579,7 +582,7 @@ int turn_special(char dirn, int leave_black_delay)
 
 int moveForwardTillReachedNode()
 {
-    if (!((input2 == 1 && input3 == 1) && input4 == 1))
+    if (!((input2 == 1 && input3==1) &&input4 == 1))
     {
         // if not at a node
         moveForwardLogic();
@@ -638,12 +641,8 @@ void moveForwardLogic()
     }
     else
     {
-        if (input3 == 1 && (input2 == 0 && input4 == 0)) // move forward if middle line detected only by middle sensor
-        {
-            analogWrite(motor1f, SPEED_LEFTMOTOR);
-            analogWrite(motor2f, SPEED_RIGHTMOTOR);
-        }
-        else if (input2 == 1) // middle line detected by middle left sensor
+
+        if (input2 == 1) // middle line detected by middle left sensor
         {
             analogWrite(motor1f, 0);
             analogWrite(motor2f, MIDDLE_TURNSPEED);
@@ -652,6 +651,11 @@ void moveForwardLogic()
         {
             analogWrite(motor1f, MIDDLE_TURNSPEED);
             analogWrite(motor2f, 0);
+        }
+        else if (input3 == 1 ) // move forward if middle line detected only by middle sensor
+        {
+            analogWrite(motor1f, SPEED_LEFTMOTOR);
+            analogWrite(motor2f, SPEED_RIGHTMOTOR);
         }
     }
 }

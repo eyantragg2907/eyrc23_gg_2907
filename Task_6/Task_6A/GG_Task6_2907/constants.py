@@ -31,17 +31,19 @@ GRAPH_DATA_FILENAME = "./map_data.txt"
 LEFT_INSTRUCTION = "l"
 RIGHT_INSTRUCTION = "r"
 FORWARD_INSTRUCTION = "n"
+SLOW_FORWARD = "d"
 U_TURN_INSTRUCTION = "R"
 
 # Special forward instruction is used when the bot needs to stop at an event after being pinged by the computer
 # The computer uses distance from AruCo marker to determine if the robot is at an event
-SPECIAL_FORWARD_INSTRUCTION = "x"
+SPL_FWD_INSTRUCTION = "x"
+SPL_SLOW_FWD= "X"
 
 # This dictionary is used to assign priority to the labels of the events. Lower number is higher priority
 label2priority = {
     "fire": 1,
     "destroyed_buildings": 2,
-    "human_aid_rehabilitation": 3,
+    "humanitarian_aid": 3,
     "military_vehicles": 4,
     "combat": 5,
 }

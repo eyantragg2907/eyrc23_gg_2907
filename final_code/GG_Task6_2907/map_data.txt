@@ -1,0 +1,44 @@
+# node_1 node_2 direction distance (for biderctional node 2 node connections)
+# node_1 node_2 direction distance pose (for uniderctional node 2 node connections, pose defining the ending pose)
+# node * (defines special exit nodes)
+
+A E_A RIGHT 1970
+A C FRONT 2701
+
+E_A B RIGHT 3654
+
+B D FRONT 3090
+B E RIGHT 9114 FRONT
+E B BACK 10200 RIGHT
+
+C F FRONT 3289
+C D RIGHT 5664
+
+D E_B RIGHT 3028
+D G FRONT 2645
+
+E_B E RIGHT 2651
+
+E H FRONT 2592
+
+F I FRONT 2182
+F E_D RIGHT 1840
+
+E_D G RIGHT 3510
+
+G J FRONT 2064
+
+G E_C RIGHT 3139
+
+E_C H RIGHT 2732 
+
+H K FRONT 2065 
+
+I J RIGHT 5442 
+I E_E FRONT 4000 RIGHT
+E_E I LEFT 4000 BACK
+
+J K RIGHT 5442
+
+K E_E FRONT 9000 LEFT
+E_E K RIGHT 9000 BACK

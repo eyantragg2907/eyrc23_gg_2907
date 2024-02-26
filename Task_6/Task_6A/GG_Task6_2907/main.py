@@ -8,8 +8,8 @@
             get_corners_map, get_aruco_map_data, get_robot_pxcoords, get_nearest_aruco, write_live_location_csv,
             update_qgis_position, get_robot_pxcoords_update_qgis, initialize_capture, listen_and_print,
             draw_event_labels, get_detected_events, delete_event_images
-* Global Variables: CAMERA_ID, ARUCO_CORNER_IDS, ARUCO_ROBOT_ID, IDEAL_MAP_SIZE, HOST_IP_ADDRESS,
-                    CHECK_FOR_ROBOT_AT_EVENT, CLOSEST_ARUCO_OUTPUT_FILE_LOC, ARUCO_DATA_PATH, GPS_COORDS_DATA,
+* Global Variables: CAMERA_ID, ARUCO_CORNER_IDS, ROBOT_ARUCO_ID, IDEAL_MAP_SIZE, HOST_IP_ADDRESS,
+                    CLOSEST_ARUCO_OUTPUT_FILE_LOC, ARUCO_DATA_PATH, GPS_COORDS_DATA,
                     EVENT_FILENAMES, EVENT_STOP_EXTRA_PIXELS, GLOBAL_ARUCOS_DF, GLOBAL_ARUCO_CORNERS, GLOBAL_ARUCO_IDS,
                     prev_closest_aruco
 """
@@ -25,32 +25,30 @@ import pandas as pd
 import socket
 import threading
 import sys
-import djikstra
 import ast
 
 
 # Importing local modules
 import predictor
+import djikstra
 
-# Importing Types of Type Hinting
+# Importing types for Type Hinting
 from cv2.typing import MatLike
 from collections.abc import Sequence
-from typing import Tuple
+from typing import Tuple, Union
 
 # Camera ID has to be specified for using external camera
-CAMERA_ID = 0  
+CAMERA_ID = 1
 
 # IDs of corner AruCos
-ARUCO_CORNER_IDS = {4, 5, 6, 7}  
+ARUCO_CORNER_IDS = {4, 5, 6, 7}
 
-ARUCO_ROBOT_ID = 100  
+ROBOT_ARUCO_ID = 100
 
-IDEAL_MAP_SIZE = 1080  
+IDEAL_MAP_SIZE = 1080
 
 # IP address of the computer (changed everytime)
-HOST_IP_ADDRESS = "192.168.67.62"  
-
-CHECK_FOR_ROBOT_AT_EVENT = True
+HOST_IP_ADDRESS = "192.168.67.62"
 
 # For QGIS live tracking
 CLOSEST_ARUCO_OUTPUT_FILE_LOC = "live_location.csv"
@@ -63,12 +61,14 @@ GPS_COORDS_DATA = "lat_long.csv"
 
 EVENT_FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
-EVENT_STOP_EXTRA_PIXELS = 25
+EVENT_STOP_EXTRA_PIXELS = 35
 
 # Reads the AruCo IDs and Corners Data
 GLOBAL_ARUCOS_DF = pd.read_csv(ARUCO_DATA_PATH)
-GLOBAL_ARUCO_CORNERS = [np.array(ast.literal_eval(x.replace('\n', ',').replace('.', ','))) \
-                        for x in GLOBAL_ARUCOS_DF["corners"].values]
+GLOBAL_ARUCO_CORNERS = [
+    np.array(ast.literal_eval(x.replace("\n", ",").replace(".", ",")))
+    for x in GLOBAL_ARUCOS_DF["corners"].values
+]
 GLOBAL_ARUCO_IDS = GLOBAL_ARUCOS_DF["ids"].values
 
 # Used for tracking last closest AruCo marker to robot
@@ -104,6 +104,7 @@ def get_aruco_detector() -> aruco.ArucoDetector:
     detector = aruco.ArucoDetector(dictionary, parameters)
     return detector
 
+
 """ 
 * Function Name: cleanup
 * Input: s: socket.socket
@@ -111,8 +112,9 @@ def get_aruco_detector() -> aruco.ArucoDetector:
 * Logic: closes socket
 * Example Call: cleanup(s) -> None
 """
-def cleanup(s: socket.socket) -> None:  
+def cleanup(s: socket.socket) -> None:
     s.close()
+
 
 """ 
 * Function Name: connect_and_move
@@ -121,9 +123,9 @@ def cleanup(s: socket.socket) -> None:
 * Logic: Checks connection to the robot and sends the path
 * Example Call: connect_and_move(s, conn, "nnn") -> None
 """
-def connect_and_move(s: socket.socket, conn: socket.socket, path: str) -> None: 
+def connect_and_move(s: socket.socket, conn: socket.socket, path: str) -> None:
     data = conn.recv(1024)
-    data = data.decode("utf-8")  
+    data = data.decode("utf-8")
 
     if data == "ACK_REQ_FROM_ROBOT":
         pass
@@ -135,7 +137,7 @@ def connect_and_move(s: socket.socket, conn: socket.socket, path: str) -> None:
     # Send start ping and path to robot
     conn.sendall(str.encode("START\n"))
     conn.sendall(str.encode(path + "\n"))
-  
+
 
 """ 
 * Function Name: init_connection
@@ -144,7 +146,7 @@ def connect_and_move(s: socket.socket, conn: socket.socket, path: str) -> None:
 * Logic: Initializes the connection with the robot
 * Example Call: init_connection() -> (socket.socket, socket.socket)
 """
-def init_connection() -> tuple[socket.socket, socket.socket]: 
+def init_connection() -> tuple[socket.socket, socket.socket]:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -170,6 +172,7 @@ def get_camera_frame(capture: cv2.VideoCapture) -> np.ndarray:
     else:
         raise Exception("Fatal Camera Error!")
 
+
 """ 
 * Function Name: get_events_coords
 * Input: side_len: int
@@ -190,6 +193,7 @@ def get_events_coords(side_len: int) -> Tuple[np.ndarray, ...]:
 
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
+
 """ 
 * Function Name: save_event_images
 * Input: frame: numpy.ndarray, pts: Tuple[numpy.ndarray, ...],
@@ -199,12 +203,13 @@ def get_events_coords(side_len: int) -> Tuple[np.ndarray, ...]:
 * Example Call: save_event_images(frame, (Apts, Bpts, Cpts, Dpts, Epts),
                             ["A.png", "B.png", "C.png", "D.png", "E.png"]) -> None
 """
-def save_event_images(frame: np.ndarray, 
-                      pts: Tuple[np.ndarray, ...], 
-                      filenames: list[str]) -> None:
+def save_event_images(
+    frame: np.ndarray, pts: Tuple[np.ndarray, ...], filenames: list[str]
+) -> None:
     for p, f in zip(pts, filenames):
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
         cv2.imwrite(f, event)
+
 
 """ 
 * Function Name: get_robot_coords_and_frame
@@ -214,8 +219,9 @@ def save_event_images(frame: np.ndarray,
 * Example Call: get_robot_coords_and_frame(capture) -> (np.ndarray, list[np.ndarray],
                     np.ndarray, Tuple[np.ndarray, ...])
 """
-def get_robot_coords_and_frame(capture: cv2.VideoCapture, save_images=False) -> \
-    tuple[np.ndarray, list[np.ndarray], np.ndarray, Tuple[np.ndarray, ...]]:  
+def get_robot_coords_and_frame(
+    capture: cv2.VideoCapture, save_images=False
+) -> tuple[np.ndarray, list[np.ndarray], np.ndarray, Tuple[np.ndarray, ...]]:
     frame = get_camera_frame(capture)
     frame, side_len = transform_frame(frame)
     event_coords = get_events_coords(side_len)
@@ -227,6 +233,7 @@ def get_robot_coords_and_frame(capture: cv2.VideoCapture, save_images=False) -> 
     pxcoords = get_robot_pxcoords_update_qgis(frame)
 
     return frame, stopcoords, pxcoords, event_coords
+
 
 """ 
 * Function Name: get_stopcoords
@@ -247,6 +254,7 @@ def get_stopcoords(event_coords: Tuple[np.ndarray, ...]) -> list[np.ndarray]:
 
     return stopcoords
 
+
 """ 
 * Function Name: transform_frame
 * Input: frame: numpy.ndarray
@@ -255,7 +263,7 @@ def get_stopcoords(event_coords: Tuple[np.ndarray, ...]) -> list[np.ndarray]:
          the transformed frame and the side length of the square
 * Example Call: transform_frame(frame) -> (numpy.ndarray, int)
 """
-def transform_frame(frame: np.ndarray) -> tuple[np.ndarray, int]: 
+def transform_frame(frame: np.ndarray) -> tuple[np.ndarray, int]:
 
     pt_A, pt_B, pt_C, pt_D = get_corners_map(frame)
 
@@ -295,8 +303,10 @@ prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D = None, None, None, None  # corners
 * Logic: Returns the updated corners of the map (accounts of minute camera movements)
 * Example Call: transform_frame(frame) -> (numpy.ndarray, int)
 """
-def get_corners_map(frame: np.ndarray) -> Tuple[Tuple[int, ...], ...] | Tuple[None, ...]:
-    
+def get_corners_map(
+    frame: np.ndarray,
+) -> Union[Tuple[Tuple[int, ...], ...], Tuple[None, ...]]:
+
     global prev_pt_A, prev_pt_B, prev_pt_C, prev_pt_D
 
     corners, ids, _ = get_aruco_map_data(frame)
@@ -335,6 +345,7 @@ def get_corners_map(frame: np.ndarray) -> Tuple[Tuple[int, ...], ...] | Tuple[No
 
     return pt_A, pt_B, pt_C, pt_D
 
+
 """ 
 * Function Name: get_aruco_data
 * Input: frame: numpy.ndarray, flatten: bool
@@ -342,14 +353,20 @@ def get_corners_map(frame: np.ndarray) -> Tuple[Tuple[int, ...], ...] | Tuple[No
 * Logic: Detects the aruco markers and returns the corners, ids and rejected points
 * Example Call: get_aruco_data(frame) -> (Sequence[MatLike], MatLike, Sequence[MatLike])
 """
-def get_aruco_map_data(frame: np.ndarray, flatten : bool = True) -> tuple[Sequence[MatLike], MatLike, Sequence[MatLike]]:
+def get_aruco_map_data(
+    frame: np.ndarray, flatten: bool = True
+) -> tuple[Sequence[MatLike], MatLike, Sequence[MatLike]]:
     detector = get_aruco_detector()
     c, i, r = detector.detectMarkers(frame)
     if len(c) == 0:
+        cv2.imshow("wtf", frame)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
         raise Exception("No Aruco Markers Found")
     if flatten:
         i = i.flatten()
     return c, i, r
+
 
 """ 
 * Function Name: get_robot_pxcoords
@@ -358,13 +375,16 @@ def get_aruco_map_data(frame: np.ndarray, flatten : bool = True) -> tuple[Sequen
 * Logic: Returns the pixel coordinates of the robot
 * Example Call: get_robot_pxcoords(100, ids, corners) -> np.ndarray
 """
-def get_robot_pxcoords(robot_id: int, ids: MatLike, corners: Sequence[MatLike]) -> np.ndarray:
+def get_robot_pxcoords(
+    robot_id: int, ids: MatLike, corners: Sequence[MatLike]
+) -> np.ndarray:
     try:
         index = np.where(ids == robot_id)[0][0]
         coords = np.mean(corners[index].reshape((4, 2)), axis=0)
         return np.array([int(x) for x in coords])
     except:
         return np.array([])
+
 
 """ 
 * Function Name: get_nearest_aruco
@@ -374,7 +394,7 @@ def get_robot_pxcoords(robot_id: int, ids: MatLike, corners: Sequence[MatLike]) 
         (uses GLOBAL_ARUCO_CORNERS and GLOBAL_ARUCO_IDS)
 * Example Call: get_nearest_aruco(robotcoords) -> 4
 """
-def get_nearest_aruco(robotcoords: np.ndarray) -> int | None:
+def get_nearest_aruco(robotcoords: np.ndarray) -> Union[int, None]:
 
     global prev_closest_aruco
 
@@ -384,17 +404,16 @@ def get_nearest_aruco(robotcoords: np.ndarray) -> int | None:
         return prev_closest_aruco
 
     for markerCorner, markerID in zip(GLOBAL_ARUCO_CORNERS, GLOBAL_ARUCO_IDS):
-        if markerID != ARUCO_ROBOT_ID:
+        if markerID != ROBOT_ARUCO_ID:
             corners_ = markerCorner.reshape((4, 2))
             marker_center = np.mean(corners_, axis=0)
             dist = np.linalg.norm(robotcoords - marker_center)
-            if dist < mindist: 
+            if dist < mindist:
                 closestmarker = markerID
                 mindist = dist
 
     prev_closest_aruco = closestmarker
     return closestmarker
-
 
 
 """ 
@@ -404,11 +423,11 @@ def get_nearest_aruco(robotcoords: np.ndarray) -> int | None:
 * Logic: Writes the live location to a csv file
 * Example Call: write_live_location_csv((28.7041, 77.1025), "live_location.csv") -> None
 """
-# TYPE HINT TO BE ADDED HERE AFTER CHECK
 def write_live_location_csv(loc, csv_name: str) -> None:
     with open(csv_name, "w") as f:
         f.write(f"lat, lon\n{loc[0]}, {loc[1]}")
-    
+
+
 """ 
 * Function Name: update_qgis_position
 * Input: robotcoords: np.ndarray
@@ -429,6 +448,7 @@ def update_qgis_position(robotcoords: np.ndarray) -> None:
         except:
             return None
 
+
 """ 
 * Function Name: get_robot_pxcoords_update_qgis
 * Input: frame: numpy.ndarray
@@ -436,10 +456,13 @@ def update_qgis_position(robotcoords: np.ndarray) -> None:
 * Logic: Updates the QGIS position and returns the pixel coordinates of the robot
 * Example Call: get_robot_pxcoords_update_qgis(frame) -> np.ndarray
 """
-def get_robot_pxcoords_update_qgis(frame : np.ndarray) -> np.ndarray:
+def get_robot_pxcoords_update_qgis(frame: np.ndarray) -> np.ndarray:
 
     corners, ids, _ = get_aruco_map_data(frame)
-    robot_pxcoords = get_robot_pxcoords(ARUCO_ROBOT_ID, ids, corners)
+    # epic=np.where(ids==97)[0][0]
+    # print(corners,ids)
+    # print(corners[epic])
+    robot_pxcoords = get_robot_pxcoords(ROBOT_ARUCO_ID, ids, corners)
     update_qgis_position(robot_pxcoords)
 
     return robot_pxcoords
@@ -452,11 +475,11 @@ def get_robot_pxcoords_update_qgis(frame : np.ndarray) -> np.ndarray:
 * Logic: Initializes the camera capture
 * Example Call: initialize_capture() -> cv2.VideoCapture
 """
-def initialize_capture(frames_to_skip : int = 20) -> cv2.VideoCapture:
+def initialize_capture(frames_to_skip: int = 30) -> cv2.VideoCapture:
 
     # Windows uses DirectShow API to access the camera
     if sys.platform == "win32":
-        capture = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
+        capture = cv2.VideoCapture(CAMERA_ID) # cv2.CAP_DSHOW
     else:
         capture = cv2.VideoCapture(CAMERA_ID)
 
@@ -469,6 +492,7 @@ def initialize_capture(frames_to_skip : int = 20) -> cv2.VideoCapture:
         ret, frame = capture.read()
 
     return capture
+
 
 """ 
 * Function Name: listen_and_print
@@ -490,6 +514,7 @@ def listen_and_print(s: socket.socket, conn: socket.socket) -> None:
     except KeyboardInterrupt:
         raise KeyboardInterrupt
 
+
 ### TYPE HINT TO BE ADDED HERE
 """ 
 * Function Name: draw_event_labels
@@ -498,6 +523,7 @@ def listen_and_print(s: socket.socket, conn: socket.socket) -> None:
 * Logic: Draws the bounding boxes and labels on the frame
 * Example Call: draw_event_labels(frame, pts, ["fire", "combat"]) -> np.ndarray
 """
+
 def draw_event_labels(frame: np.ndarray, pts, labels: list[str]) -> np.ndarray:
     for p, l in zip(pts, labels):
         frame = cv2.rectangle(
@@ -522,14 +548,19 @@ def draw_event_labels(frame: np.ndarray, pts, labels: list[str]) -> np.ndarray:
 * Logic: Returns the detected events using the predictor
 * Example Call: get_detected_events() -> {"A": "fire", "B": "empty", "C": "combat"}
 """
+
+
 def get_detected_events() -> dict:
 
     detected_events = predictor.run_predictor(EVENT_FILENAMES)
 
-    # Removing None values (no events)
-    detected_events_out = {k: v for k, v in detected_events.items() if v is not None}
+    # Removing None values (no events) and swapping the values for correct terminal output
+    terminal_output_events_swap = {"combat":"Combat","destroyed_buildings":"Destroyed Buildings","fire":"Fire",
+                                   "humanitarian_aid":"Humanitarian Aid and rehabilitation", "military_vehicles":"Military Vehicles"}
+    detected_events_out = {k: terminal_output_events_swap[v] for k, v in detected_events.items() if v is not None}
     print(detected_events_out)
     return detected_events
+
 
 """ 
 * Function Name: delete_event_images
@@ -570,18 +601,16 @@ if __name__ == "__main__":
 
         # run djikstra to get the path between events, maintainig priority
         path = djikstra.final_path(detected_events)
-        path = "n" + path
-        
-   
+        command = "n" + path
+        # print(command)
     soc, conn = init_connection()
 
-    connect_and_move(soc, conn, command)    
-    
+    connect_and_move(soc, conn, command)
+
     # DEBUG: listen to robot
-    lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
-    lpt.daemon = True
-    lpt.start()
-    
+    # lpt = threading.Thread(target=listen_and_print, args=(soc, conn))
+    # lpt.daemon = True
+    # lpt.start()
 
     try:
         cv2.namedWindow("robot_moving", cv2.WINDOW_NORMAL)
@@ -604,11 +633,11 @@ if __name__ == "__main__":
             cv2.imshow("robot_moving", cv2.resize(frame, (750, 750)))
             cv2.moveWindow("robot_moving", 0, 0)
             if cv2.waitKey(1) == ord("q"):
-                break
+                raise KeyboardInterrupt  # exit on q
 
     except KeyboardInterrupt:
-        # cleanup(soc)
+        cleanup(soc)
         capture.release()
-        lpt.join()
+        # lpt.join()
         cv2.destroyAllWindows()
         delete_event_images()

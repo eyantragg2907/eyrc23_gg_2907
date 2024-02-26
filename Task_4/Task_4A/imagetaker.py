@@ -1,4 +1,4 @@
-CAMERA_ID = 0  # 0 for internal, 1 for external as a basis
+CAMERA_ID = 1 # 0 for internal, 1 for external as a basis
 
 import cv2
 from datetime import datetime
@@ -19,7 +19,7 @@ def get_aruco_data(frame):
     global detector
     c, i, r = detector.detectMarkers(frame)
 
-    print(c)
+    # print(c)
 
     if len(c) == 0:
         raise Exception("No Aruco Markers Found")
@@ -99,20 +99,20 @@ def get_pts_from_frame(s):
 
     return (Apts, Bpts, Cpts, Dpts, Epts)
 
-
+COUNTER = 0
 def save_event_images(frame, pts, filenames):
+    global COUNTER
     for p, f in zip(pts, filenames):
-        print(p)
-        print(frame)
+        # print(p)
+        # print(frame)
         event = frame[p[0, 0] : p[0, 1], p[1, 0] : p[1, 1]]
-<<<<<<< HEAD
-        print(f)
-=======
         # event = unsharp_mask(event)
-        print(event)
+        # print(event)
+        dt = str(datetime.now().timestamp()).replace(".", "")
+        f = f.split(".")[0] + dt + f"_{COUNTER}.png"
         print("saving to", f)
->>>>>>> e2e61ada25ce24973767a854a22fe4260366aa4f
         cv2.imwrite(f, event)
+        COUNTER += 1
 
 
 def get_events(frame, filenames):
@@ -125,20 +125,14 @@ def get_events(frame, filenames):
 
 
 def main():
-    num_of_frames_skip = 100
+    num_of_frames_skip = 40
     # Initialize the camera
-<<<<<<< HEAD
-    cap = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1080)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1920)
-=======
     if sys.platform == "win32":
-        cap = cv2.VideoCapture(CAMERA_ID, cv2.CAP_DSHOW)
+        cap = cv2.VideoCapture(CAMERA_ID)
     else:
         cap = cv2.VideoCapture(CAMERA_ID)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
->>>>>>> e2e61ada25ce24973767a854a22fe4260366aa4f
     # take a photo
     for i in range(num_of_frames_skip):
         ret, frame = cap.read()
@@ -153,21 +147,6 @@ def main():
     # D = "military_vehicles"
     # E = "combat"
 
-<<<<<<< HEAD
-    classmap = [
-        "combat",
-        "destroyed_buildings",
-        "fire",
-        "human_aid_rehabilitation",
-        "military_vehicles",
-    ]
-
-    A = 1
-    B = 4
-    C = 2
-    D = 0
-    E = 3
-=======
 
     classmap = [
         "combat",
@@ -175,35 +154,18 @@ def main():
         "fire",
         "human",
         "vehicle",
+        "None"
     ]
 
-    A = classmap.index("building")
-    B = classmap.index("fire")
+    A = classmap.index("vehicle")
+    B = classmap.index("building")
     C = classmap.index("combat")
-    D = classmap.index("human")
-    E = classmap.index("vehicle")
+    D = classmap.index("fire")
+    E = classmap.index("fire")
 
     SET = "NEWSET_"
->>>>>>> e2e61ada25ce24973767a854a22fe4260366aa4f
+    FOLDER = "overfit"
 
-    SET = "NOISY_DATASET"
-
-<<<<<<< HEAD
-    FOLDER = "empty_train"
-    c = datetime.now().strftime("%Y%m%d%H%M%S")
-
-    ret, frame = cap.read()
-    # save the photo
-    if ret is True:
-        print(f"Photo {c} taken")
-        cv2.imwrite(f"temp_save.jpg", frame)
-        #filenames = f"{FOLDER}/{A}/{c}{SET}.png {FOLDER}/{B}/{c}{SET}.png {FOLDER}/{C}/{c}{SET}.png {FOLDER}/{D}/{c}{SET}.png {FOLDER}/{E}/{c}{SET}.png".split()
-        filenames = f"{FOLDER}/{c}_A.png {FOLDER}/{c}_B.png {FOLDER}/{c}_C.png {FOLDER}/{c}_D.png {FOLDER}/{c}_E.png".split()
-        #filenames = [f"{a}.png" for a in [A, B, C, D, E]]
-        frame, pts, events = get_events(frame, filenames)
-        print(f"Photo {c} saved")
-    print("Now we wait")
-=======
     # while True:
     # # if ret:
     #     ret, frame = cap.read()
@@ -214,13 +176,13 @@ def main():
     # cv2.destroyAllWindows()
 
     c = 0
-    while c < 12:
+    while c < 120:
         ret, frame = cap.read()
         
         # save the photo
-        cx = datetime.now().timestamp()
+        cx = c
         if ret is True:
-            cv2.imwrite(f"temp_save.jpg", frame)
+            # cv2.imwrite(f"temp_save.jpg", frame)
             filenames = f"{FOLDER}/{A}/{cx}{SET}.png {FOLDER}/{B}/{cx}{SET}.png {FOLDER}/{C}/{cx}{SET}.png {FOLDER}/{D}/{cx}{SET}.png {FOLDER}/{E}/{cx}{SET}.png".split()
             frame, pts, events = get_events(frame, filenames)
             c += 1
@@ -228,7 +190,6 @@ def main():
         print("Now we wait")
 
     print("Done")
->>>>>>> e2e61ada25ce24973767a854a22fe4260366aa4f
 
     cap.release()
 

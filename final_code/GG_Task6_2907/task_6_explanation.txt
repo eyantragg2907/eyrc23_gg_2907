@@ -1,0 +1,99 @@
+All the main python code is run through the main file `main.py`. This includes event detection and live tracking.
+Training code is run through `model_training_code/train.py`.
+Embeddec c code is present in `embedded-c/robot_code/robot_code.ino`
+
+1. Image Processing
+
+We are detecting the four corners of the arena using cv2 AruCo detection. Then, we transform the frame (rotate and zoom)
+and get the images using a specified offset from the near aruco markers. We are also doing a 
+morphological transformation of the frame. The events are being pre-preprocessed along the following:
+
+ - Pixel values are being scaled to 0-1
+ - Images are being resized to 64 x 64 using bicubic interpolation
+
+2. Event Detection
+
+The images are then fed into a model to classify the images. `predictor.py` is the file that contains the model and the code to predict the events.
+We are using a Convolutional Neural Network. Following is the architecture of the model:
+    Layer (type)                Output Shape              Param #   
+    =================================================================
+    sequential (Sequential)     (None, 32, 32, 64)        38720     
+                                                                    
+    sequential_1 (Sequential)   (None, 16, 16, 128)       221440    
+                                                                    
+    dropout (Dropout)           (None, 16, 16, 128)       0         
+                                                                    
+    sequential_2 (Sequential)   (None, 4, 4, 128)         819456    
+                                                                    
+    sequential_3 (Sequential)   (None, 1, 1, 256)         2458112   
+                                                                    
+    flatten (Flatten)           (None, 256)               0         
+                                                                    
+    dropout_1 (Dropout)         (None, 256)               0         
+                                                                    
+    batch_normalization (Batch  (None, 256)               1024      
+    Normalization)                                                  
+                                                                    
+    dense (Dense)               (None, 1024)              263168    
+                                                                    
+    dense_1 (Dense)             (None, 1024)              1049600   
+                                                                    
+    dense_2 (Dense)             (None, 6)                 6150      
+                                                                    
+    =================================================================
+    Total params: 4857670 (18.53 MB)
+    Trainable params: 4857158 (18.53 MB)
+    Non-trainable params: 512 (2.00 KB)
+    _________________________________________________________________
+
+3. Line Following
+    We are using 5 IR sensors for the line following algorithm. 
+    The robot has 2 modes - Line Following ("middle line") and Bang Bang ("wall")
+
+    Line Following is activated when any of the 3 middle IR sensors detect a black line. Otherwise, bang bang mode is activated.
+
+    We have different types of functions, for starting the run, moving forwards till we reach a node, 
+    ending the run, rotating, leaving the node, etc.
+    The robot calls them based on the IR sensor feedback and the command given by the path planning algorithm.
+
+    In the Line Following mode, the middle IR is supposed to follow the black line. 
+        The 2nd and 4th IR sensors give the feedback required for this.
+    In the Bang Bang mode, the extreme IRs are supposed to stay within the limits of the road. 
+        As soon as any of them detects a black line/grass, the robot moves in the other direction to stay on track.
+    
+    `robot_code.ino` is the arduino file that contains the code for the line following algorithm.
+    
+    It has a lot of constants that are used for movement where line following is not possible for eg. turns.
+    
+    The entire Arduino Code is multithreaded to run the Wi-Fi module and the line following algorithm simultaneously on separate threads.
+    Aruco detection is used for stopping at events. Aruco Detection (getting the aruco coords which is closest to the robot coords) 
+    is also used for getting the location of the robot for simulating the robot moving in the qgis map.
+
+    A path is given to the robot in the Arduino Code which has the following keywords ->
+        - 'n': move to next node
+        - 'l': take a left turn
+        - 'r': take a right turn
+        - 'd': move to next node in certain situations
+        - 'x': move to the next event node (destination for one call of djikstra), stop only when the computer
+                calculates distance between robot and event and pings the robot to stop
+        - 'X': move to the next event node in certain conditions. Stop only when the computer
+                calculates distance between robot and event and pings the robot to stop
+        - 'R': take a u-turn, moving right
+        - 'L': take a u-turn, moving left (rarely used)
+        - 'p': take a left turn with altered conditions
+
+
+4. Path Planning
+
+We are using Djikstra algorithm for path planning. The algorithm is implemented in the file `dkistra.py`.
+Graph datastructure is used to represent the arena and is implemented in the file `graph.py`. 
+map_data.txt has the weights for edges in the graph.
+
+The algorithm is implemented in the following steps:
+1. We have given names to every node and event spot on the arena which are used for path planning.
+2. The module maintains a constants.py that has the times the robot takes to move between nodes/events. Our naming convetion is used there.
+   The module also maintains the priority orders.
+3. The script is given a dictionary of the detected events at A, B, C, D, E.
+4. The script path plans from the starting node to every event iteratively and generates a path string.
+5. For the djikstra algorithm, the step space is same as the symbols defined in Line Following.
+6. The returned path is sent to the ESP32 via Wi-Fi serial for movement.
