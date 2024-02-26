@@ -1,0 +1,9 @@
+keras==2.14.0
+numpy==1.26.1
+opencv-python==4.8.0
+pandas==2.0.3
+pyarrow==14.0.2
+tensorflow==2.15.0
+torch==2.0.1
+torchaudio==2.0.2
+torchvision==0.15.2
