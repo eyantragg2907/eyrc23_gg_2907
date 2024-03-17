@@ -7,7 +7,7 @@
 * Global Variables:     None
 """
 
-from constants import GRAPH_DATA_FILENAME, reverse_pose
+from constants import *
 
 
 class Graph:

@@ -36,7 +36,7 @@ from typing import Tuple, Union
 # Constants:
 
 # CAMERA_ID: Camera ID corresponding to the Lenovo Camera
-CAMERA_ID = 1
+CAMERA_ID = 3
 
 # ARUCO_CORNER_IDS: IDs of corner AruCos
 ARUCO_CORNER_IDS = {4, 5, 6, 7}
@@ -48,7 +48,7 @@ ROBOT_ARUCO_ID = 100
 IDEAL_MAP_SIZE = 1080
 
 # HOST_IP_ADDRESS: IP address of the computer (changed everytime)
-HOST_IP_ADDRESS = "192.168.67.62"
+HOST_IP_ADDRESS = "192.168.30.62"
 HOST_PORT = 8002  # Port to listen on
 
 # CLOSEST_ARUCO_OUTPUT_FILE_LOC: For QGIS live tracking, the location of the file where the code should write the closest coordinates

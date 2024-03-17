@@ -26,36 +26,36 @@
 /* The following constants are for Robot Configuration and Speed Settings */
 
 /* Speed Control Variables: Adjusting PWM Motor Speed */
-#define SPEED_RIGHTMOTOR 150    // Standard Right Motor Speed.
+#define SPEED_RIGHTMOTOR 130    // Standard Right Motor Speed.
 #define SPEED_LEFTMOTOR 175     // Standard Left Motor Speed.
-#define SPEED_RIGHTMOTOR_x 130  // Right Motor Speed when an EVENT_NODE needs to be detected.
-#define SPEED_LEFTMOTOR_x 130   // Left Motor Speed when an EVENT_NODE needs to be detected.
+#define SPEED_RIGHTMOTOR_x 95 //d110 //X75//n130 //x 95  // Right Motor Speed when an EVENT_NODE needs to be detected.
+#define SPEED_LEFTMOTOR_x  130 //d140 //X110//n175 //x 130   // Left Motor Speed when an EVENT_NODE needs to be detected.
 #define SPEED_RIGHTMOTOR_e 75   // Right Motor Speed when an EVENT_NODE needs to be detected in certain areas.
-#define SPEED_LEFTMOTOR_e 75    // Left Motor Speed when an EVENT_NODE needs to be detected in certain areas.
-#define SPEED_RIGHTMOTOR_d 140  // Right Motor Speed in certain areas.
-#define SPEED_LEFTMOTOR_d 140   // Left Motor Speed in certain areas.
-#define ROTATE_SPEED_RIGHT 140  // Speed for both motors when doing a D90 Right turn.
+#define SPEED_LEFTMOTOR_e 110    // Left Motor Speed when an EVENT_NODE needs to be detected in certain areas.
+#define SPEED_RIGHTMOTOR_d 100 // Right Motor Speed in certain areas.
+#define SPEED_LEFTMOTOR_d 130   // Left Motor Speed in certain areas.
+#define ROTATE_SPEED_RIGHT 140 //140 // Speed for both motors when doing a D90 Right turn.
 #define ROTATE_SPEED_LEFT_L 145 // Speed for left motor (reverse) when doing a D90 Left turn.
-#define ROTATE_SPEED_LEFT_R 110 // Speed for right motor (forward) when doing a D90 Left turn.
+#define ROTATE_SPEED_LEFT_R 120 // Speed for right motor (forward) when doing a D90 Left turn.
 #define ROTATE_SPEED_UTURN 200  // Speed for both motors in all kinds of D180 turns.
 
-#define BANGBANG_TURNSPEED 220 // The speed for corrective movements in both directions in WALL mode.
-#define XINCREASEBANGBANG 35   // An additive factor that increases BANGBANG_TURNSPEED when an EVENT_NODE needs to be detected.
+#define BANGBANG_TURNSPEED 230 // The speed for corrective movements in both directions in WALL mode.
+#define XINCREASEBANGBANG 25// 25   // An additive factor that increases BANGBANG_TURNSPEED when an EVENT_NODE needs to be detected.
 
 #define MIDDLE_TURNSPEED 125 // The speed for corrective movements in both directions in MIDDLE_LINE mode.
 
 /* Stop Delays: Controlling robot momentum */
 #define ROT_COMPLETE_DELAY 100        // Stop delay after a D90 turn.
-#define EVENT_NODE_REACHED_DELAY 1000 // Stop delay for every EVENT NODE. Also activates BUZZER.
+#define EVENT_NODE_REACHED_DELAY 900 // Stop delay for every EVENT NODE. Also activates BUZZER.
 #define NORMAL_NODE_REACHED_DELAY 50  // Stop delay after every node. No BUZZER.
 #define END_DELAY 5000                // Stop delay for buzzer ring at the end.
 
 /* Turn Logic: Delays that control how turning works */
-#define CENTER_CORRECT_DELAY 350          // Delay for which the motors run to align center of rotation for turning.
-#define LEAVE_BLACK_DELAY_RIGHT 500       // Delay before black line detection begins while turning right.
+#define CENTER_CORRECT_DELAY 370          // Delay for which the motors run to align center of rotation for turning.
+#define LEAVE_BLACK_DELAY_RIGHT 505       // Delay before black line detection begins while turning right.
 #define LEAVE_BLACK_DELAY_LEFT 590        // Delay before black line detection begins while turning left.
 #define p_LEAVE_BLACK_DELAY_REDUCTION 150 // Delay reduction for black line detection while turning left in certain areas.
-#define UTURN_TIME 845                    // Exact delay to conduct a succesful D180 turn. No black line detection happens in u-turns.
+#define UTURN_TIME 860                    // Exact delay to conduct a succesful D180 turn. No black line detection happens in u-turns.
 
 /* Delays that control how False Node detection logic works */
 #define NODE_LEAVE_DELAY 140      // Delay for which robot continues to move after reaching a Node, without any moving logic.
@@ -74,13 +74,13 @@
 /* WiFi and Others */
 #define WIFI_TRY_DELAY 500        // Delay between WIFI-connect-to-network retry's.
 #define CONNECTION_PING_DELAY 200 // Delay between WiFi-connect-to-host to host retry's.
-#define SETUP_DELAY 8000          // Delay in the beginning before the robot starts moving to give us time to put it on the arena.
+#define SETUP_DELAY 0          // Delay in the beginning before the robot starts moving to give us time to put it on the arena.
 
 /* Wifi Variables */
 const char *ssid = "brainerd";
 const char *password = "internetaccess";
 const uint16_t port = 8002;
-const char *host = "192.168.67.62";
+const char *host = "192.168.202.7";
 
 WiFiClient client;
 
