@@ -26,22 +26,22 @@
 /* The following constants are for Robot Configuration and Speed Settings */
 
 /* Speed Control Variables: Adjusting PWM Motor Speed */
-#define SPEED_RIGHTMOTOR 140 // 145 // 130    // Standard Right Motor Speed.
+#define SPEED_RIGHTMOTOR 135 // 140 // 145 // 130    // Standard Right Motor Speed.
 #define SPEED_LEFTMOTOR 175     // Standard Left Motor Speed.
-#define SPEED_RIGHTMOTOR_x 110 // 115 // 95 // Right Motor Speed when an EVENT_NODE needs to be detected.
+#define SPEED_RIGHTMOTOR_x 105 // 110 // 115 // 95 // Right Motor Speed when an EVENT_NODE needs to be detected.
 #define SPEED_LEFTMOTOR_x 130   // Left Motor Speed when an EVENT_NODE needs to be detected.
-#define SPEED_RIGHTMOTOR_e 105 // 110 // 85  // 95 // Right Motor Speed when an EVENT_NODE needs to be detected in certain areas.
+#define SPEED_RIGHTMOTOR_e 100 // 105 // 110 // 85  // 95 // Right Motor Speed when an EVENT_NODE needs to be detected in certain areas.
 #define SPEED_LEFTMOTOR_e 110 // 120 // 110   // Left Motor Speed when an EVENT_NODE needs to be detected in certain areas.
-#define SPEED_RIGHTMOTOR_d 95 // 100  // 100 // Right Motor Speed in certain areas.
-#define SPEED_LEFTMOTOR_d 120   // Left Motor Speed in certain areas.
+#define SPEED_RIGHTMOTOR_d 85 // 90 // 100  // 100 // Right Motor Speed in certain areas.
+#define SPEED_LEFTMOTOR_d 105 // 120   // Left Motor Speed in certain areas.
 #define ROTATE_SPEED_RIGHT 130  // Speed for both motors when doing a D90 Right turn.
 #define ROTATE_SPEED_LEFT_L 125 // 135 // Speed for left motor (reverse) when doing a D90 Left turn.
-#define ROTATE_SPEED_LEFT_R 105 // 110 // 100 // 110 // Speed for right motor (forward) when doing a D90 Left turn.
+#define ROTATE_SPEED_LEFT_R 100 // 105 // 110 // 100 // 110 // Speed for right motor (forward) when doing a D90 Left turn.
 #define ROTATE_SPEED_SLOW_LEFT 65 // Speed for left turn at the end for special case.
 #define ROTATE_SPEED_UTURN 200  // Speed for both motors in all kinds of D180 turns.
 
-#define BANGBANG_TURNSPEED 230 // The speed for corrective movements in both directions in WALL mode.
-#define XINCREASEBANGBANG 15   // An additive factor that increases BANGBANG_TURNSPEED when an EVENT_NODE needs to be detected.
+#define BANGBANG_TURNSPEED 235 // The speed for corrective movements in both directions in WALL mode.
+#define XINCREASEBANGBANG 15  // An additive factor that increases BANGBANG_TURNSPEED when an EVENT_NODE needs to be detected.
 
 #define MIDDLE_TURNSPEED 125 // The speed for corrective movements in both directions in MIDDLE_LINE mode.
 
@@ -50,13 +50,14 @@
 #define EVENT_NODE_REACHED_DELAY 1000 // Stop delay for every EVENT NODE. Also activates BUZZER.
 #define NORMAL_NODE_REACHED_DELAY 100  // Stop delay after every node. No BUZZER.
 #define END_DELAY 5000                // Stop delay for buzzer ring at the end.
+#define DELAY_AFTER_UTURN 150
 
 /* Turn Logic: Delays that control how turning works */
 #define CENTER_CORRECT_DELAY 370          // Delay for which the motors run to align center of rotation for turning.
 #define LEAVE_BLACK_DELAY_RIGHT 505       // Delay before black line detection begins while turning right.
 #define LEAVE_BLACK_DELAY_LEFT 590        // Delay before black line detection begins while turning left.
 #define p_LEAVE_BLACK_DELAY_REDUCTION 570 // Delay reduction for black line detection while turning left in certain areas.
-#define UTURN_TIME 835 // 845                    // Exact delay to conduct a succesful D180 turn. No black line detection happens in u-turns.
+#define UTURN_TIME 810 // 835 // 845                    // Exact delay to conduct a succesful D180 turn. No black line detection happens in u-turns.
 
 /* Delays that control how False Node detection logic works */
 #define NODE_LEAVE_DELAY 160      // Delay for which robot continues to move after reaching a Node, without any moving logic.
@@ -82,7 +83,7 @@
 const char *ssid = "brainerd";
 const char *password = "internetaccess";
 const uint16_t port = 8002;
-const char *host = "192.168.95.144";
+const char *host = "192.168.95.62";
 
 WiFiClient client;
 
@@ -462,6 +463,7 @@ void conductMovement(char *path)
             turn_right_faster();
             delay(UTURN_TIME);
             stop();
+            delay(DELAY_AFTER_UTURN);
             readIRs();
 
             // debug message
