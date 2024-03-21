@@ -690,7 +690,7 @@ if __name__ == "__main__":
         path = djikstra.final_path(detected_events)
         command = "n" + path
 
-    print(f"DEBUG: {command=}")
+    # print(f"DEBUG: {command=}")
     # start connection to robot after getting the path
     soc, conn = init_connection()
 
