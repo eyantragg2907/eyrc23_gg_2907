@@ -26,15 +26,15 @@
 /* The following constants are for Robot Configuration and Speed Settings */
 
 /* Speed Control Variables: Adjusting PWM Motor Speed */
-#define SPEED_RIGHTMOTOR 137 // 135 // 140 // 145 // 130    // Standard Right Motor Speed.
+#define SPEED_RIGHTMOTOR 140 // 135 // 140 // 145 // 130    // Standard Right Motor Speed.
 #define SPEED_LEFTMOTOR 175     // Standard Left Motor Speed.
 #define SPEED_RIGHTMOTOR_x 105 // 110 // 115 // 95 // Right Motor Speed when an EVENT_NODE needs to be detected.
 #define SPEED_LEFTMOTOR_x 130   // Left Motor Speed when an EVENT_NODE needs to be detected.
-#define SPEED_RIGHTMOTOR_e 100 // 105 // 110 // 85  // 95 // Right Motor Speed when an EVENT_NODE needs to be detected in certain areas.
+#define SPEED_RIGHTMOTOR_e 95 // 105 // 110 // 85  // 95 // Right Motor Speed when an EVENT_NODE needs to be detected in certain areas.
 #define SPEED_LEFTMOTOR_e 110 // 120 // 110   // Left Motor Speed when an EVENT_NODE needs to be detected in certain areas.
-#define SPEED_RIGHTMOTOR_d 85 // 90 // 100  // 100 // Right Motor Speed in certain areas.
+#define SPEED_RIGHTMOTOR_d 88 // 90 // 100  // 100 // Right Motor Speed in certain areas.
 #define SPEED_LEFTMOTOR_d 105 // 120   // Left Motor Speed in certain areas.
-#define ROTATE_SPEED_RIGHT 130  // Speed for both motors when doing a D90 Right turn.
+#define ROTATE_SPEED_RIGHT 150  // Speed for both motors when doing a D90 Right turn.
 #define ROTATE_SPEED_LEFT_L 125 // 135 // Speed for left motor (reverse) when doing a D90 Left turn.
 #define ROTATE_SPEED_LEFT_R 100 // 105 // 110 // 100 // 110 // Speed for right motor (forward) when doing a D90 Left turn.
 #define ROTATE_SPEED_SLOW_LEFT 65 // Speed for left turn at the end for special case.
@@ -64,8 +64,8 @@
 #define IGNORE_FALSE_NODE_TIME 60 // Delay for which robot continues to move after the above delay, with moving logic.
 
 /* Delays to control how the robot moves in the beginning */
-#define ALIGN_CENTER_BEGINNING 90 // Delay for which the motors run to align center of rotation in the beginning for turning.
-#define TURN_DELAY_BEGINNING 30   // Delay for which a small left turn is conducted in the beginning, for correction purposes.
+#define ALIGN_CENTER_BEGINNING 0 // 90 // Delay for which the motors run to align center of rotation in the beginning for turning.
+#define TURN_DELAY_BEGINNING 0  // 30 // Delay for which a small left turn is conducted in the beginning, for correction purposes.
 
 /* Delays to control how the robot moves at the end */
 #define NODE_LEAVE_DELAY_END 80    // Delay for which robot continues to move before any of the terminating logic starts.
