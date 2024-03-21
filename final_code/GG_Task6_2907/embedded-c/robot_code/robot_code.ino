@@ -26,7 +26,7 @@
 /* The following constants are for Robot Configuration and Speed Settings */
 
 /* Speed Control Variables: Adjusting PWM Motor Speed */
-#define SPEED_RIGHTMOTOR 135 // 140 // 145 // 130    // Standard Right Motor Speed.
+#define SPEED_RIGHTMOTOR 137 // 135 // 140 // 145 // 130    // Standard Right Motor Speed.
 #define SPEED_LEFTMOTOR 175     // Standard Left Motor Speed.
 #define SPEED_RIGHTMOTOR_x 105 // 110 // 115 // 95 // Right Motor Speed when an EVENT_NODE needs to be detected.
 #define SPEED_LEFTMOTOR_x 130   // Left Motor Speed when an EVENT_NODE needs to be detected.
