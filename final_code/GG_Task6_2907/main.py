@@ -24,6 +24,7 @@ import pandas as pd
 import socket
 import sys
 import ast
+import time
 
 # Importing local modules
 import predictor
@@ -36,7 +37,7 @@ from typing import Tuple, Union
 # Constants:
 
 # CAMERA_ID: Camera ID corresponding to the Lenovo Camera
-CAMERA_ID = 3
+CAMERA_ID = 0
 
 # ARUCO_CORNER_IDS: IDs of corner AruCos
 ARUCO_CORNER_IDS = {4, 5, 6, 7}
@@ -48,7 +49,7 @@ ROBOT_ARUCO_ID = 100
 IDEAL_MAP_SIZE = 1080
 
 # HOST_IP_ADDRESS: IP address of the computer (changed everytime)
-HOST_IP_ADDRESS = "192.168.30.62"
+HOST_IP_ADDRESS = "192.168.95.144"
 HOST_PORT = 8002  # Port to listen on
 
 # CLOSEST_ARUCO_OUTPUT_FILE_LOC: For QGIS live tracking, the location of the file where the code should write the closest coordinates
@@ -64,7 +65,7 @@ GPS_COORDS_DATA = "lat_long.csv"
 EVENT_FILENAMES = ["A.png", "B.png", "C.png", "D.png", "E.png"]
 
 # EVENT_STOP_EXTRA_PIXELS: Extra pixels to be added to the bounding box of the event when trying to Interrupt Stop
-EVENT_STOP_EXTRA_PIXELS = 35
+EVENT_STOP_EXTRA_PIXELS = 25
 
 aruco_df = pd.read_csv(ARUCO_DATA_PATH)  # we use this to load the pre-saved aruco data
 
@@ -140,6 +141,21 @@ def connect_and_move(s: socket.socket, conn: socket.socket, path: str) -> None:
     # Else, send start ping and path to robot
     conn.sendall(str.encode("START\n"))
     conn.sendall(str.encode(path + "\n"))
+
+    data = ""
+    while data != "GOO":
+
+        data = conn.recv(1024)
+        data = data.decode("utf-8")
+        data = data.split("\n")[0]
+
+        if (data == "GOO"):
+            return
+        else:
+            time.sleep(0.2);
+            conn.sendall(str.encode("START\n"))
+            conn.sendall(str.encode(path + "\n"))
+
 
 
 """
@@ -288,7 +304,11 @@ def transform_frame(frame: np.ndarray) -> tuple[np.ndarray, int]:
     # the following if condition will be true only in the beginning.
     if pt_A is None or pt_B is None or pt_C is None or pt_D is None:
         print(f"{pt_A=}\n\n{pt_B=}\n\n{pt_C=}\n\n{pt_D=}")
+        cv2.imshow("x",frame)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
         raise Exception("Corners not found correctly")
+
 
     # calculate width
     width_AD = np.sqrt(((pt_A[0] - pt_D[0]) ** 2) + ((pt_A[1] - pt_D[1]) ** 2))
@@ -662,6 +682,7 @@ if __name__ == "__main__":
         path = djikstra.final_path(detected_events)
         command = "n" + path
 
+    print(f"DEBUG: {command=}")
     # start connection to robot after getting the path
     soc, conn = init_connection()
 

@@ -26,39 +26,40 @@
 /* The following constants are for Robot Configuration and Speed Settings */
 
 /* Speed Control Variables: Adjusting PWM Motor Speed */
-#define SPEED_RIGHTMOTOR 130    // Standard Right Motor Speed.
+#define SPEED_RIGHTMOTOR 140 // 145 // 130    // Standard Right Motor Speed.
 #define SPEED_LEFTMOTOR 175     // Standard Left Motor Speed.
-#define SPEED_RIGHTMOTOR_x 95 //d110 //X75//n130 //x 95  // Right Motor Speed when an EVENT_NODE needs to be detected.
-#define SPEED_LEFTMOTOR_x  130 //d140 //X110//n175 //x 130   // Left Motor Speed when an EVENT_NODE needs to be detected.
-#define SPEED_RIGHTMOTOR_e 75   // Right Motor Speed when an EVENT_NODE needs to be detected in certain areas.
-#define SPEED_LEFTMOTOR_e 110    // Left Motor Speed when an EVENT_NODE needs to be detected in certain areas.
-#define SPEED_RIGHTMOTOR_d 100 // Right Motor Speed in certain areas.
-#define SPEED_LEFTMOTOR_d 130   // Left Motor Speed in certain areas.
-#define ROTATE_SPEED_RIGHT 140 //140 // Speed for both motors when doing a D90 Right turn.
-#define ROTATE_SPEED_LEFT_L 145 // Speed for left motor (reverse) when doing a D90 Left turn.
-#define ROTATE_SPEED_LEFT_R 120 // Speed for right motor (forward) when doing a D90 Left turn.
+#define SPEED_RIGHTMOTOR_x 110 // 115 // 95 // Right Motor Speed when an EVENT_NODE needs to be detected.
+#define SPEED_LEFTMOTOR_x 130   // Left Motor Speed when an EVENT_NODE needs to be detected.
+#define SPEED_RIGHTMOTOR_e 105 // 110 // 85  // 95 // Right Motor Speed when an EVENT_NODE needs to be detected in certain areas.
+#define SPEED_LEFTMOTOR_e 110 // 120 // 110   // Left Motor Speed when an EVENT_NODE needs to be detected in certain areas.
+#define SPEED_RIGHTMOTOR_d 95 // 100  // 100 // Right Motor Speed in certain areas.
+#define SPEED_LEFTMOTOR_d 120   // Left Motor Speed in certain areas.
+#define ROTATE_SPEED_RIGHT 130  // Speed for both motors when doing a D90 Right turn.
+#define ROTATE_SPEED_LEFT_L 125 // 135 // Speed for left motor (reverse) when doing a D90 Left turn.
+#define ROTATE_SPEED_LEFT_R 105 // 110 // 100 // 110 // Speed for right motor (forward) when doing a D90 Left turn.
+#define ROTATE_SPEED_SLOW_LEFT 65 // Speed for left turn at the end for special case.
 #define ROTATE_SPEED_UTURN 200  // Speed for both motors in all kinds of D180 turns.
 
 #define BANGBANG_TURNSPEED 230 // The speed for corrective movements in both directions in WALL mode.
-#define XINCREASEBANGBANG 25// 25   // An additive factor that increases BANGBANG_TURNSPEED when an EVENT_NODE needs to be detected.
+#define XINCREASEBANGBANG 15   // An additive factor that increases BANGBANG_TURNSPEED when an EVENT_NODE needs to be detected.
 
 #define MIDDLE_TURNSPEED 125 // The speed for corrective movements in both directions in MIDDLE_LINE mode.
 
 /* Stop Delays: Controlling robot momentum */
 #define ROT_COMPLETE_DELAY 100        // Stop delay after a D90 turn.
-#define EVENT_NODE_REACHED_DELAY 900 // Stop delay for every EVENT NODE. Also activates BUZZER.
-#define NORMAL_NODE_REACHED_DELAY 50  // Stop delay after every node. No BUZZER.
+#define EVENT_NODE_REACHED_DELAY 1000 // Stop delay for every EVENT NODE. Also activates BUZZER.
+#define NORMAL_NODE_REACHED_DELAY 100  // Stop delay after every node. No BUZZER.
 #define END_DELAY 5000                // Stop delay for buzzer ring at the end.
 
 /* Turn Logic: Delays that control how turning works */
 #define CENTER_CORRECT_DELAY 370          // Delay for which the motors run to align center of rotation for turning.
 #define LEAVE_BLACK_DELAY_RIGHT 505       // Delay before black line detection begins while turning right.
 #define LEAVE_BLACK_DELAY_LEFT 590        // Delay before black line detection begins while turning left.
-#define p_LEAVE_BLACK_DELAY_REDUCTION 150 // Delay reduction for black line detection while turning left in certain areas.
-#define UTURN_TIME 860                    // Exact delay to conduct a succesful D180 turn. No black line detection happens in u-turns.
+#define p_LEAVE_BLACK_DELAY_REDUCTION 570 // Delay reduction for black line detection while turning left in certain areas.
+#define UTURN_TIME 835 // 845                    // Exact delay to conduct a succesful D180 turn. No black line detection happens in u-turns.
 
 /* Delays that control how False Node detection logic works */
-#define NODE_LEAVE_DELAY 140      // Delay for which robot continues to move after reaching a Node, without any moving logic.
+#define NODE_LEAVE_DELAY 160      // Delay for which robot continues to move after reaching a Node, without any moving logic.
 #define IGNORE_FALSE_NODE_TIME 60 // Delay for which robot continues to move after the above delay, with moving logic.
 
 /* Delays to control how the robot moves in the beginning */
@@ -70,6 +71,7 @@
 #define ERROR_COUNTER_MAX 11       // Number of times a false detection of "ALL OFF" can happen at the end.
 #define END_SKIP 1200              // Delay before "ALL OFF" detection logic starts working. Robot moves with moving logic during this.
 #define END_SKIP_FORWARD_DELAY 500 // Delay for which simple forward movement is present after "ALL OFF" detection.
+#define SPECIAL_END_DELAY_FOR_p 700
 
 /* WiFi and Others */
 #define WIFI_TRY_DELAY 500        // Delay between WIFI-connect-to-network retry's.
@@ -80,7 +82,7 @@
 const char *ssid = "brainerd";
 const char *password = "internetaccess";
 const uint16_t port = 8002;
-const char *host = "192.168.202.7";
+const char *host = "192.168.95.144";
 
 WiFiClient client;
 
@@ -109,7 +111,7 @@ QueueHandle_t reverse_action_queue;
 QueueHandle_t message_queue;
 QueueHandle_t send_to_wifi_queue;
 
-#define MESSAGE_QUEUE_SIZE 40
+#define MESSAGE_QUEUE_SIZE 60
 
 /* Constants that are used as Enum values */
 #define START_ACTIONCODE 101
@@ -275,6 +277,8 @@ void conductMovement(char *path)
     char next_movement;
     Serial.print("Path length: ");
     Serial.println(path_len);
+
+    bool over = false;
 
     for (int nc = 0; nc < path_len; nc++)
     {
@@ -486,7 +490,17 @@ void conductMovement(char *path)
             do
             {
                 readIRs();
-            } while (!turn(LEFT, LEAVE_BLACK_DELAY_LEFT - p_LEAVE_BLACK_DELAY_REDUCTION));
+            } while (!turnForEndOnly(LEFT, LEAVE_BLACK_DELAY_LEFT - p_LEAVE_BLACK_DELAY_REDUCTION));
+
+            analogWrite(motor1r, 0);
+            analogWrite(motor2r, 0);
+            analogWrite(motor1f, SPEED_LEFTMOTOR);
+            analogWrite(motor2f, SPEED_RIGHTMOTOR);
+            delay(SPECIAL_END_DELAY_FOR_p);
+
+            stop();
+
+            over = true;
         }
         else
         {
@@ -494,44 +508,58 @@ void conductMovement(char *path)
         }
     }
 
-    // After the path is complete, we move forward till the end of the arena ("ALL OFF").
-    Serial.println("Terminating movement begins...");
+    if (over == false) {
+        // After the path is complete, we move forward till the end of the arena ("ALL OFF").
+        Serial.println("Terminating movement begins...");
 
-    // Move a little forward to avoid false detections
-    analogWrite(motor1r, 0);
-    analogWrite(motor2r, 0);
-    analogWrite(motor1f, SPEED_LEFTMOTOR);
-    analogWrite(motor2f, SPEED_RIGHTMOTOR);
-    delay(NODE_LEAVE_DELAY_END);
+        // Move a little forward to avoid false detections
+        analogWrite(motor1r, 0);
+        analogWrite(motor2r, 0);
+        analogWrite(motor1f, SPEED_LEFTMOTOR);
+        analogWrite(motor2f, SPEED_RIGHTMOTOR);
+        delay(NODE_LEAVE_DELAY_END);
 
-    start_of_end_detect = millis();
-    int error_counter = 0;
-    while (1)
-    {
-        readIRs();
-        // Keep moving forward till we reach the end of the arena
-        moveForwardLogicSpecial(SPEED_RIGHTMOTOR, SPEED_LEFTMOTOR);
-        if (millis() - start_of_end_detect >= END_SKIP)
+        start_of_end_detect = millis();
+        int error_counter = 0;
+        while (1)
         {
-            // If we have moved forward enough and want to detect the "ALL OFF" condition
-            if (input3 == 0 && input2 == 0 && input4 == 0)
+            readIRs();
+            // Keep moving forward till we reach the end of the arena
+            moveForwardLogicSpecial(SPEED_RIGHTMOTOR, SPEED_LEFTMOTOR);
+            if (millis() - start_of_end_detect >= END_SKIP)
             {
-                // If we have reached the "ALL OFF" condition and have done it ERROR_COUNTER_MAX times,
-                // we consider that we have reached the end of the arena.
-                error_counter += 1;
-                if (error_counter == ERROR_COUNTER_MAX)
+                // If we have moved forward enough and want to detect the "ALL OFF" condition
+                if (input3 == 0 && input2 == 0 && input4 == 0)
                 {
-                    endDetectionCode();
-                    break;
+                    // If we have reached the "ALL OFF" condition and have done it ERROR_COUNTER_MAX times,
+                    // we consider that we have reached the end of the arena.
+                    error_counter += 1;
+                    if (error_counter == ERROR_COUNTER_MAX)
+                    {
+                        endDetectionCode();
+                        break;
+                    }
                 }
             }
         }
-    }
 
-    // end of movement!
-    char msg[MESSAGE_QUEUE_SIZE];
-    snprintf(msg, MESSAGE_QUEUE_SIZE, "terminate\n");
-    xQueueSend(send_to_wifi_queue, msg, 0);
+        // end of movement!
+        char msg[MESSAGE_QUEUE_SIZE];
+        snprintf(msg, MESSAGE_QUEUE_SIZE, "terminate\n");
+        xQueueSend(send_to_wifi_queue, msg, 0);
+    }
+    else {
+        digitalWrite(led_red, HIGH);
+        digitalWrite(buzzer, LOW);
+        // digitalWrite(buzzer, HIGH); // comment this if u want buzzer.
+        delay(END_DELAY);
+        digitalWrite(led_red, LOW);
+        digitalWrite(buzzer, HIGH);
+        // end of movement!
+        char msg[MESSAGE_QUEUE_SIZE];
+        snprintf(msg, MESSAGE_QUEUE_SIZE, "terminate\n");
+        xQueueSend(send_to_wifi_queue, msg, 0);
+    }
 }
 
 /*
@@ -558,6 +586,7 @@ void endDetectionCode()
     // ring the buzzer
     digitalWrite(led_red, HIGH);
     digitalWrite(buzzer, LOW);
+    // digitalWrite(buzzer, HIGH); // comment this if u want buzzer.
     delay(END_DELAY);
     digitalWrite(led_red, LOW);
     digitalWrite(buzzer, HIGH);
@@ -643,6 +672,88 @@ int turn(char dirn, int leave_black_delay)
 
     return 0;
 }
+
+/*
+ * Function Name:       turn
+ * Input:               char dirn, int leave_black_delay
+ * Output:              int return_code, 0 if turn is not complete, 1 if it is
+ * Logic:               Turns in "dirn" direction while ignoring the black 
+ *                      line for "leave_black_delay".
+ * Example Call:        turn(LEFT, 530)
+ */
+int turnForEndOnly(char dirn, int leave_black_delay)
+{
+    if (node)
+    {
+        // at a node, move a little forward to align center of rotation
+        analogWrite(motor1f, SPEED_LEFTMOTOR);
+        analogWrite(motor2f, SPEED_RIGHTMOTOR);
+        delay(CENTER_CORRECT_DELAY);
+        node = false;
+        return 0;
+    } // Now we have left the node for sure!
+
+    // rotflag = 0 indicates that we have not yet rotated to leave the middle black line.
+    // rotate for fixed time to leave the middle black line
+    if (rotflag == 0)
+    {
+        if (dirn == RIGHT)
+        {
+            turn_right();
+        }
+        else if (dirn == LEFT)
+        {
+            turn_left();
+        }
+        delay(leave_black_delay);
+        stop();
+        Serial.println("Rotated to leave the middle black line!");
+        rotflag = 1;
+        return 0;
+    }
+
+    // rotflag != 0 indicates that we have rotated to leave the middle black line.
+    // now we have to rotate till we reach the middle line again.
+    if (dirn == RIGHT)
+    {
+        if (input3 == 1 && (input2 == 0 && input4 == 0))
+        {
+            // reached the middle line again, we completed rotation
+
+            Serial.println("Rotation Completed");
+            rotflag = 0;
+            node = true;
+            stop();
+            delay(ROT_COMPLETE_DELAY);
+            return 1;
+        }
+        else
+        {
+            turn_right();
+        }
+    }
+    else if (dirn == LEFT)
+    {
+        if (input3 == 1 && (input2 == 0 && input4 == 0))
+        {
+            // reached the middle line again, we completed rotation
+
+            Serial.println("Rotation Completed");
+            rotflag = 0;
+            node = true;
+            stop();
+            delay(ROT_COMPLETE_DELAY);
+            return 1;
+        }
+        else
+        {
+            turn_left_slower();
+        }
+    }
+
+    return 0;
+}
+
 
 /*
  * Function Name:       moveForwardTillReachedNode
@@ -790,16 +901,20 @@ void moveForwardLogicHighBangBang(int right_speed, int left_speed)
 
         if ((input1 == 0 && input5 == 0) || (input1 == 1 && input5 == 1)) // forward if no line detected or both lines detected
         {
+            analogWrite(motor1r, 0);
+            analogWrite(motor2r, 0);
             analogWrite(motor1f, left_speed);
             analogWrite(motor2f, right_speed);
         }
         else if (input1 == 1 && input5 == 0) // left line detected by left sensor, move left to align
         {
+            analogWrite(motor1r, 0);
             analogWrite(motor1f, BANGBANG_TURNSPEED + XINCREASEBANGBANG);
             analogWrite(motor2f, 0);
         }
         else if (input5 == 1 && input1 == 0) // right line detected by right sensor, move right to align
         {
+            analogWrite(motor2r, 0);
             analogWrite(motor1f, 0);
             analogWrite(motor2f, BANGBANG_TURNSPEED + XINCREASEBANGBANG);
         }
@@ -916,6 +1031,13 @@ void listenAndDirectActions()
 
                 path.toCharArray(message, MESSAGE_QUEUE_SIZE);
 
+                if (strlen(message) < 3) {
+                    client.print("DNR\n");
+                    continue;
+                } else {
+                    client.print("GOO\n");
+                }
+
                 if (xQueueSend(message_queue, message, portMAX_DELAY)) // portMAX_DELAY means block until the message is sent
                 {
                     Serial.println("SENT MESSAGE TO MESSAGE_QUEUE");
@@ -1006,6 +1128,22 @@ void turn_left()
     analogWrite(motor1f, 0);
     analogWrite(motor1r, ROTATE_SPEED_LEFT_L);
     analogWrite(motor2f, ROTATE_SPEED_LEFT_R);
+}
+
+/*
+ * Function Name:   turn_right_faster
+ * Input:           void
+ * Output:          void
+ * Logic:           Turn right-wards in-place with `ROTATE_SPEED_UTURN`
+ *                  as the speed value. Use for u-turns!
+ * Example Call:    turn_right_faster()
+ */
+void turn_left_slower()
+{
+    analogWrite(motor2r, 0);
+    analogWrite(motor1f, 0);
+    analogWrite(motor1r, ROTATE_SPEED_SLOW_LEFT);
+    analogWrite(motor2f, ROTATE_SPEED_SLOW_LEFT);
 }
 
 /*
