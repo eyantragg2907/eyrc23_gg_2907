@@ -64,8 +64,8 @@
 #define IGNORE_FALSE_NODE_TIME 60 // Delay for which robot continues to move after the above delay, with moving logic.
 
 /* Delays to control how the robot moves in the beginning */
-#define ALIGN_CENTER_BEGINNING 0 // 90 // Delay for which the motors run to align center of rotation in the beginning for turning.
-#define TURN_DELAY_BEGINNING 0  // 30 // Delay for which a small left turn is conducted in the beginning, for correction purposes.
+#define ALIGN_CENTER_BEGINNING 90 // 90 // Delay for which the motors run to align center of rotation in the beginning for turning.
+#define TURN_DELAY_BEGINNING 30  // 30 // Delay for which a small left turn is conducted in the beginning, for correction purposes.
 
 /* Delays to control how the robot moves at the end */
 #define NODE_LEAVE_DELAY_END 80    // Delay for which robot continues to move before any of the terminating logic starts.
@@ -77,7 +77,7 @@
 /* WiFi and Others */
 #define WIFI_TRY_DELAY 500        // Delay between WIFI-connect-to-network retry's.
 #define CONNECTION_PING_DELAY 200 // Delay between WiFi-connect-to-host to host retry's.
-#define SETUP_DELAY 0          // Delay in the beginning before the robot starts moving to give us time to put it on the arena.
+#define SETUP_DELAY 0 // 8000 // 0 to no delay          // Delay in the beginning before the robot starts moving to give us time to put it on the arena.
 
 /* Wifi Variables */
 const char *ssid = "brainerd";
