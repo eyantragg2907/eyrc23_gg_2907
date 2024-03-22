@@ -33,7 +33,7 @@ CLASS_MAP = [
     "military_vehicles",
     None,
 ]
-IMG_SHAPE = (64, 64)  # IMG_SHAPE: Shape of the image that the model expects
+IMG_SHAPE = (112, 112)  # IMG_SHAPE: Shape of the image that the model expects
 MODEL_PATH = "model.tf"  # MODEL_PATH: Path to the model file
 
 """ 
@@ -61,7 +61,7 @@ def preprocess_image(image_path: str):
 
     # resize and return
     img = tf.image.resize(img, IMG_SHAPE, method="bicubic")
-    assert img.shape == (64, 64, 3)  # type: ignore
+    assert img.shape == (112, 112, 3)  # type: ignore
     return img
 
 
