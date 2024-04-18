@@ -8,3 +8,4 @@ The competition spanned 8 months and we worked on problems like Machine Learning
 
 We were the top 5 team in our theme (across 450+ teams) and went to IIT Bombay as Grand Finalists.
 
+![](group_pic.jpeg)
