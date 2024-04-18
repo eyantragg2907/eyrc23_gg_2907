@@ -16,7 +16,6 @@ logging.getLogger('tensorflow').disabled = True
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
-
 import tensorflow as tf
 
 # Disabling warnings and logs
@@ -30,20 +29,20 @@ CLASS_MAP = [
     "combat",
     "destroyed_buildings",
     "fire",
-    "human_aid_rehabilitation",
+    "humanitarian_aid",
     "military_vehicles",
-    "empty"
+    None
 ]
 IMG_SHAPE = (64, 64)
 
 """ 
 * Function Name: preprocess_image
 * Input: image_path: str
-* Output: tensor
+* Output: tf.Tensor
 * Logic: Preprocesses the image to be fed into the model (clips values, normalizes, resizes)
 * Example Call: preprocess_image("path/to/image.jpg") -> tensor
 """
-def preprocess_image(image_path):
+def preprocess_image(image_path: str) -> tf.Tensor:
 
     img = tf.image.decode_image(tf.io.read_file(image_path), expand_animations=False, dtype=tf.float32, channels=3)
     img = tf.cast(img, tf.float32)
@@ -56,16 +55,16 @@ def preprocess_image(image_path):
 """ 
 * Function Name: get_model
 * Input: None
-* Output: model
+* Output: tf.keras.Model
 * Logic: Loads the model and compiles it
 * Example Call: get_model() -> model
 """
-def get_model():
+def get_model() -> tf.keras.Model:
     model = tf.keras.models.load_model("model.tf", compile=False)
     if model is not None:
         model.compile(
             optimizer="adam",
-            loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),  =
+            loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), 
             metrics=["accuracy"],
         )
         return model
@@ -75,12 +74,12 @@ def get_model():
 
 """ 
 * Function Name: predict
-* Input: model, img (tensor)
-* Output: event (str)
+* Input: model: tf.keras.Model, img: tf.Tensor
+* Output: str
 * Logic: Predicts the event from the image
 * Example Call: predict(model, img) -> "fire"
 """
-def predict(model, img):
+def predict(model: tf.keras.Model, img: tf.Tensor) -> str:
     img = tf.expand_dims(img, axis=0)
 
     # predict the event
@@ -93,13 +92,13 @@ def predict(model, img):
 
 """ 
 * Function Name: run_predictor
-* Input: filepaths: list of str
-* Output: output: dict
+* Input: filepaths: list[str]
+* Output: dict[str, str]
 * Logic: Runs the predictor on the images and returns the output
 * Example Call: run_predictor(["path/to/image1.jpg", "path/to/image2.jpg", "path/to/image3.jpg"]) -> 
   {"A": "fire", "B": "empty", "C": "combat"}
 """
-def run_predictor(filepaths):
+def run_predictor(filepaths: list[str]) -> dict[str, str]:
 
     model = get_model()
     output = {}
@@ -107,8 +106,6 @@ def run_predictor(filepaths):
     for x_path, pos in zip(filepaths, ["A", "B", "C", "D", "E"]):
         img = preprocess_image(x_path)
         event = predict(model, img)
-        if event == "empty":
-            event = None
         output[pos] = event
     
     return output

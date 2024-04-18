@@ -1,6 +1,6 @@
 {
     "configuration": "FlashFreq=80,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
     "board": "esp32:esp32:esp32doit-devkit-v1",
-    "sketch": "Task_5/multithread/multithreaded_stop/multithreaded_stop.ino",
+    "sketch": "final_code/GG_Task6_2907/embedded-c/robot_code/robot_code.ino",
     "port": "/dev/tty.usbserial-0001"
 }
